@@ -1,0 +1,50 @@
+<table border="1" width="100%" style="border-collapse:collapse">
+		        <tr>
+				   <td>Email</td>
+				   <td>Username</td>
+				   <td>Name</td>
+                   <td>Date Of Birth</td>
+				   <td>Address</td>
+				   <td>City</td>
+				   <td>State</td>
+				   <td>Zipcode</td>
+                   <td>Created</td> 				   
+				</tr>
+				<tr>
+					<td>
+					  <%= records[0]['email'] %>
+					</td>						
+					
+					<td>
+					  <%= records[0]['username'] %>
+					</td>						
+					
+					<td>
+					   <%= records[0]['first_name']+" "+records[0]['last_name'] %>
+					</td>
+
+                    <td>
+					   <%= records[0]['dateofbirth'] %>
+					</td>
+ 
+                    <td>
+					   <%= records[0]['address'] %>
+					</td>
+
+                    <td>
+					   <%= records[0]['city'] %>
+					</td>
+
+                    <td>
+					   <%= records[0]['state'] %>
+					</td>
+
+                    <td>
+					   <%= records[0]['zipcode'] %>
+					</td>					
+
+                    <td>
+					   <%= records[0]['created_at'] %>
+					</td>					
+				</tr>							 
+</table>			

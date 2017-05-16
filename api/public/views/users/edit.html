@@ -1,0 +1,116 @@
+<div ng-include="'views/layouts/header.html'"></div>
+
+<div>
+    <titleelement></titleelement>
+</div>
+
+<form name="userform"  novalidate>
+	<div>
+	  <table border="1" style="border:1px solid #cccccc;border-collapse:collapse">
+	  
+		  <tr>
+			  <td>First Name</td>		  
+			  <td>
+			     <input type="text" name="firstname" ng-model="user.first_name" required>
+				 <p ng-show="submitted && userform.firstname.$invalid">
+				   Enter First Name
+				 </p>
+			  </td>		  
+		  </tr>
+		  
+		  <tr>
+			  <td>Second Name</td>		  
+			  <td>
+				 <input type="text" name="lastname" ng-model="user.last_name" required>
+				 <p ng-show="submitted && userform.lastname.$invalid">Enter Last Name</p>
+				 <input type="hidden" ng-model="user.id">
+			  </td>		  
+		  </tr>
+		  
+		  <tr>
+		    <td>Image</td>	
+		    <td>
+		       <input type="file" ngf-select ng-model="picFile" name="file"    
+             accept="image/*" ngf-max-size="2MB">
+			   <!-- <p ng-show="submitted && userform.file.$error.required">
+			      Select File
+			   </p>
+			   <p ng-show="submitted && userform.file.$error.maxSize">
+			     File too large 
+                 {{errorFile.size / 1000000|number:1}}MB: max 2M
+			   </p> -->                           
+               <img ng-show="userform.file.$valid" ngf-thumbnail="picFile" class="thumb">
+			   <button ng-click="picFile = null" ng-show="picFile">Remove</button>
+			  
+			  <div>
+			     <img src="/uploads/{{user.profile_pic}}" class="thumb"/>
+			  </div>
+	        </td>
+		  </tr>
+
+          <tr>
+			  <td>Address</td>		  
+			  <td>
+				 <input type="text" name="address" ng-model="user.address" required>
+				 <p ng-show="submitted && userform.address.$invalid">
+				   Enter Address				 
+				 </p>  
+			  </td>		  
+		  </tr>		  
+
+          <tr>
+			  <td>City</td>		  
+			  <td>
+				 <input type="text" name="city" ng-model="user.city" required>
+				 <p ng-show="submitted && userform.city.$invalid">Enter City</p>				 
+			  </td>		  
+		  </tr>
+
+          <tr>
+			  <td>State</td>		  
+			  <td>
+				 <input type="state" name="state" ng-model="user.state" required>
+				 <p ng-show="submitted && userform.state.$invalid">
+				    Enter State				 
+			     </p>		
+			  </td>		  
+		  </tr>
+
+          <tr>
+			  <td>Zipcode</td>		  
+			  <td>
+				 <input type="zipcode" name="zipcode" ng-model="user.zipcode" required>
+				 <p ng-show="submitted && userform.zipcode.$invalid">
+				    Enter Zipcode				 
+				 </p>	
+			  </td>		  
+		  </tr>	
+
+          <tr>
+			  <td>DOB</td>		  
+			  <td>
+				 <datepicker date-format="yyyy-MM-dd" date-max-limit="2016
+" selector="form-control">
+					<div class="input-group">
+						<input class="form-control" name="dateofbirth" ng-model="user.dateofbirth" placeholder="Choose a date" required/>
+						<span class="input-group-addon" style="cursor:pointer">
+						<i class="fa fa-lg fa-calendar"></i>
+						</span>
+					</div>
+                 </datepicker>
+				 <p ng-show="submitted && userform.datofbirth.$invalid">
+				    Enter Date Of Birth				 
+				 </p>
+			  </td>		  
+		  </tr>
+		  
+		  <tr style="border:0px solid #ffffff">
+			  <td></td>		  
+			  <td>
+				 <input type="button" value="Submit" ng-click="edituser(picFile)"/> 
+			  </td>		  
+		  </tr>
+	  </table>	  
+	</div>
+</form>
+<div ng-include="'views/layouts/footer.html'"></div>

@@ -1,0 +1,179 @@
+
+<div ng-include="'views/layouts/header.html'"></div>
+ <link rel="stylesheet" type="text/css" href="css/slider.css">	 
+ <div>
+    <titleelement></titleelement>
+ </div>
+ <br>
+
+ <div>
+   <div>
+     <input type="text" name="email"  ng-model="user.searchemail" placeholder="Email"/>
+	 <input type="text" name="username"  ng-model="user.searchusername" placeholder="Username"/>
+	 <input type="text" name="firstname"  ng-model="user.searchfirstname" placeholder="First Name"/>
+	 <input type="text" name="lastname"  ng-model="user.searchlastname" placeholder="Last Name"/>
+	 </br>	 	
+	 Age:- <rzslider  rz-slider-model="user.age" rz-slider-options="user.options"></></rzslider>	 
+	 </br>
+	 
+	 <div>
+       Per page:-<input type="text" name="userlimit" ng-model="user.limit" value="" />	  
+     </div>
+	 <input type="button" name="search"  ng-model="user.search" value="Search" ng-click="searchUser('')"/>
+   </div>
+   </br>
+   </br>
+  
+   <input type="button" name="check" ng-model="user.checkall" ng-click="checkAllToggle()" value="CheckAll"/>	
+   		  
+   <input type="button" name="uncheck" ng-model="user.uncheckall" ng-click="uncheckAllToggle()" value="UnCheckAll"/>	
+   </br>
+   </br>  
+  
+    <div>
+     Totalusers: {{ totalusers }}
+    </div>
+	
+    <div style="float:left">
+      <div>
+       <a href="#add">Add Users</a>
+      </div>
+      </br>
+    </div>
+
+    <div style="float:right">
+      <div style="float:left">
+        <a href="http://127.0.0.1:8081/exportusers">Export to csv</a>
+      </div>
+
+      <div style="float:left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
+
+	  <div style="float:left">
+		 <a href="http://127.0.0.1:8081/exportxlsusers">Export to xls</a>
+	  </div>
+      </br>
+    </div>
+	
+    <table border="1" style="border:1px solid #cccccc;border-collapse:collapse;width:100%">
+       <tr>
+	     <th>
+		   <a href="javascript:void(0)" ng-click="removeUsers()">Delete</a>
+		 </th>
+	     <th>
+		   <a href="javascript:void(0)" ng-click="searchUser('first_name')">
+		     First Name
+		   </a>
+		   <input type="hidden" name="sortfirstname"  ng-model="sort.first_name"/>
+		   <span ng-show="sortType == 'sortfirstname'">
+		       <span ng-show="!sortReverse">^</span>
+			   <span ng-show="sortReverse">v</span>
+		   </span>
+		 </th>
+		 <th>
+		   <a href="javascript:void(0)" ng-click="sortlist('last_name')">
+		     Last Name
+		   </a>
+		   <input type="hidden" name="sortlastname"  ng-model="sort.last_name"/>
+		   
+		   <span ng-show="sortType == 'sortlastname'">
+		       <span ng-show="!sortReverse">^</span>
+			   <span ng-show="sortReverse">v</span>
+		   </span>
+		 </th>
+		 <th>
+		   <a href="javascript:void(0)" ng-click="sortlist('email')">Email</a>
+		   <input type="hidden" name="sortemail"  ng-model="sort.email"/>
+		   		   
+		   <span ng-show="sortType == 'sortemail'">
+		       <span ng-show="!sortReverse">^</span>
+			   <span ng-show="sortReverse">v</span>
+		   </span>
+		 </th>
+		 <th>
+		   <a href="javascript:void(0)" ng-click="sortlist('username')">Username</a>
+		   <input type="hidden" name="sortusername"  ng-model="sort.username"/>
+		   <input type="hidden" name="sortfields" ng-model="user.sortfields" value="" />
+		   <input type="hidden" name="sortfieldtype" ng-model="user.sortfieldtype" value="" />
+		   <span ng-show="sortType == 'sortusername'">
+		       <span ng-show="!sortReverse">^</span>
+			   <span ng-show="sortReverse">v</span>
+		   </span>
+          </a>
+	     </th>
+		
+		 <th>
+		   <a href="javascript:void(0)" ng-click="sortlist('dateofbirth')">DateOfBirth</a>
+		   <input type="hidden" name="sortdateofbirth"  ng-model="sort.dateofbirth"/>
+		   <input type="hidden" name="sortfields" ng-model="user.sortfields" value="" />
+		   <input type="hidden" name="sortfieldtype" ng-model="user.sortfieldtype" value="" />
+		   <span ng-show="sortType == 'sortdateofbirth'">
+		       <span ng-show="!sortReverse">^</span>
+			   <span ng-show="sortReverse">v</span>
+		   </span>
+          </a>
+	     </th>
+		 <th colspan="3">Action</th>		
+	  </tr>
+	  
+	  <tr ng-repeat="x in users">
+	      <td><input type="checkbox" ng-model="x.Selected" value="{{x._id}}"/></td>
+	      <td>{{x.first_name}}</td>
+		  <td>{{x.last_name}}</td>
+		  <td>{{x.email}}</td>
+		  <td>{{x.username}}</td>
+          <td>{{x.dateofbirth}}</td>		  
+		  <!-- <td><a href="#/view/{{x._id}}" >View</a></td> -->
+		  <td><a href="javascript:void(0)" fancybox ng-click="showview(x._id)">View</a></td>
+		  <td><a href="#/edit/{{x._id}}">Edit</a></td>
+		  <td>
+		    <a href="javascript:void(0)" ng-click="remove(x._id , $index)">
+			   Delete
+			</a>
+		  </td>
+	  </tr>
+    </table>
+  
+    <ul style="list-style:none;float:none">
+       <li ng-show="current_page>1">
+	     <a href="javascript:void(0)" ng-click="current_page= current_page -1;searchUser();">
+		    Previous
+		 </a>
+	   </li>
+	 
+	   <li ng-show="current_page>1">
+	      <a href="javascript:void(0)" ng-click="current_page=1;searchUser();">
+		    First
+		  </a>
+	   </li>
+	 
+	   <li ng-repeat="page in pages">
+	      <a href="javascript:void(0)" ng-click="setPageNo($index); searchUser();">
+		    {{page}}
+		  </a>
+	   </li>
+	 
+	   <li ng-show="current_page<totalpages">
+	      <a href="javascript:void(0)" ng-click="current_page= current_page+1;searchUser();">
+		    Next
+		  </a>
+	   </li>
+	 
+	   <li ng-show="current_page<totalpages">
+	      <a href="javascript:void(0)" ng-click="current_page=totalpages;searchUser();">
+		    Last
+		  </a>
+	   </li>
+  </ul>  
+</div>
+
+<style type="text/css">
+  ul li{
+    float:left;
+	border:1px solid #CCCCCC;
+	width:auto;
+	padding-left:10px;
+	padding-right:10px;
+  }
+</style>
+
+<div ng-include="'views/layouts/footer.html'"></div>
