@@ -52,7 +52,7 @@ app.controller('users' , ['$scope' , '$http' , '$route' , '$routeParams' ,'$loca
 		$scope.current_page = 1;
           
         if(localStorageService.get('login')=="1"){   
-			$http.get('http://127.0.0.1:8081/showusers?limit='+$scope.user.limit+'&sortfield='+$scope.user.sortfields+'&sorttype='+$scope.user.sortfieldtype).then(function(response){
+			$http.get('showusers?limit='+$scope.user.limit+'&sortfield='+$scope.user.sortfields+'&sorttype='+$scope.user.sortfieldtype).then(function(response){
 		              console.log(response.data['records']);
 					  $scope.users = response.data['records'];
 					  $scope.pages = response.data['pages'];                      
@@ -69,7 +69,7 @@ app.controller('users' , ['$scope' , '$http' , '$route' , '$routeParams' ,'$loca
 		 $scope.title += ' '+$routeParams.id;
 		 
          if(localStorageService.get('login')=="1"){    
-			$http.get('http://127.0.0.1:8081/view/'+$routeParams.id).then(function(response){	   
+			$http.get('view/'+$routeParams.id).then(function(response){	   
 					$scope.user = response.data[0];   	  			
 			}); 
 		 }
@@ -82,7 +82,7 @@ app.controller('users' , ['$scope' , '$http' , '$route' , '$routeParams' ,'$loca
         var msg = "Are you sure you want to remove";
 		if(window.confirm(msg)){
 			if(localStorageService.get('login')=="1"){       
-				$http.get('http://127.0.0.1:8081/delete/'+id).then(function(response){
+				$http.get('delete/'+id).then(function(response){
 					if(response.data['success']=='1'){
 						$scope.users.splice(index , 1); 
 						$location.path("/");					
@@ -97,7 +97,7 @@ app.controller('users' , ['$scope' , '$http' , '$route' , '$routeParams' ,'$loca
 		$scope.title +=' '+$routeParams.id;
 		
         if(localStorageService.get('login')=="1"){       
-			$http.get('http://127.0.0.1:8081/view/'+$routeParams.id).then(function(response){
+			$http.get('view/'+$routeParams.id).then(function(response){
 				$scope.user = response.data[0];   	  			
 			});   
 		}
@@ -123,7 +123,7 @@ app.controller('users' , ['$scope' , '$http' , '$route' , '$routeParams' ,'$loca
 				       };
  
                        file.upload = Upload.upload({
-							  url:'http://127.0.0.1:8081/edit/'+$routeParams.id,
+							  url:'edit/'+$routeParams.id,
 							  data:data
 				       });
 
@@ -160,7 +160,7 @@ app.controller('users' , ['$scope' , '$http' , '$route' , '$routeParams' ,'$loca
                       
 					   var req = {
 						    method: 'POST',
-						    url: 'http://127.0.0.1:8081/edit/'+$routeParams.id,
+						    url: 'edit/'+$routeParams.id,
 						    headers: {
 						      'Content-Type': 'application/json'
 						    },
@@ -201,7 +201,7 @@ app.controller('users' , ['$scope' , '$http' , '$route' , '$routeParams' ,'$loca
 				};
 				
 				file.upload = Upload.upload({
-					  url:'http://127.0.0.1:8081/adduser',
+					  url:'adduser',
 					  data:data
 				});
 
@@ -237,7 +237,7 @@ app.controller('users' , ['$scope' , '$http' , '$route' , '$routeParams' ,'$loca
 			   
 			   var req = {
 					method: 'POST',
-					url: 'http://127.0.0.1:8081/adduser',
+					url: 'adduser',
 					headers: {
 					  'Content-Type': 'application/json'
 					},
@@ -274,7 +274,7 @@ app.controller('users' , ['$scope' , '$http' , '$route' , '$routeParams' ,'$loca
                       
 			var req = {
 			    method: 'POST',
-			    url: 'http://127.0.0.1:8081/login',
+			    url: 'login',
 			    headers: {
 			      'Content-Type': 'application/json'
 			    },
@@ -470,7 +470,7 @@ app.controller('users' , ['$scope' , '$http' , '$route' , '$routeParams' ,'$loca
 		  data = data+"limit="+$scope.user.limit; 
 	   }
 	   
-       $http.get('http://127.0.0.1:8081/showusers?'+data).then(function(response){	  
+       $http.get('showusers?'+data).then(function(response){	  
 	       $scope.users = response.data['records'];   	  					   
            $scope.pages = response.data['pages'];           
            $scope.totalpages = response.data['totalpages']; 	   
@@ -479,7 +479,7 @@ app.controller('users' , ['$scope' , '$http' , '$route' , '$routeParams' ,'$loca
 
    if($route.current.type=="login"){  
    
-        $http.get('http://127.0.0.1:8081/checklogin').then(function(response){	
+        $http.get('checklogin').then(function(response){	
 			if(response.data['authen']=='1'){
 				//localStorageService.set('login' , '1');
 			    //$location.path("/");
@@ -578,7 +578,7 @@ app.controller('users' , ['$scope' , '$http' , '$route' , '$routeParams' ,'$loca
        console.log($scope.selected);
 	   
 	   var ids = $scope.selected.join();
-       $http.get('http://127.0.0.1:8081/removemultiple?ids='+ids).then(function(response){	
+       $http.get('removemultiple?ids='+ids).then(function(response){	
 			if(response.data['authen']=='1'){
 				//localStorageService.set('login' , '1');
 			    $route.reload();

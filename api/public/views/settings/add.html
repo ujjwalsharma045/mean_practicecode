@@ -1,0 +1,27 @@
+<div ng-include="'views/layouts/header.html'"></div>
+
+<div>
+   <titleelement></titleelement>
+</div>
+</br>
+
+<form name="settingform" novalidate>
+	<div>
+	  <table border="1" style="border:1px solid#cccccc;border-collapse:collapse">	 
+	      <tr ng-repeat="(key, value) in settings">
+			  <td>{{settings[key].title}}</td>		  
+			  <td>
+				 <input type="text" name="setting[]" ng-model="settings[key].content">
+			  </td>		  
+		  </tr>
+		  		  		  
+		  <tr style="border:0px solid #ffffff">			  
+			  <td colspan="2">
+				 <input type="button" value="Submit" ng-click="savesettings()"/> 	  
+			  </td>		  
+		  </tr>
+	  </table>	  
+	</div>
+</form>
+
+<div ng-include="'views/layouts/footer.html'"></div>

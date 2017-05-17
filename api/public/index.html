@@ -94,6 +94,15 @@
 												
 			}).when('/error' , {				
 				template:'<div>404 Page Not Found</div>',				
+			}).when('/setting' , {
+				controller:'setting',
+				templateUrl:'views/settings/add.html',
+				type:'list',
+				resolve:{
+					pageTitle:function(){
+					   return "Settings";
+					}
+				}
 			}).otherwise({
 				redirectTo:'/error'
 			});					
@@ -104,6 +113,7 @@
 	 <script src="services/authenticate.js"></script>	 
 	 <script src="controllers/users.js"></script>
 	 <script src="controllers/contact.js"></script>
+	 <script src="controllers/setting.js"></script>
   </head>
   <body>
      <div ng-app="apimodule">

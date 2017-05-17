@@ -50,14 +50,14 @@ module.exports = function(schedule, mail, mailer, User){
 					text:"Specific User Activated successfully"
 				  };
 				 
-				  mailObj.sendMail(mailoptions, function(error , response){
+				 /* mailObj.sendMail(mailoptions, function(error , response){
 					  if(error){
 						  console.log(error);
 					  }
 					  else {
 						  console.log(response.message); 
 					  }
-				  });
+				  });*/
 			} 				
 		});	    
    });   
