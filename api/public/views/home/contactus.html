@@ -1,0 +1,48 @@
+<div ng-include="'views/layouts/header.html'"></div>
+
+<div>
+    <titleelement></titleelement>
+</div>
+
+<form name="contactusform"  novalidate>
+	<div>
+	  <table border="1" style="border:1px solid #cccccc;border-collapse:collapse">
+	  
+		  <tr>
+			  <td>Name</td>		  
+			  <td>
+			     <input type="text" name="name" ng-model="user.name" required>
+				 <p ng-show="submitted && contactusform.name.$invalid">
+				   Enter Name
+				 </p>
+			  </td>		  
+		  </tr>
+		  
+		  <tr>
+			  <td>Email</td>		  
+			  <td>
+				 <input type="text" name="email" ng-model="user.email" required>
+				 <p ng-show="submitted && contactusform.email.$invalid">Enter Last Name</p>				 
+			  </td>		  
+		  </tr>
+		  		  
+          <tr>
+			  <td>Content</td>		  
+			  <td>
+				 <input type="text" name="content" ng-model="user.content" required>
+				 <p ng-show="submitted && contactusform.content.$invalid">
+				   Enter Content				 
+				 </p>  
+			  </td>		  
+		  </tr>		            
+		  
+		  <tr style="border:0px solid #ffffff">
+			  <td></td>		  
+			  <td>
+				 <input type="button" value="Submit" ng-click="sendmail()"/> 
+			  </td>		  
+		  </tr>
+	  </table>	  
+	</div>
+</form>
+<div ng-include="'views/layouts/footer.html'"></div>

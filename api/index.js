@@ -120,8 +120,9 @@ require('./services')(app , func , mail, upload, storage, mailer, multer, valida
 
 require('./settings')(app , func , mail, upload, storage, mailer, multer, validator, Setting , paginate , cors , dateFormat, dateDiff , dobByAge , json2csv , excelexport , pdf , passport , LocalStrategy);
 
-require('./crons')(schedule, mail, mailer, User);
+require('./home')(app, func, mail, mailer, multer, validator, cors, dateFormat, dateDiff,LocalStrategy);
 
+//require('./crons')(schedule, mail, mailer, User);
 
 var server = app.listen(8081 , function(){
     var host = server.address().address;
