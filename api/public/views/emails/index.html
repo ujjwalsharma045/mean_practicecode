@@ -5,73 +5,27 @@
 	 <script src="//code.angularjs.org/1.2.13/angular-cookies.js"></script>
   </head>
   <body>
-		<div ng-app="userregistraton">
-			<form action="adduser" method="post" novalidate>
+		<div>			
 			   <div> 
-				   <label>First Name</label>
+				   <label>Name</label>
 				   <span>
-					  <input type="text" name="first_name" ng-model="first_name"/>
+					  {{name}}
 				   </span>
                </div>
 			   
 			   <div>
-			     <label>Last Name</label>
+			     <label>Email</label>
 			     <span>
-				   <input type="text" name="last_name" ng-model="last_name"/>
+				      {{email}}
 			     </span>
                </div>
 			   
 			   <div>
-			       <label>Email</label>
+			       <label>Message</label>
 				   <span>
-					  <input type="text" name="email" ng-model="email"/>
+					  {{content}}
 				   </span>
-               </div>
-			   
-			   <div>
-			       <label>Username</label>
-				   <span>
-					  <input type="text" name="username" ng-model="username"/>
-				   </span>
-               </div>
-			   
-			   <div>
-			       <label>Password</label>
-				   <span>
-					  <input type="password" name="password" ng-model="password"/>
-				   </span>
-               </div>
-			   
-			   <div>
-                 <label>Address</label>
-			     <span>
-				   <input type="text" name="address" ng-model="address"/>
-			     </span>
-			   </div>	 
- 
-               <div>
-				   <label>City</label>
-				   <span>
-					  <input type="text" name="city" ng-model="email"/>
-				   </span>
-			  </div>
-			  
-              <div>
-			     <label>State</label>
-			     <span>
-				   <input type="text" name="state" ng-model="state"/>
- 			     </span>
-              </div>
-			   
-			  <div> 
-                 <label>Zipcode</label>
-			     <span>
-				   <input type="text" name="zip_code" ng-model="zip_code"/>
-			     </span> 
-			  </div>
-			  
-			   <input type="submit" value="Submit"/>
-			</form>
+               </div>			   			   
 		</div>	
    </body>
 </html>   

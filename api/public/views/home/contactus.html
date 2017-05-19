@@ -29,13 +29,23 @@
           <tr>
 			  <td>Content</td>		  
 			  <td>
-				 <input type="text" name="content" ng-model="user.content" required>
+				 <textarea name="content" ng-model="user.content" required></textarea>				 
 				 <p ng-show="submitted && contactusform.content.$invalid">
 				   Enter Content				 
 				 </p>  
 			  </td>		  
-		  </tr>		            
-		  
+		  </tr>		
+
+		  <tr>
+			  <td>Captcha</td>		  
+			  <td>
+				 <div vc-recaptcha key="model.key"></div>
+                 <p ng-show="submitted && contactusform.g-recaptcha-response.$invalid">
+				     Select Captcha				 
+				 </p> 				 
+			  </td>		  
+		  </tr>		
+
 		  <tr style="border:0px solid #ffffff">
 			  <td></td>		  
 			  <td>

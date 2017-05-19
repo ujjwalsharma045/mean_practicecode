@@ -13,6 +13,7 @@ app.use(cors());
 app.use(express.static('public'));
 app.set('adminemail' , 'watermark0913@gmail.com');
 app.set('view engine' , 'ejs');
+app.set('captcha_secretkey' , '6LdqGSIUAAAAACWfT13RKusonYoknI1ge9-_k9qu');
 app.use(cookieParser()); 
 app.engine('html', require('ejs').renderFile);
 var passport = require('passport');
@@ -64,7 +65,6 @@ var Setting = require('./models/setting')(mongoose);
 
 app.use(passport.initialize());
 app.use(passport.session());
-
 
 passport.use(new LocalStrategy({
     usernameField: 'username',

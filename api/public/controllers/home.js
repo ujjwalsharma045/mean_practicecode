@@ -1,7 +1,10 @@
-app.controller('home' , ['$scope' , '$http' , '$route' , '$routeParams' ,'$location' , 'authen', 'localStorageService' , 'dateTime' , 'Users' , 'pageTitle', 'Upload', '$timeout', function($scope , $http , $route , $routeParams ,$location , authen, localStorageService , dateTime , Users , pageTitle, Upload, $timeout){
+app.controller('home' , ['$scope' , '$http' , '$route' , '$routeParams' ,'$location' , 'authen', 'localStorageService' , 'dateTime' , 'Users' , 'pageTitle', 'Upload', '$timeout', 'vcRecaptchaService', function($scope , $http , $route , $routeParams ,$location , authen, localStorageService , dateTime , Users , pageTitle, Upload, $timeout, vcRecaptchaService){
     	   
    var storageType = localStorageService.getStorageType(); 
-   
+   $scope.model = {
+                    key: '6LdqGSIUAAAAAER0Wv9KsnLaLpVDj2KaN2UiUCg6'
+                };
+
    $scope.options = {
       language: 'en',
       allowedContent: true,
@@ -19,9 +22,10 @@ app.controller('home' , ['$scope' , '$http' , '$route' , '$routeParams' ,'$locat
    $scope.sendmail = function(){
 	   if($scope.contactusform.$valid){
 		   var data = {
-			  name:$scope.user.name,
-			  email:$scope.user.email,
-			  content:$scope.user.content		  
+			  'name':$scope.user.name,
+			  'email':$scope.user.email,
+			  'content':$scope.user.content,
+              'recaptcharesponse':vcRecaptchaService.getResponse()			  
 		   };
 		   
 		   var req = {
@@ -35,7 +39,7 @@ app.controller('home' , ['$scope' , '$http' , '$route' , '$routeParams' ,'$locat
 	   
 		   $http(req).then(
 			  function(response){
-				  $location.path("/home/contactus");
+				  $route.reload();
 				  if(response.data['success']=="1"){
 					 
 				  }
