@@ -1,9 +1,9 @@
 app.controller('home' , ['$scope' , '$http' , '$route' , '$routeParams' ,'$location' , 'authen', 'localStorageService' , 'dateTime' , 'Users' , 'pageTitle', 'Upload', '$timeout', 'vcRecaptchaService', function($scope , $http , $route , $routeParams ,$location , authen, localStorageService , dateTime , Users , pageTitle, Upload, $timeout, vcRecaptchaService){
-    	   
+    	
    var storageType = localStorageService.getStorageType(); 
    $scope.model = {
-                    key: '6LdqGSIUAAAAAER0Wv9KsnLaLpVDj2KaN2UiUCg6'
-                };
+       key: '6LdqGSIUAAAAAER0Wv9KsnLaLpVDj2KaN2UiUCg6'
+   };
 
    $scope.options = {
       language: 'en',
@@ -17,8 +17,8 @@ app.controller('home' , ['$scope' , '$http' , '$route' , '$routeParams' ,'$locat
    
    $scope.content = "";   
    $scope.timeformat = dateTime.showTime();     
-   $scope.title = pageTitle;         
-    
+   $scope.title = pageTitle;
+       
    $scope.sendmail = function(){
 	   if($scope.contactusform.$valid){
 		   var data = {
@@ -55,12 +55,25 @@ app.controller('home' , ['$scope' , '$http' , '$route' , '$routeParams' ,'$locat
        else {
 		   $scope.submitted = true;
 	   }	   
-   }
+    }
+	
+    $scope.sliders = [];
+	
+    if($route.current.type=="home"){
+	    $http.get('/home/index').then(function(response){
+			  if(response.data['success']=="1"){
+				   $scope.sliders = response.data['records'];
+			  }
+			  else {
+				  
+			  }
+		});
+    }
    
-   $scope.logout = function(){
+    $scope.logout = function(){
 	  localStorageService.remove('login');
 	  $location.path("/login"); 	   
-   }     
+    }     
 }]);
 
 

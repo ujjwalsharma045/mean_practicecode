@@ -1,4 +1,4 @@
-module.exports = function(app, func, mail, mailer, multer, validator, cors, dateFormat, dateDiff,LocalStrategy){ 
+module.exports = function(app, func, mail, mailer, multer, validator, cors, dateFormat, dateDiff,LocalStrategy, Category){ 
     
     var sess;
     var session = require('express-session'); 
@@ -17,6 +17,10 @@ module.exports = function(app, func, mail, mailer, multer, validator, cors, date
 			}
 		});
     };
+	
+	
+	app.get("/home/index" , homepage);
+	app.get("/home" , homepage);
 	
     app.all("/home/contactus" , function(req, res){
 	    sess=req.session;
@@ -93,9 +97,7 @@ module.exports = function(app, func, mail, mailer, multer, validator, cors, date
 						console.log(response);
 					}        				
                 }); */
-				
-				
-				
+								
 			}
 			else {
 				res.setHeader('Content-Type', 'application/json');
@@ -103,4 +105,19 @@ module.exports = function(app, func, mail, mailer, multer, validator, cors, date
 			}
 		}		
 	});  
+
+	function homepage(req , res){
+		sess=req.session;
+        var resp = func.isLoggedIn(sess);
+		if(!resp){
+			res.setHeader('Content-Type', 'application/json');
+			res.send(JSON.stringify({authen:0 , success:0}));			
+		}
+	    else {
+			Category.find().exec(function(err, docs){
+				res.setHeader('Content-Type', 'application/json');
+				res.send(JSON.stringify({'records':docs , success:1}));
+			});
+		}
+	} 
 }

@@ -62,6 +62,7 @@ mongoose.connect('mongodb://localhost/mydatabase');
 var User = require('./models/user')(mongoose);
 var Services = require('./models/service')(mongoose);
 var Setting = require('./models/setting')(mongoose);
+var Category = require('./models/category')(mongoose);
 
 app.use(passport.initialize());
 app.use(passport.session());
@@ -120,7 +121,7 @@ require('./services')(app , func , mail, upload, storage, mailer, multer, valida
 
 require('./settings')(app , func , mail, upload, storage, mailer, multer, validator, Setting , paginate , cors , dateFormat, dateDiff , dobByAge , json2csv , excelexport , pdf , passport , LocalStrategy);
 
-require('./home')(app, func, mail, mailer, multer, validator, cors, dateFormat, dateDiff,LocalStrategy);
+require('./home')(app, func, mail, mailer, multer, validator, cors, dateFormat, dateDiff,LocalStrategy, Category);
 
 //require('./crons')(schedule, mail, mailer, User);
 

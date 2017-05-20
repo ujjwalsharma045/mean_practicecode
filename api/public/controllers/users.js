@@ -82,10 +82,10 @@ app.controller('users' , ['$scope' , '$http' , '$route' , '$routeParams' ,'$loca
         var msg = "Are you sure you want to remove";
 		if(window.confirm(msg)){
 			if(localStorageService.get('login')=="1"){       
-				$http.get('delete/'+id).then(function(response){
+				$http.delete('delete/'+id).then(function(response){
 					if(response.data['success']=='1'){
 						$scope.users.splice(index , 1); 
-						$location.path("/");					
+						$route.reload();					
 					}						   	 
 				});
 			}
@@ -578,7 +578,7 @@ app.controller('users' , ['$scope' , '$http' , '$route' , '$routeParams' ,'$loca
        console.log($scope.selected);
 	   
 	   var ids = $scope.selected.join();
-       $http.get('removemultiple?ids='+ids).then(function(response){	
+       $http.delete('removemultiple?ids='+ids).then(function(response){	
 			if(response.data['authen']=='1'){
 				//localStorageService.set('login' , '1');
 			    $route.reload();

@@ -106,7 +106,7 @@ module.exports = function(app , func , mail, upload, storage, mailer, multer, va
 	    }
 	});
 
-	app.get("/delete/:id" , function(req, res){
+	app.delete("/delete/:id" , function(req, res){
 		sess=req.session;
         var resp = func.isLoggedIn(sess);
 		if(!resp){
@@ -556,7 +556,7 @@ module.exports = function(app , func , mail, upload, storage, mailer, multer, va
 			 });	     							
     });
 	
-	app.get("/removemultiple" , function(req, res){
+	app.delete("/removemultiple" , function(req, res){
 		sess=req.session;
         var resp = func.isLoggedIn(sess);
 		if(!resp){
