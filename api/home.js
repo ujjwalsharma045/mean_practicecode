@@ -1,4 +1,4 @@
-module.exports = function(app, func, mail, mailer, multer, validator, cors, dateFormat, dateDiff,LocalStrategy, Category){ 
+module.exports = function(app, func, mail, mailer, multer, validator, cors, dateFormat, dateDiff,LocalStrategy, Category, Page){ 
     
     var sess;
     var session = require('express-session'); 
@@ -21,6 +21,9 @@ module.exports = function(app, func, mail, mailer, multer, validator, cors, date
 	
 	app.get("/home/index" , homepage);
 	app.get("/home" , homepage);
+	
+	app.get("/home/page/:slug" , pages);
+	app.get("/page/:slug" , pages);
 	
     app.all("/home/contactus" , function(req, res){
 	    sess=req.session;
@@ -119,5 +122,21 @@ module.exports = function(app, func, mail, mailer, multer, validator, cors, date
 				res.send(JSON.stringify({'records':docs , success:1}));
 			});
 		}
-	} 
+	}
+
+    function pages(req , res){
+		sess=req.session;
+        var resp = func.isLoggedIn(sess);
+		if(!resp){
+			res.setHeader('Content-Type', 'application/json');
+			res.send(JSON.stringify({authen:0 , success:0}));			
+		}
+	    else {
+			
+			Page.find({slug:req.params.slug} , function(err, doc){ console.log(doc);
+				res.setHeader('Content-Type', 'application/json');
+				res.send(JSON.stringify({'record':doc , success:1}));
+			});
+		}
+	}	
 }

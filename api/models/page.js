@@ -4,13 +4,15 @@ module.exports = function(mongoose){
 	
 	var pageSchema = new Schema({
 	  title: String,
-	  content: String,	  
+	  content: String,	 
+      slug:String,	  
 	  created_at: Date,
-	  updated_at: Date
+	  modified_at: Date
 	});
 	
 	
 	var Page = mongoose.model('Page', pageSchema);
+	
 	return Page;
 }
 

@@ -69,6 +69,18 @@ app.controller('home' , ['$scope' , '$http' , '$route' , '$routeParams' ,'$locat
 			  }
 		});
     }
+	
+	if($route.current.type=="aboutus"){
+		$scope.pagecontent = "";
+	    $http.get('/home/page/about-us').then(function(response){			
+			  if(response.data['success']=="1"){ 			  
+				   $scope.pagecontent = response.data['record'][0].content;
+			  }
+			  else {
+				  
+			  }
+		});
+    }
    
     $scope.logout = function(){
 	  localStorageService.remove('login');
