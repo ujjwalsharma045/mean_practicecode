@@ -33,33 +33,33 @@ passport.use('login', new LocalStrategy({
     User.findOne({ 'username' :  username }, 
       function(err, user) {
         // In case of any error, return using the done method
-        if (err)
+        if(err)
           return done(err);
-        // Username does not exist, log error & redirect back
-        if (!user){
+	  
+        //Username does not exist, log error & redirect back
+        if(!user){
           console.log('User Not Found with username '+username);
-          return done(null, false);                 
+          return done(null, false , { success: '0' });                 
         }
-        // User exists but wrong password, log the error 
+		
+        //User exists but wrong password, log the error 
         if (!isValidPassword(user, password)){
           console.log('Invalid Password');
-          return done(null, false);
+          return done(null, false ,  { success: '0' });
         }
 		
-		 req.login(user, function(error) {
-           if(error) return next(error);
+		req.login(user, function(error){
+             if(error) return next(error);
 			 console.log(req.user);
 			 console.log(req.isAuthenticated());
-             console.log("Request Login supossedly successful.");
-              
-         });
+             console.log("Request Login supossedly successful.");              
+        });
+		 
         // User and password both match, return user from 
-        // done method which will be treated like success
-        
-		 return done(null, user);     
-		
-      }
-    );
+        // done method which will be treated like success        
+		return done(null, user);     		
+     }
+   );
 }));
 
 /*var isAuthenticated = function (req, res, next) {
@@ -199,9 +199,9 @@ require('./user')(app , func , mail, upload, storage, mailer, multer, validator,
 
 require('./services')(app , func , mail, upload, storage, mailer, multer, validator, Services , paginate , cors);
 
-require('./settings')(app , func , mail, upload, storage, mailer, multer, validator, Setting , paginate , cors , dateFormat, dateDiff , dobByAge , json2csv , excelexport , pdf , passport , LocalStrategy);
+require('./settings')(app, func, mail, upload, storage, mailer, multer, validator, Setting, paginate, cors, dateFormat, dateDiff, dobByAge, json2csv, excelexport, pdf, passport, LocalStrategy);
 
-require('./home')(app, func, mail, mailer, multer, validator, cors, dateFormat, dateDiff,LocalStrategy, Category, Page);
+require('./home')(app, func, mail, mailer, multer, validator, cors, dateFormat, dateDiff, LocalStrategy, Category, Page);
 
 //require('./crons')(schedule, mail, mailer, User);
 

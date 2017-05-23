@@ -270,10 +270,28 @@ module.exports = function(app , func , mail, upload, storage, mailer, multer, va
 			}				
 	});
 	
-	app.post('/login', passport.authenticate('login'), function(req, res){
+	app.post('/login',  function(req, res, next){
 		 //console.log(req);	
-        res.setHeader('Content-Type', 'application/json');
-		res.send(JSON.stringify({authen:1, success:1}));
+		 
+		 passport.authenticate('login', function(err, user, info) {
+              if(err){ 
+			     return next(err); 
+			  }
+			  
+              if(!user){ 
+			     res.setHeader('Content-Type', 'application/json');
+		         res.send(JSON.stringify({authen:0, success:0})); 
+			  }
+			  else {
+				  req.login(user, function(err) {
+					 if(err){ return next(err); }
+					 res.setHeader('Content-Type', 'application/json');
+					 res.send(JSON.stringify({authen:1, success:1}));
+				  });
+			  }
+         })(req, res, next);
+        //res.setHeader('Content-Type', 'application/json');
+		//res.send(JSON.stringify({authen:1, success:1}));
     });
 		
 	/* app.post("/login", function(req , res){
