@@ -1,12 +1,12 @@
-module.exports = function(app , func , mail, upload, storage, mailer, multer, validator, User, paginate , cors , dateFormat , dateDiff, dobByAge, json2csv, excel , pdf, passport , LocalStrategy){ 
+module.exports = function(app , func , mail, upload, storage, mailer, multer, validator, User, paginate , cors , dateFormat , dateDiff, dobByAge, json2csv, excel , pdf, passport , LocalStrategy, isAuthenticated){ 
    
     var sess;
-    var session = require('express-session'); 
+    //var session = require('express-session'); 
     var math = require('mathjs');  		
 	
-	app.get("/showusers" , function(req, res){
+	app.get("/showusers" , passport.isAuthenticated , function(req, res){
 		sess=req.session;	
-		console.log(sess);
+		//console.log(sess);
 		var resp = func.isLoggedIn(sess);
 		if(!resp){
 			res.setHeader('Content-Type', 'application/json');
@@ -51,7 +51,7 @@ module.exports = function(app , func , mail, upload, storage, mailer, multer, va
 				var formateddob = dateFormat(newdate ,'yyyy-mm-dd');
 				//var formateddob = dateFormat(dob ,'yyyy-mm-dd');
 				
-				console.log(formateddob);
+				//console.log(formateddob);
 				
 				//data.dateofbirth = formateddob;
 				data.dateofbirth = { "$lte": formateddob };
@@ -89,14 +89,14 @@ module.exports = function(app , func , mail, upload, storage, mailer, multer, va
             perPage = (req.query.limit && req.query.limit>0)? req.query.limit:5; 			
 			User.find(data).count().exec(function(err, count){
 				  var totalPages = math.ceil(count/perPage);
-				  console.log(totalPages);
+				  //console.log(totalPages);
 				  
 				  var pages = {};
 				  for(var i=1; i<=totalPages; i++){
 					  pages[i] = i;
 				  }
 				  
-				  console.log(pages);
+				  //console.log(pages);
 			      User.find(data).limit(perPage).skip(perPage * (page-1)).sort(sortsection).exec(function(err, docs){
 				      //console.log(docs);			   
 				      res.setHeader('Content-Type', 'application/json');
@@ -125,7 +125,7 @@ module.exports = function(app , func , mail, upload, storage, mailer, multer, va
 	    }
 	});
 
-	app.get("/view/:id" , function(req, res){
+	app.get("/view/:id" , passport.isAuthenticated, function(req, res){
         sess=req.session;
         var resp = func.isLoggedIn(sess);
 		if(!resp){
@@ -143,7 +143,7 @@ module.exports = function(app , func , mail, upload, storage, mailer, multer, va
 		}
 	});
 
-    app.post("/edit/:id" , function(req, res){
+    app.post("/edit/:id", passport.isAuthenticated,  function(req, res){
 		sess=req.session;
         var resp = func.isLoggedIn(sess);
 		if(!resp){
@@ -234,7 +234,7 @@ module.exports = function(app , func , mail, upload, storage, mailer, multer, va
 		}
 	});
 
-    app.post("/adduser" ,  function(req , res){
+    app.post("/adduser" , passport.isAuthenticated,  function(req , res){
 		sess=req.session;
         var resp = func.isLoggedIn(sess);
 		if(!resp){
@@ -317,8 +317,14 @@ module.exports = function(app , func , mail, upload, storage, mailer, multer, va
 			}
 		}			
 	});
-
-    app.post("/login" , function(req , res){
+	
+	app.post('/login', passport.authenticate('login'), function(req, res){
+		 //console.log(req);	
+        res.setHeader('Content-Type', 'application/json');
+		res.send(JSON.stringify({authen:1, success:1}));
+    });
+		
+	/* app.post("/login" , function(req , res){
         sess = req.session;       
         var resp = func.isGuestSession(sess);
 		if(!resp){
@@ -368,7 +374,7 @@ module.exports = function(app , func , mail, upload, storage, mailer, multer, va
 				 res.send(JSON.stringify({success:2 , error:'Invalid Request' , authen:0 }));
 			}		
 		}
-	});
+	}); */
 
     /*app.post("/login" ,  function(req , res, next){
         sess = req.session;       
@@ -387,7 +393,7 @@ module.exports = function(app , func , mail, upload, storage, mailer, multer, va
            
 	});*/	
 
-    app.get('/exportusers' , function(req , res){
+    app.get('/exportusers', passport.isAuthenticated, function(req , res){
          User.find({} , function(err, records){
 	         if(err) 
 				throw err;
@@ -403,7 +409,7 @@ module.exports = function(app , func , mail, upload, storage, mailer, multer, va
 		 });	
 	});
 
-    app.get('/exportxlsusers', function(req , res){
+    app.get('/exportxlsusers', passport.isAuthenticated, function(req , res){
          User.find({} , '_id first_name last_name username email address city state zipcode dateofbirth',  function(err, records){
 	         if(err) 
 				throw err;
@@ -556,7 +562,7 @@ module.exports = function(app , func , mail, upload, storage, mailer, multer, va
 			 });	     							
     });
 	
-	app.delete("/removemultiple" , function(req, res){
+	app.delete("/removemultiple" , passport.isAuthenticated, function(req, res){
 		sess=req.session;
         var resp = func.isLoggedIn(sess);
 		if(!resp){
@@ -581,7 +587,7 @@ module.exports = function(app , func , mail, upload, storage, mailer, multer, va
 	    }
 	});
 
-    app.get('/totalusers' , function(req, res){
+    app.get('/totalusers' , passport.isAuthenticated, function(req, res){
 		User.find().count().exec(function(err, count){
 			if(err)
 			  throw err;
@@ -590,7 +596,7 @@ module.exports = function(app , func , mail, upload, storage, mailer, multer, va
 		});
 	}); 
 
-    app.get("/viewhtml/:id" , function(req, res){
+    app.get("/viewhtml/:id" ,  passport.isAuthenticated, function(req, res){
         sess=req.session;
         var resp = func.isLoggedIn(sess);
 		if(!resp){			
@@ -608,6 +614,12 @@ module.exports = function(app , func , mail, upload, storage, mailer, multer, va
 			      });
 			}); 		
 		}
+	});
+	
+	app.post("/logout" , function(req, res){
+        req.logout();
+		res.setHeader('Content-Type', 'application/json');
+		res.send(JSON.stringify({authen:0 ,success:1}));						
 	});
 	
 }

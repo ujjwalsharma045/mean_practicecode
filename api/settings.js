@@ -4,8 +4,8 @@ module.exports = function(app , func , mail, upload, storage, mailer, multer, va
     var session = require('express-session'); 
     var math = require('mathjs');
     var async = require('async');	
-		
-    app.post("/setting/add" ,  function(req , res){
+	
+    app.post("/setting/add" , passport.isAuthenticated,  function(req , res){
 		sess=req.session;
         var resp = func.isLoggedIn(sess);
 		if(!resp){
@@ -62,7 +62,7 @@ module.exports = function(app , func , mail, upload, storage, mailer, multer, va
 		}			
 	});
 
-    app.get("/setting/list" ,  function(req , res){
+    app.get("/setting/list" , passport.isAuthenticated, function(req , res){
 		sess=req.session;
         var resp = func.isLoggedIn(sess);
 		if(!resp){

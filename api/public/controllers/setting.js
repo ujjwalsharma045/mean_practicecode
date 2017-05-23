@@ -48,7 +48,13 @@ app.controller('setting' , ['$scope' , '$http' , '$route' , '$routeParams' ,'$lo
    if($route.current.type=="list"){       
 	    if(localStorageService.get('login')=="1"){       
 			$http.get('setting/list').then(function(response){
-				$scope.settings = response.data['settings'];   	  			
+				if(response.data['authen']==0){
+					$location.path("/login");
+				}
+				else {
+				   $scope.settings = response.data['settings'];   	  				
+				}
+				
 			});   
 		}
         else {

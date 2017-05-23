@@ -315,7 +315,26 @@ app.controller('users' , ['$scope' , '$http' , '$route' , '$routeParams' ,'$loca
    
    $scope.logout = function(){
 	   localStorageService.remove('login');
-	   $location.path("/login"); 	   
+	   
+	   var req = {
+			method: 'POST',
+			url: 'logout',
+			headers: {
+			  'Content-Type': 'application/json'
+			}
+	   };
+
+	   $http(req).then(
+		   function(response){
+			 console.log(response);
+			 if(response.data['success']=='1'){
+				 $location.path("/login");
+			 }
+		   },
+		   function(response){	      
+			
+		   }
+	   );	   	    	  
    }
    
    $scope.setPageNo = function(no){
