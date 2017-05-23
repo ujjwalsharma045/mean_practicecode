@@ -34,8 +34,12 @@ app.controller('setting' , ['$scope' , '$http' , '$route' , '$routeParams' ,'$lo
 		   $http(req).then(
 			  function(response){
 					console.log(response);
-					if(response.data['success']=='1'){
+					if(response.data['authen']=='1'){
 						$location.path("/");
+					}
+					else {
+						localStorageService.remove('login');
+						$location.path("/login");
 					}
 			  },
 			  function(response){	      
@@ -43,16 +47,20 @@ app.controller('setting' , ['$scope' , '$http' , '$route' , '$routeParams' ,'$lo
 			  }
 		   );		    				
 	  }
+	  else {
+		  $location.path("/login");
+	  }
    }
 
    if($route.current.type=="list"){       
 	    if(localStorageService.get('login')=="1"){       
 			$http.get('setting/list').then(function(response){
-				if(response.data['authen']==0){
-					$location.path("/login");
+				if(response.data['authen']==1){					
+					$scope.settings = response.data['settings'];  
 				}
 				else {
-				   $scope.settings = response.data['settings'];   	  				
+					localStorageService.remove('login');
+				    $location.path("/login");	  				
 				}
 				
 			});   

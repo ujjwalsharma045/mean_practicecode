@@ -1,5 +1,5 @@
 app.controller('users' , ['$scope' , '$http' , '$route' , '$routeParams' ,'$location' , 'authen', 'localStorageService' , 'dateTime' , 'Users' , 'pageTitle', 'Upload', '$timeout', function($scope , $http , $route , $routeParams ,$location , authen, localStorageService , dateTime , Users , pageTitle, Upload, $timeout){
-    	   
+      	   
    var storageType = localStorageService.getStorageType(); 
    
    $scope.options = {
@@ -53,10 +53,22 @@ app.controller('users' , ['$scope' , '$http' , '$route' , '$routeParams' ,'$loca
           
         if(localStorageService.get('login')=="1"){   
 			$http.get('showusers?limit='+$scope.user.limit+'&sortfield='+$scope.user.sortfields+'&sorttype='+$scope.user.sortfieldtype).then(function(response){
-		              console.log(response.data['records']);
-					  $scope.users = response.data['records'];
-					  $scope.pages = response.data['pages'];                      
-                      $scope.totalpages = response.data['totalpages'];
+				      if(response.data['authen']=="1"){				
+						   if(response.data['success']=="1"){
+							  console.log(response.data['records']);
+					          $scope.users = response.data['records'];
+					          $scope.pages = response.data['pages'];                      
+                              $scope.totalpages = response.data['totalpages'];
+						   }
+						   else {
+							  localStorageService.remove('login'); 
+							  $location.path("/login");
+						   }
+					  }					  
+					  else {
+						   localStorageService.remove('login');
+						   $location.path("/login");
+					  }		              
 		    });	   
 		}	 
 		else {
@@ -65,13 +77,23 @@ app.controller('users' , ['$scope' , '$http' , '$route' , '$routeParams' ,'$loca
    }
     
    if($route.current.type=="view"){  
-         
-		 $scope.title += ' '+$routeParams.id;
-		 
-         if(localStorageService.get('login')=="1"){    
-			$http.get('view/'+$routeParams.id).then(function(response){	   
-					$scope.user = response.data[0];   	  			
-			}); 
+         $scope.title += ' '+$routeParams.id;
+		 if(localStorageService.get('login')=="1"){    
+			$http.get('view/'+$routeParams.id).then(function(response){
+                    if(response.data['authen']=="1"){				
+					   if(response.data['success']=="1"){
+					      $scope.user = response.data['records']; 
+					   }
+					   else {
+						  localStorageService.remove('login'); 
+						  $location.path("/login");
+					   }
+					}					  
+				    else {
+					   localStorageService.remove('login');	
+                       $location.path("/login");
+					}
+			});     
 		 }
          else {
 			$location.path("/login");
@@ -83,11 +105,24 @@ app.controller('users' , ['$scope' , '$http' , '$route' , '$routeParams' ,'$loca
 		if(window.confirm(msg)){
 			if(localStorageService.get('login')=="1"){       
 				$http.delete('delete/'+id).then(function(response){
-					if(response.data['success']=='1'){
-						$scope.users.splice(index , 1); 
-						$route.reload();					
-					}						   	 
+					if(response.data['authen']=='1'){
+						if(response.data['success']=='1'){
+						   $scope.users.splice(index , 1); 
+						   $route.reload();					
+						}
+						else {
+						   localStorageService.remove('login');	
+						   $location.path("/login");	
+						}
+					}
+                    else {
+						localStorageService.remove('login');
+						$location.path("/login");
+					}					
 				});
+			}
+			else {
+				$location.path("/login");
 			}
 		}
    }
@@ -98,7 +133,19 @@ app.controller('users' , ['$scope' , '$http' , '$route' , '$routeParams' ,'$loca
 		
         if(localStorageService.get('login')=="1"){       
 			$http.get('view/'+$routeParams.id).then(function(response){
-				$scope.user = response.data[0];   	  			
+				if(response.data['authen']=="1"){				
+				   if(response.data['success']=="1"){
+					  $scope.user = response.data['records']; 
+				   }
+				   else {
+					  localStorageService.remove('login'); 
+					  $location.path("/login");
+				   }
+				}					  
+				else {
+				   localStorageService.remove('login');	
+                   $location.path("/login");
+				}				
 			});   
 		}
         else {
@@ -132,8 +179,18 @@ app.controller('users' , ['$scope' , '$http' , '$route' , '$routeParams' ,'$loca
 							  /* $timeout(function () {
 								file.result = response.data;
 							  });*/
-							  if(response.data['success']=='1'){
-									$location.path("/");
+							  if(response.data['authen']=='1'){
+								  if(response.data['success']=='1'){
+									  $location.path("/");
+								  }
+								  else {
+									  localStorageService.remove('login');
+									  $location.path("/login");
+								  }
+							  }
+							  else {
+								  localStorageService.remove('login');
+								  $location.path("/login");
 							  }
 						   }, 
 						   function (response) {
@@ -169,10 +226,20 @@ app.controller('users' , ['$scope' , '$http' , '$route' , '$routeParams' ,'$loca
 
 					   $http(req).then(
 					       function(response){
-						     console.log(response);
-						     if(response.data['success']=='1'){
-								$location.path("/");
-							 }
+						      console.log(response);
+							  if(response.data['authen']=='1'){
+								  if(response.data['success']=='1'){
+									  $location.path("/");
+								  }
+								  else {
+									  localStorageService.remove('login');
+									  $location.path("/login");
+								  }
+							  }
+							  else {
+								  localStorageService.remove('login');
+								  $location.path("/login");
+							  }						     
 					       },
 						   function(response){	      
 							
@@ -183,6 +250,9 @@ app.controller('users' , ['$scope' , '$http' , '$route' , '$routeParams' ,'$loca
 		   else {
 			  $scope.submitted =true; 
 		   } 
+	   }
+	   else {
+		   $location.path("/login");
 	   }
    }   
     
@@ -210,8 +280,17 @@ app.controller('users' , ['$scope' , '$http' , '$route' , '$routeParams' ,'$loca
 					  /* $timeout(function () {
 						file.result = response.data;
 					  });*/
-					  if(response.data['success']=='1'){
-							$location.path("/");
+					  if(response.data['authen']=='1'){
+						    if(response.data['success']=='1')
+							  $location.path("/");
+                            else {
+							  localStorageService.remove('login');	
+							  $location.path("/login");	
+							}
+ 					  }
+					  else {
+						  localStorageService.remove('login');
+						  $location.path("/login");
 					  }
 				   }, 
 				   function (response) {
@@ -247,8 +326,18 @@ app.controller('users' , ['$scope' , '$http' , '$route' , '$routeParams' ,'$loca
                $http(req).then(
 				  function(response){
 						console.log(response);
-						if(response.data['success']=='1'){
-							$location.path("/");
+						if(response.data['authen']=='1'){
+							if(response.data['success']=='1'){
+							   $location.path("/");
+							}
+							else {  
+							   localStorageService.remove('login');
+							   $location.path("/login");	
+							}
+						}
+						else {
+							localStorageService.remove('login');
+							$location.path("/login");
 						}
 				  },
 				  function(response){	      
@@ -260,6 +349,9 @@ app.controller('users' , ['$scope' , '$http' , '$route' , '$routeParams' ,'$loca
 		else {
 		    $scope.submitted =true; 	
 		} 
+	  }
+	  else {
+		  $location.path("/login");
 	  }
    }
     
@@ -314,8 +406,7 @@ app.controller('users' , ['$scope' , '$http' , '$route' , '$routeParams' ,'$loca
    }   
    
    $scope.logout = function(){
-	   localStorageService.remove('login');
-	   
+	     
 	   var req = {
 			method: 'POST',
 			url: 'logout',
@@ -328,6 +419,7 @@ app.controller('users' , ['$scope' , '$http' , '$route' , '$routeParams' ,'$loca
 		   function(response){
 			 console.log(response);
 			 if(response.data['success']=='1'){
+				 localStorageService.remove('login');
 				 $location.path("/login");
 			 }
 		   },
@@ -596,13 +688,22 @@ app.controller('users' , ['$scope' , '$http' , '$route' , '$routeParams' ,'$loca
        });
        console.log($scope.selected);
 	   
-	   var ids = $scope.selected.join();
-       $http.delete('removemultiple?ids='+ids).then(function(response){	
-			if(response.data['authen']=='1'){
-				//localStorageService.set('login' , '1');
-			    $route.reload();
-			}										   	  	
-	   }); 	   	  
+	   if(localStorageService.get('login')=="1"){ 
+		   var ids = $scope.selected.join();
+		   $http.delete('removemultiple?ids='+ids).then(function(response){	
+				if(response.data['authen']=='1'){
+					//localStorageService.set('login' , '1');
+					$route.reload();
+				}
+				else {
+					localStorageService.remove('login');
+					$location.path("/login");
+				}			
+		   }); 	   	  
+	   }
+	   else {
+		   $location.path("/login");
+	   }
    }   
 }]);
 

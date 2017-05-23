@@ -106,6 +106,15 @@
 					   return "About Us";
 					}
 				}
+			}).when('/home/aboutus' , {
+				controller:'home',
+				templateUrl:'views/home/aboutus.html',
+				type:'aboutus',
+				resolve:{
+					pageTitle:function(){
+					   return "About Us";
+					}
+				}
 			}).when('/exportusers' , {								
 				
 			}).when('/exportxlsusers' , {

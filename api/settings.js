@@ -5,14 +5,7 @@ module.exports = function(app , func , mail, upload, storage, mailer, multer, va
     var math = require('mathjs');
     var async = require('async');	
 	
-    app.post("/setting/add" , passport.isAuthenticated,  function(req , res){
-		sess=req.session;
-        var resp = func.isLoggedIn(sess);
-		if(!resp){
-			res.setHeader('Content-Type', 'application/json');
-			res.send(JSON.stringify({authen:0 , success:0}));			
-		}
-	    else {	
+    app.post("/setting/add" , passport.isAuthenticated,  function(req , res){		
 			var error = [];
 			var data = [];
 			if(req.method=="POST"){
@@ -58,22 +51,14 @@ module.exports = function(app , func , mail, upload, storage, mailer, multer, va
 			else {
 				 res.setHeader('Content-Type', 'application/json');
 			     res.send(JSON.stringify({authen:1 , success:0}));			
-			}
-		}			
+			}				
 	});
 
     app.get("/setting/list" , passport.isAuthenticated, function(req , res){
-		sess=req.session;
-        var resp = func.isLoggedIn(sess);
-		if(!resp){
-			res.setHeader('Content-Type', 'application/json');
-			res.send(JSON.stringify({authen:0 , success:0}));			
-		}
-	    else {	
+		
 			Setting.find().exec(function(err, docs){
 				res.setHeader('Content-Type', 'application/json');
-				res.send(JSON.stringify({'settings':docs}));
-			});
-		}			
+				res.send(JSON.stringify({'settings':docs, 'authen':1, 'success':1}));
+			});					
 	});	
 }

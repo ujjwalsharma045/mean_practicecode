@@ -47,16 +47,16 @@ passport.use('login', new LocalStrategy({
         }
 		
 		 req.login(user, function(error) {
-                    if (error) return next(error);
-					console.log(req.user);
-					console.log(req.isAuthenticated());
-                    console.log("Request Login supossedly successful.");
-        return done(null, user);            
-                });
+           if(error) return next(error);
+			 console.log(req.user);
+			 console.log(req.isAuthenticated());
+             console.log("Request Login supossedly successful.");
+              
+         });
         // User and password both match, return user from 
         // done method which will be treated like success
         
-		
+		 return done(null, user);     
 		
       }
     );
@@ -147,8 +147,7 @@ var isValidPassword = function(user, password){
 }
 
 function isAuthenticated(){
-	 
-	 return function (req, res, next) {
+	return function (req, res, next) {
         console.log(req);		
 		if (req.isAuthenticated()){			
 			return next();
@@ -167,9 +166,9 @@ var validator = require('validator');
 
 var multer = require('multer');
 app.use(function(req, res, next) {
-        res.header("Access-Control-Allow-Origin", "http://127.0.0.1:8081");
-        res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-        next();
+    res.header("Access-Control-Allow-Origin", "http://127.0.0.1:8081");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    next();
 });
 
 var mailer = require('nodemailer');  
@@ -186,16 +185,11 @@ var storage = multer.diskStorage({
 });
 
 var upload = multer({storage:storage}).single('file');
-
 var func = require("./commonfunctions.js");
-
 var mail = require("./mailfunctions.js");
-
 var dateFormat = require('dateformat'); 
-
 var dateDiff = require('date-diff');
 var dobByAge = require('birth-by-age-at-date');
-
 var json2csv = require('json2csv');
 var excelexport = require('node-excel-export');
 var pdf = require('html-pdf');
@@ -214,8 +208,5 @@ require('./home')(app, func, mail, mailer, multer, validator, cors, dateFormat, 
 var server = app.listen(8081 , function(){
     var host = server.address().address;
     var port = server.address().port;
-   
-    console.log('App listing at http' , host, port);
+    console.log('App listing at http', host, port);
 });
-
-

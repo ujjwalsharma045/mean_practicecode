@@ -1,18 +1,11 @@
 module.exports = function(app , func , mail, upload, storage, mailer, multer, validator, User, paginate , cors , dateFormat , dateDiff, dobByAge, json2csv, excel , pdf, passport , LocalStrategy, isAuthenticated){ 
-   
+    
     var sess;
     //var session = require('express-session'); 
     var math = require('mathjs');  		
 	
-	app.get("/showusers" , passport.isAuthenticated , function(req, res){
-		sess=req.session;	
-		//console.log(sess);
-		var resp = func.isLoggedIn(sess);
-		if(!resp){
-			res.setHeader('Content-Type', 'application/json');
-		    res.send(JSON.stringify({authen:'0'}));									
-		}
-		else {
+	app.get("/showusers", passport.isAuthenticated, function(req, res){
+		
 			var data = {
 				
 			};
@@ -55,9 +48,8 @@ module.exports = function(app , func , mail, upload, storage, mailer, multer, va
 				
 				//data.dateofbirth = formateddob;
 				data.dateofbirth = { "$lte": formateddob };
-			}
-			
-			
+			};
+						
 			var sortsection = {
 				
 			};
@@ -100,57 +92,33 @@ module.exports = function(app , func , mail, upload, storage, mailer, multer, va
 			      User.find(data).limit(perPage).skip(perPage * (page-1)).sort(sortsection).exec(function(err, docs){
 				      //console.log(docs);			   
 				      res.setHeader('Content-Type', 'application/json');
-				      res.send(JSON.stringify({'records':docs , 'totalrecords':count , 'totalpages':totalPages , 'pages':pages}));
+				      res.send(JSON.stringify({'records':docs , 'totalrecords':count , 'totalpages':totalPages , 'pages':pages, 'success':1, 'authen':1}));
 				  });	
 			});						
-	    }
+	    
 	});
 
-	app.delete("/delete/:id" , function(req, res){
-		sess=req.session;
-        var resp = func.isLoggedIn(sess);
-		if(!resp){
-			res.setHeader('Content-Type', 'application/json');
-			res.send(JSON.stringify({authen:0 , success:0}));			
-		}
-	    else {    		
-			var userid = req.params.id; 
-					
-			User.findOneAndRemove({_id: userid}, function(err) {
-				if (err) throw err;     
-				res.setHeader('Content-Type', 'application/json');	
-				res.send(JSON.stringify({authen:0 , success:1}));			
-				console.log('User successfully deleted!');						
-			});		
-	    }
+	app.delete("/delete/:id", passport.isAuthenticated, function(req, res){
+		var userid = req.params.id; 
+		User.findOneAndRemove({_id: userid}, function(err) {
+			if (err) throw err;     
+			res.setHeader('Content-Type', 'application/json');	
+			res.send(JSON.stringify({'authen':1 , 'success':1}));			
+			console.log('User successfully deleted!');						
+		});		
 	});
 
-	app.get("/view/:id" , passport.isAuthenticated, function(req, res){
-        sess=req.session;
-        var resp = func.isLoggedIn(sess);
-		if(!resp){
-			res.setHeader('Content-Type', 'application/json');
-			res.send(JSON.stringify({authen:0 , success:0}));			
-		}
-	    else {    		     	
-			var userid = req.params.id;
-			User.find({_id:userid}, function(err, records) {
-				  if (err) throw err;
-				  console.log(records); 
-				  res.setHeader('Content-Type', 'application/json');
-				  res.send(JSON.stringify(records));
-			}); 		
-		}
+	app.get("/view/:id", passport.isAuthenticated, function(req, res){
+		var userid = req.params.id;
+		User.find({_id:userid}, function(err, records) {
+			  if (err) throw err;
+			  console.log(records); 
+			  res.setHeader('Content-Type', 'application/json');
+			  res.send(JSON.stringify({'records':records, 'success':1, 'authen':1}));
+		}); 		
 	});
 
-    app.post("/edit/:id", passport.isAuthenticated,  function(req, res){
-		sess=req.session;
-        var resp = func.isLoggedIn(sess);
-		if(!resp){
-			res.setHeader('Content-Type', 'application/json');
-			res.send(JSON.stringify({authen:0 , success:0}));			
-		}
-	    else {			
+    app.post("/edit/:id", passport.isAuthenticated,  function(req, res){			    	
 			var userid = req.params.id; 
 			var error = [];	
 			var data = {};
@@ -218,30 +186,15 @@ module.exports = function(app , func , mail, upload, storage, mailer, multer, va
 				   res.send(JSON.stringify({authen:1 ,success:0}));
 			    }			
 		    }
-		}
+		
 	});
 	
-	app.get("/checklogin" , function(req, res){
-		sess=req.session;
-        var resp = func.isLoggedIn(sess);
-		if(!resp){
-			res.setHeader('Content-Type', 'application/json');
-			res.send(JSON.stringify({authen:0 , success:0}));			
-		}
-	    else {						
-			res.setHeader('Content-Type', 'application/json');
-			res.send(JSON.stringify({authen:1 ,success:1}));						
-		}
+	app.get("/checklogin", passport.isAuthenticated, function(req, res){
+		res.setHeader('Content-Type', 'application/json');
+		res.send(JSON.stringify({authen:1 ,success:1}));						
 	});
 
-    app.post("/adduser" , passport.isAuthenticated,  function(req , res){
-		sess=req.session;
-        var resp = func.isLoggedIn(sess);
-		if(!resp){
-			res.setHeader('Content-Type', 'application/json');
-			res.send(JSON.stringify({authen:0 , success:0}));			
-		}
-	    else {	
+    app.post("/adduser", passport.isAuthenticated,  function(req , res){			
 			var error = [];
 			var data = {};
 			if(req.method=="POST"){
@@ -314,8 +267,7 @@ module.exports = function(app , func , mail, upload, storage, mailer, multer, va
 			else {
 				res.setHeader('Content-Type', 'application/json');
 			    res.send(JSON.stringify({authen:1 , success:0}));			
-			}
-		}			
+			}				
 	});
 	
 	app.post('/login', passport.authenticate('login'), function(req, res){
@@ -324,7 +276,7 @@ module.exports = function(app , func , mail, upload, storage, mailer, multer, va
 		res.send(JSON.stringify({authen:1, success:1}));
     });
 		
-	/* app.post("/login" , function(req , res){
+	/* app.post("/login", function(req , res){
         sess = req.session;       
         var resp = func.isGuestSession(sess);
 		if(!resp){
@@ -376,7 +328,7 @@ module.exports = function(app , func , mail, upload, storage, mailer, multer, va
 		}
 	}); */
 
-    /*app.post("/login" ,  function(req , res, next){
+    /*app.post("/login",  function(req , res, next){
         sess = req.session;       
 		passport.authenticate('local', function(err, user, info) {
             if (err) { return next(err); }
@@ -538,85 +490,70 @@ module.exports = function(app , func , mail, upload, storage, mailer, multer, va
 		 });	
 	});	
 	
-	app.get('/exportpdfusers' , function(req , res){
-         	var options = {format: 'Letter'};
-			
-			var info = {
-				 "Company": "ABC",
-				 "Team": "JsonNode",
-				 "Number of members": 4,
-				"Time to finish": "1 day"
-            }
-			
-			res.render('views/users/users', {
-				info: info,
-			}, function (err, HTML){
-				pdf.create(HTML, options).toFile('./downloads/employee.pdf', function (err, result){
-					if(err){
-						console.log(err);
-						return res.status(400).send({
-							//message: errorHandler.getErrorMessage(err)
-						});
-					}
-				})
-			 });	     							
+	app.get('/exportpdfusers', function(req , res){
+		var options = {format: 'Letter'};
+		
+		var info = {
+			 "Company": "ABC",
+			 "Team": "JsonNode",
+			 "Number of members": 4,
+			"Time to finish": "1 day"
+		}
+		
+		res.render('views/users/users', {
+			info: info,
+		}, function (err, HTML){
+			pdf.create(HTML, options).toFile('./downloads/employee.pdf', function (err, result){
+				if(err){
+					console.log(err);
+					return res.status(400).send({
+						//message: errorHandler.getErrorMessage(err)
+					});
+				}
+			})
+		 });	     							
     });
 	
-	app.delete("/removemultiple" , passport.isAuthenticated, function(req, res){
-		sess=req.session;
-        var resp = func.isLoggedIn(sess);
-		if(!resp){
-			res.setHeader('Content-Type', 'application/json');
-			res.send(JSON.stringify({authen:0 , success:0}));			
-		}
-	    else {    		
-			var ids = req.query.ids; 
-			var myarr = ids.split(",");  
-			
-			for(var i=0; i<myarr.length; i++){
-				if(myarr[i]!=""){
-					console.log(myarr[i]);
-					User.findOneAndRemove({_id: myarr[i]}, function(err) {
-						if (err) throw err;     					
-						console.log('User successfully deleted!');						
-					});	
-				}
+	app.delete("/removemultiple", passport.isAuthenticated, function(req, res){
+		var ids = req.query.ids; 
+		var myarr = ids.split(",");  
+		
+		for(var i=0; i<myarr.length; i++){
+			if(myarr[i]!=""){
+				console.log(myarr[i]);
+				User.findOneAndRemove({_id: myarr[i]}, function(err) {
+					if (err) throw err;     					
+					console.log('User successfully deleted!');						
+				});	
 			}
-            res.setHeader('Content-Type', 'application/json');	
-			res.send(JSON.stringify({authen:1 , success:1}));						
-	    }
+		}
+		res.setHeader('Content-Type', 'application/json');	
+		res.send(JSON.stringify({authen:1 , success:1}));							    
 	});
 
-    app.get('/totalusers' , passport.isAuthenticated, function(req, res){
+    app.get('/totalusers', passport.isAuthenticated, function(req, res){
 		User.find().count().exec(function(err, count){
 			if(err)
 			  throw err;
 		    res.setHeader('Content-Type', 'application/json');	
-			res.send(JSON.stringify({users:count , success:1}));						
+			res.send(JSON.stringify({users:count , success:1 , authen:1}));						
 		});
 	}); 
 
-    app.get("/viewhtml/:id" ,  passport.isAuthenticated, function(req, res){
-        sess=req.session;
-        var resp = func.isLoggedIn(sess);
-		if(!resp){			
-			res.render('users/views' , {
-				 records:''				 
-			});
-		}
-	    else {    		     	
-			var userid = req.params.id;
-			User.find({_id:userid}, function(err, records) {
-				  if (err) throw err;
-				  console.log(records); 				  
-				  res.render('users/views' , {
-				      records:records				 
-			      });
-			}); 		
-		}
+    app.get("/viewhtml/:id",  passport.isAuthenticated, function(req, res){            		     	
+		var userid = req.params.id;
+		User.find({_id:userid}, function(err, records) {
+			  if (err) throw err;
+			  console.log(records); 				  
+			  res.render('users/views', {
+				  records:records,
+                  success:1,
+                  authen:1				  
+			  });
+		}); 				
 	});
 	
-	app.post("/logout" , function(req, res){
+	app.post("/logout", function(req, res){
         req.logout();
 		res.setHeader('Content-Type', 'application/json');
 		res.send(JSON.stringify({authen:0 ,success:1}));						
