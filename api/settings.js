@@ -5,7 +5,7 @@ module.exports = function(app , func , mail, upload, storage, mailer, multer, va
     var math = require('mathjs');
     var async = require('async');	
 	
-    app.post("/setting/add" , passport.isAuthenticated,  function(req , res){		
+    app.post("/setting/add" , passport.isAdminAuthenticated,  function(req , res){		
 			var error = [];
 			var data = [];
 			if(req.method=="POST"){
@@ -54,7 +54,7 @@ module.exports = function(app , func , mail, upload, storage, mailer, multer, va
 			}				
 	});
 
-    app.get("/setting/list" , passport.isAuthenticated, function(req , res){
+    app.get("/setting/list" , passport.isAdminAuthenticated, function(req , res){
 		
 			Setting.find().exec(function(err, docs){
 				res.setHeader('Content-Type', 'application/json');

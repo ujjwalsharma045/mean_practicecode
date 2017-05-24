@@ -4,7 +4,7 @@ module.exports = function(app , func , mail, upload, storage, mailer, multer, va
     //var session = require('express-session'); 
     var math = require('mathjs');  		
 	
-	app.get("/showusers", passport.isAuthenticated, function(req, res){
+	app.get("/showusers", passport.isAdminAuthenticated, function(req, res){
 		
 			var data = {
 				
@@ -98,7 +98,7 @@ module.exports = function(app , func , mail, upload, storage, mailer, multer, va
 	    
 	});
 
-	app.delete("/delete/:id", passport.isAuthenticated, function(req, res){
+	app.delete("/delete/:id", passport.isAdminAuthenticated, function(req, res){
 		var userid = req.params.id; 
 		User.findOneAndRemove({_id: userid}, function(err) {
 			if (err) throw err;     
@@ -108,7 +108,7 @@ module.exports = function(app , func , mail, upload, storage, mailer, multer, va
 		});		
 	});
 
-	app.get("/view/:id", passport.isAuthenticated, function(req, res){
+	app.get("/view/:id", passport.isAdminAuthenticated, function(req, res){
 		var userid = req.params.id;
 		User.find({_id:userid}, function(err, records) {
 			  if (err) throw err;
@@ -118,7 +118,7 @@ module.exports = function(app , func , mail, upload, storage, mailer, multer, va
 		}); 		
 	});
 
-    app.post("/edit/:id", passport.isAuthenticated,  function(req, res){			    	
+    app.post("/edit/:id", passport.isAdminAuthenticated,  function(req, res){			    	
 			var userid = req.params.id; 
 			var error = [];	
 			var data = {};
@@ -189,12 +189,12 @@ module.exports = function(app , func , mail, upload, storage, mailer, multer, va
 		
 	});
 	
-	app.get("/checklogin", passport.isAuthenticated, function(req, res){
+	app.get("/checklogin", passport.isAdminAuthenticated, function(req, res){
 		res.setHeader('Content-Type', 'application/json');
 		res.send(JSON.stringify({authen:1 ,success:1}));						
 	});
 
-    app.post("/adduser", passport.isAuthenticated,  function(req , res){			
+    app.post("/adduser", passport.isAdminAuthenticated,  function(req , res){			
 			var error = [];
 			var data = {};
 			if(req.method=="POST"){
@@ -279,14 +279,19 @@ module.exports = function(app , func , mail, upload, storage, mailer, multer, va
 			  }
 			  
               if(!user){ 
-			     res.setHeader('Content-Type', 'application/json');
-		         res.send(JSON.stringify({authen:0, success:0})); 
+			      res.setHeader('Content-Type', 'application/json');
+		          res.send(JSON.stringify({authen:0, success:0})); 
 			  }
 			  else {
 				  req.login(user, function(err) {
 					 if(err){ return next(err); }
 					 res.setHeader('Content-Type', 'application/json');
-					 res.send(JSON.stringify({authen:1, success:1}));
+					 if(req.user.is_admin==1){
+					   res.send(JSON.stringify({authen:1, success:1, usertype:'admin'}));
+					 }
+					 else {
+					   res.send(JSON.stringify({authen:1, success:1, usertype:'user'}));	 
+					 }
 				  });
 			  }
          })(req, res, next);
@@ -363,7 +368,7 @@ module.exports = function(app , func , mail, upload, storage, mailer, multer, va
            
 	});*/	
 
-    app.get('/exportusers', passport.isAuthenticated, function(req , res){
+    app.get('/exportusers', passport.isAdminAuthenticated, function(req , res){
          User.find({} , function(err, records){
 	         if(err) 
 				throw err;
@@ -379,7 +384,7 @@ module.exports = function(app , func , mail, upload, storage, mailer, multer, va
 		 });	
 	});
 
-    app.get('/exportxlsusers', passport.isAuthenticated, function(req , res){
+    app.get('/exportxlsusers', passport.isAdminAuthenticated, function(req , res){
          User.find({} , '_id first_name last_name username email address city state zipcode dateofbirth',  function(err, records){
 	         if(err) 
 				throw err;
@@ -532,7 +537,7 @@ module.exports = function(app , func , mail, upload, storage, mailer, multer, va
 		 });	     							
     });
 	
-	app.delete("/removemultiple", passport.isAuthenticated, function(req, res){
+	app.delete("/removemultiple", passport.isAdminAuthenticated, function(req, res){
 		var ids = req.query.ids; 
 		var myarr = ids.split(",");  
 		
@@ -549,7 +554,7 @@ module.exports = function(app , func , mail, upload, storage, mailer, multer, va
 		res.send(JSON.stringify({authen:1 , success:1}));							    
 	});
 
-    app.get('/totalusers', passport.isAuthenticated, function(req, res){
+    app.get('/totalusers', passport.isAdminAuthenticated, function(req, res){
 		User.find().count().exec(function(err, count){
 			if(err)
 			  throw err;
@@ -558,7 +563,7 @@ module.exports = function(app , func , mail, upload, storage, mailer, multer, va
 		});
 	}); 
 
-    app.get("/viewhtml/:id",  passport.isAuthenticated, function(req, res){            		     	
+    app.get("/viewhtml/:id",  passport.isAdminAuthenticated, function(req, res){            		     	
 		var userid = req.params.id;
 		User.find({_id:userid}, function(err, records) {
 			  if (err) throw err;

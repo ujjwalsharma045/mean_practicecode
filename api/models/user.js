@@ -16,7 +16,8 @@ module.exports = function(mongoose){
 	  dateofbirth: String,
 	  profile_pic: String,
 	  created_at: Date,
-	  updated_at: Date
+	  updated_at: Date,
+	  is_admin:String
 	});
 	
 	userSchema.plugin(passportLocalMongoose);

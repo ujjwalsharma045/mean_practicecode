@@ -15,28 +15,16 @@ ul li {
         </div>
         <nav>
            <div class="responsive_nav">                                        
-			  <ul class="menu">
-				<li class="active">
-				   <a href="#/home/index" class="btn btn-link">Home</a>
-				</li>
+			  <ul class="menu">				
 				<li class="unlock-link" ng-if="adminloggedin">
 					<a href="#/" class="btn btn-link">User</a>
 				</li>
 				<li class="" ng-if="adminloggedin">
 				   <a href="#/setting" class="btn btn-link">Setting</a>
-				</li>
-				<li class="">
-					 <a href="#/home/contactus" class="btn btn-link">Contact us</a>
-				</li>
-				<li class="">
-				   <a href="#/home/aboutus" class="btn btn-link">About</a>
-				</li>
-				<li ng-if="loggedin">
+				</li>				
+				<li ng-if="adminloggedin">
 				   <a href="javascript:void(0)" class="btn btn-link" ng-click="logout()">Logout</a>
-				</li>
-				<li ng-if="!loggedin">
-				   <a href="#/login" class="btn btn-link">Login</a>
-				</li>
+				</li>				
 			  </ul>
            </div>
 	    </nav>

@@ -2,6 +2,18 @@ app.controller('setting' , ['$scope' , '$http' , '$route' , '$routeParams' ,'$lo
      	   
    var storageType = localStorageService.getStorageType(); 
    
+   $scope.adminloggedin = false;
+   $scope.loggedin = false;
+   if(localStorageService.get('login')=="1"){
+       if(localStorageService.get('usertype')=="admin"){       	
+           $scope.adminloggedin = true;
+		   $scope.loggedin = true;
+	   }
+	   else if(localStorageService.get('usertype')=="user"){
+		   $scope.loggedin = true;
+	   }
+   }
+   
    $scope.options = {
       language: 'en',
       allowedContent: true,

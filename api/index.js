@@ -148,7 +148,7 @@ var isValidPassword = function(user, password){
 
 function isAuthenticated(){
 	return function (req, res, next) {
-        console.log(req);		
+        console.log(req.user);		
 		if (req.isAuthenticated()){			
 			return next();
 		}
@@ -159,7 +159,22 @@ function isAuthenticated(){
 	}
 }
 
+function isAdminAuthenticated(){
+	return function (req, res, next) {
+        console.log(req.user.is_admin);		
+		if (req.isAuthenticated() && req.user.is_admin=='1'){			
+			return next();
+		}
+		else {			
+			res.setHeader('Content-Type', 'application/json');  
+			res.send(JSON.stringify({authen:0, success:0}));
+		}
+	}
+}
+
 passport.isAuthenticated = isAuthenticated();
+
+passport.isAdminAuthenticated = isAdminAuthenticated();
 // passport/login.js
 
 var validator = require('validator');
