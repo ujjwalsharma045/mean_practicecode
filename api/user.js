@@ -1,4 +1,4 @@
-module.exports = function(app , func , mail, upload, storage, mailer, multer, validator, User, paginate , cors , dateFormat , dateDiff, dobByAge, json2csv, excel , pdf, passport , LocalStrategy, isAuthenticated){ 
+module.exports = function(app , func , mail, upload, storage, mailer, multer, validator, User, paginate , cors , dateFormat , dateDiff, dobByAge, json2csv, excel , pdf, passport , LocalStrategy, bCrypt){ 
     
     var sess;
     //var session = require('express-session'); 
@@ -215,7 +215,7 @@ module.exports = function(app , func , mail, upload, storage, mailer, multer, va
 									 last_name:req.body.last_name,
 									 email:req.body.email,
 									 username:req.body.username,
-									 password:req.body.password,
+									 password:bCrypt.hashSync(req.body.password),
 									 profile_pic:req.file.filename,
 									 dateofbirth:req.body.dateofbirth,
 									 created_at :formatteddate 						
@@ -229,7 +229,7 @@ module.exports = function(app , func , mail, upload, storage, mailer, multer, va
 								 last_name:req.body.last_name,
 								 email:req.body.email,
 								 username:req.body.username,
-								 password:req.body.password,
+								 password:bCrypt.hashSync(req.body.password),
 								 profile_pic:'',
 								 dateofbirth:req.body.dateofbirth,
 								 created_at :formatteddate 						
@@ -582,4 +582,44 @@ module.exports = function(app , func , mail, upload, storage, mailer, multer, va
 		res.send(JSON.stringify({authen:0 ,success:1}));						
 	});
 	
+	app.post('/user/editpassword', passport.isAuthenticated, function(req, res){		   
+		if(req.method=="POST"){  	
+            console.log("user");
+            console.log(req.user._id);			
+		    User.find({_id:req.user._id} , function(err, records){
+				if(err) throw err;
+				var errors = [];
+				console.log(records[0].password);
+				//console.log(JSON.parse(records).keys.length);				
+				
+				if(bCrypt.hashSync(req.body.newpassword)==records[0].password){					
+				    errors.push('New password is same as current password');
+				}
+				
+				if(!bCrypt.compareSync(req.body.oldpassword, records[0].password)){					
+					errors.push('Enter correct old password');									
+				}
+												
+				if(req.body.newpassword!=req.body.confirmpassword){					
+					errors.push('New password does not match with confirm password');
+			    }
+				
+				if(errors.length>0){									
+					res.setHeader('Content-Type', 'application/json');
+					res.send(JSON.stringify({'success':0, 'authen':1 , 'errors':errors}));	
+				}
+                else {
+					var data = {
+						   password:bCrypt.hashSync(req.body.newpassword)
+					};
+				 
+					User.findOneAndUpdate({_id:req.user._id}, data, function(err, records){
+						if(err) throw err;
+						res.setHeader('Content-Type', 'application/json');
+						res.send(JSON.stringify({'records':records, 'success':1, 'authen':1}));
+					}); 				
+				}
+			});			
+		}         	
+	});
 }

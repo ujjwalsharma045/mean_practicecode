@@ -147,12 +147,15 @@ var isValidPassword = function(user, password){
 }
 
 function isAuthenticated(){
+	console.log("tera");
 	return function (req, res, next) {
-        console.log(req.user);		
-		if (req.isAuthenticated()){			
+		console.log(req.user);		
+		if(req.isAuthenticated()){	
+            console.log("teraagain");		
 			return next();
 		}
-		else {			
+		else {
+            console.log("terafailed");	 		
 			res.setHeader('Content-Type', 'application/json');  
 			res.send(JSON.stringify({authen:0, success:0}));
 		}
@@ -160,6 +163,7 @@ function isAuthenticated(){
 }
 
 function isAdminAuthenticated(){
+	console.log("mera");
 	return function (req, res, next) {
         console.log(req.user.is_admin);		
 		if (req.isAuthenticated() && req.user.is_admin=='1'){			
@@ -210,7 +214,7 @@ var excelexport = require('node-excel-export');
 var pdf = require('html-pdf');
 var schedule = require("node-schedule");
 
-require('./user')(app , func , mail, upload, storage, mailer, multer, validator, User , paginate , cors , dateFormat, dateDiff , dobByAge , json2csv , excelexport , pdf , passport , LocalStrategy, isAuthenticated);
+require('./user')(app , func , mail, upload, storage, mailer, multer, validator, User , paginate , cors , dateFormat, dateDiff , dobByAge , json2csv , excelexport , pdf , passport , LocalStrategy, bCrypt);
 
 require('./services')(app , func , mail, upload, storage, mailer, multer, validator, Services , paginate , cors);
 

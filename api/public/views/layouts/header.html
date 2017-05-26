@@ -19,6 +19,9 @@ ul li {
 				<li class="active">
 				   <a href="#/home/index" class="btn btn-link">Home</a>
 				</li>
+				<li ng-if="loggedin">
+				   <a href="#/user/editpassword" class="btn btn-link">EditPassword</a>
+				</li>
 				<li class="unlock-link" ng-if="adminloggedin">
 					<a href="#/" class="btn btn-link">User</a>
 				</li>

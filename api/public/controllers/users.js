@@ -62,7 +62,7 @@ app.controller('users' , ['$scope' , '$http' , '$route' , '$routeParams' ,'$loca
 		
 		$scope.current_page = 1;
           
-        if(localStorageService.get('login')=="1"){   
+        if(localStorageService.get('login')=="1" && localStorageService.get('usertype')=="admin"){   
 			$http.get('showusers?limit='+$scope.user.limit+'&sortfield='+$scope.user.sortfields+'&sorttype='+$scope.user.sortfieldtype).then(function(response){
 				      if(response.data['authen']=="1"){				
 						   if(response.data['success']=="1"){
@@ -89,7 +89,7 @@ app.controller('users' , ['$scope' , '$http' , '$route' , '$routeParams' ,'$loca
     
     if($route.current.type=="view"){  
          $scope.title += ' '+$routeParams.id;
-		 if(localStorageService.get('login')=="1"){    
+		 if(localStorageService.get('login')=="1" && localStorageService.get('usertype')=="admin"){    
 			$http.get('view/'+$routeParams.id).then(function(response){
                     if(response.data['authen']=="1"){				
 					   if(response.data['success']=="1"){
@@ -114,7 +114,7 @@ app.controller('users' , ['$scope' , '$http' , '$route' , '$routeParams' ,'$loca
     $scope.remove = function(id , index){  
         var msg = "Are you sure you want to remove";
 		if(window.confirm(msg)){
-			if(localStorageService.get('login')=="1"){       
+			if(localStorageService.get('login')=="1" && localStorageService.get('usertype')=="admin"){       
 				$http.delete('delete/'+id).then(function(response){
 					if(response.data['authen']=='1'){
 						if(response.data['success']=='1'){
@@ -136,13 +136,13 @@ app.controller('users' , ['$scope' , '$http' , '$route' , '$routeParams' ,'$loca
 				$location.path("/login");
 			}
 		}
-   }
+    }
    
     if($route.current.type=="edit"){   
         
 		$scope.title +=' '+$routeParams.id;
 		
-        if(localStorageService.get('login')=="1"){       
+        if(localStorageService.get('login')=="1" && localStorageService.get('usertype')=="admin"){       
 			$http.get('view/'+$routeParams.id).then(function(response){
 				if(response.data['authen']=="1"){				
 				   if(response.data['success']=="1"){
@@ -162,10 +162,10 @@ app.controller('users' , ['$scope' , '$http' , '$route' , '$routeParams' ,'$loca
         else {
 			$location.path("/login");
 		}		
-   } 
+    } 
    
     $scope.edituser = function(file){	   	   	   
-	   if(localStorageService.get('login')=="1"){    
+	   if(localStorageService.get('login')=="1" && localStorageService.get('usertype')=="admin"){    
 		   if($scope.userform.$valid){	   			  
 				  if(file){ 					   
                        var data = {
@@ -265,10 +265,10 @@ app.controller('users' , ['$scope' , '$http' , '$route' , '$routeParams' ,'$loca
 	   else {
 		   $location.path("/login");
 	   }
-   }   
+    }   
     
     $scope.adduser = function(file){
-	  if(localStorageService.get('login')=="1"){ 
+	  if(localStorageService.get('login')=="1" && localStorageService.get('usertype')=="admin"){ 
 	    if($scope.userform.$valid){
             if(file){
 				var data = {
@@ -364,7 +364,7 @@ app.controller('users' , ['$scope' , '$http' , '$route' , '$routeParams' ,'$loca
 	  else {
 		  $location.path("/login");
 	  }
-   }
+    }
     
     $scope.loginuser = function(){	  
 	    $scope.errormessage = '';
@@ -422,7 +422,7 @@ app.controller('users' , ['$scope' , '$http' , '$route' , '$routeParams' ,'$loca
 				$location.path("/"); 	  			
 			}							   	  		
 		});         
-   }   
+    }   
    
     $scope.logout = function(){
 	     
@@ -605,9 +605,9 @@ app.controller('users' , ['$scope' , '$http' , '$route' , '$routeParams' ,'$loca
            $scope.pages = response.data['pages'];           
            $scope.totalpages = response.data['totalpages']; 	   
 	   });	
-   }
+    }
 
-   if($route.current.type=="login"){  
+    if($route.current.type=="login"){  
    
         $http.get('checklogin').then(function(response){	
 			if(response.data['authen']=='1'){
@@ -615,9 +615,9 @@ app.controller('users' , ['$scope' , '$http' , '$route' , '$routeParams' ,'$loca
 			    //$location.path("/");
 			}										   	  	
 		});         
-   }  
+    }  
 
-   $scope.sortlist = function(name){
+    $scope.sortlist = function(name){
 	   $scope.searchUser(name);
 	   /*var sorttype = "";
 	   	   	   
@@ -667,7 +667,7 @@ app.controller('users' , ['$scope' , '$http' , '$route' , '$routeParams' ,'$loca
 	   });*/
    }
 
-   /*$scope.checkAllToggle = function(){
+    /*$scope.checkAllToggle = function(){
 	   //alert($scope.user.checkall);
 	   console.log($scope.user.ids);
 	   
@@ -685,19 +685,19 @@ app.controller('users' , ['$scope' , '$http' , '$route' , '$routeParams' ,'$loca
 	   console.log($scope.users);
    }*/
 
-   $scope.checkAllToggle = function(){	 
+    $scope.checkAllToggle = function(){	 
        angular.forEach($scope.users, function (x) {
             x.Selected = true;			
        });	   
-   }
+    }
 
-   $scope.uncheckAllToggle = function(){	   
+    $scope.uncheckAllToggle = function(){	   
 	   angular.forEach($scope.users, function (x) {
             x.Selected = false;			
        });	   
    }
 
-   $scope.removeUsers = function(){	   
+    $scope.removeUsers = function(){	   
        $scope.selected = [];
 	   angular.forEach($scope.users, function (value , key) {
 		    console.log(value.Selected);		
@@ -707,7 +707,7 @@ app.controller('users' , ['$scope' , '$http' , '$route' , '$routeParams' ,'$loca
        });
        console.log($scope.selected);
 	   
-	   if(localStorageService.get('login')=="1"){ 
+	   if(localStorageService.get('login')=="1" && localStorageService.get('usertype')=="admin"){ 
 		   var ids = $scope.selected.join();
 		   $http.delete('removemultiple?ids='+ids).then(function(response){	
 				if(response.data['authen']=='1'){
@@ -723,7 +723,51 @@ app.controller('users' , ['$scope' , '$http' , '$route' , '$routeParams' ,'$loca
 	   else {
 		   $location.path("/login");
 	   }
-   }   
+   }
+
+    $scope.editpassword = function(){
+	   if(localStorageService.get('login')=="1"){ 
+	    if($scope.userpassword.$valid){
+		    
+			data = {
+			   oldpassword:$scope.user.password,
+			   newpassword:$scope.user.newpassword,
+			   confirmpassword:$scope.user.confirmpassword,
+			};
+			
+			var req = {
+				url:'user/editpassword',
+				method:'POST',
+				header:{
+					'Content-Type':'application/json'
+				},
+				data:data
+			};
+			
+			$http(req).then(
+				function(response){
+					if(response.data['authen']=="1"){
+						if(response.data['success']=="1"){
+							$route.reload();
+						}
+						else if(response.data['success']=="0"){
+							$scope.errors = response.data['errors'];
+						}
+					}
+					else {
+						$location.path('/login');
+					}
+				},
+				function(){
+					
+				}
+            );				
+		}
+        else {
+			$scope.submitted = true;
+		}		
+       }
+	} 
 }]);
 
 

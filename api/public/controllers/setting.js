@@ -29,7 +29,7 @@ app.controller('setting' , ['$scope' , '$http' , '$route' , '$routeParams' ,'$lo
    $scope.title = pageTitle;
                           
    $scope.savesettings = function(){
-	  if(localStorageService.get('login')=="1"){ 	                  		
+	  if(localStorageService.get('login')=="1" && localStorageService.get('usertype')=="admin"){ 	                  		
 		   var data = {
 				settings: $scope.settings					
 		   };	
@@ -65,7 +65,7 @@ app.controller('setting' , ['$scope' , '$http' , '$route' , '$routeParams' ,'$lo
    }
 
    if($route.current.type=="list"){       
-	    if(localStorageService.get('login')=="1"){       
+	    if(localStorageService.get('login')=="1" && localStorageService.get('usertype')=="admin"){       
 			$http.get('setting/list').then(function(response){
 				if(response.data['authen']==1){					
 					$scope.settings = response.data['settings'];  
