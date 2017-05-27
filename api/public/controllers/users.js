@@ -450,7 +450,7 @@ app.controller('users' , ['$scope' , '$http' , '$route' , '$routeParams' ,'$loca
    
     $scope.setPageNo = function(no){
 	   $scope.current_page  = no+1;
-   }
+    }
    
     $scope.searchUser = function(name){
        
@@ -768,6 +768,75 @@ app.controller('users' , ['$scope' , '$http' , '$route' , '$routeParams' ,'$loca
 		}		
        }
 	} 
+	
+	$scope.editprofile = function(){
+	   if(localStorageService.get('login')=="1"){ 
+			if($scope.userprofileform.$valid){
+					
+					/* var data = {
+					   username:$scope.user.password,
+					   newpassword:$scope.user.newpassword,
+					   confirmpassword:$scope.user.confirmpassword,
+					};*/
+					
+					var req = {
+						url:'user/editprofile',
+						method:'POST',
+						header:{
+							'Content-Type':'application/json'
+						},
+						data:$scope.userprofile
+					};
+					
+					$http(req).then(
+						function(response){
+							if(response.data['authen']=="1"){
+								if(response.data['success']=="1"){
+									$route.reload();
+								}
+								else if(response.data['success']=="0"){
+									$scope.errors = response.data['errors'];
+								}
+							}
+							else {
+								$location.path('/login');
+							}
+						},
+						function(){
+							
+						}
+					);				
+			}
+			else {
+					$scope.submitted = true;
+			}		
+		}
+	}
+	
+	if($route.current.type=="profile"){           
+		 if(localStorageService.get('login')=="1" && localStorageService.get('usertype')=="user"){    
+			$http.get('user/editprofile').then(function(response){
+                    if(response.data['authen']=="1"){				
+					   if(response.data['success']=="1"){
+					      $scope.userprofile = response.data['records'][0]; 
+					   }
+					   else {
+						  localStorageService.remove('login'); 
+						  localStorageService.remove('user'); 
+						  $location.path("/login");
+					   }
+					}					  
+				    else {
+					   localStorageService.remove('login');	
+					   localStorageService.remove('user'); 
+                       $location.path("/login");
+					}
+			});     
+		 }
+         else {
+			$location.path("/login");
+		 }		 
+    }
 }]);
 
 

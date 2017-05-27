@@ -622,4 +622,37 @@ module.exports = function(app , func , mail, upload, storage, mailer, multer, va
 			});			
 		}         	
 	});
+	
+	app.all('/user/editprofile', passport.isAuthenticated, function(req, res){		   
+		if(req.method=="POST"){  	
+            console.log("user");
+            console.log(req.body);			
+		    User.find({_id:req.user._id} , function(err, records){
+				if(err) throw err;
+				var errors = [];
+				//console.log(records[0].password);
+				//console.log(JSON.parse(records).keys.length);				
+								
+				var data = {
+					first_name:req.body.first_name,
+					last_name:req.body.last_name,
+					email:req.body.email,
+					username:req.body.username
+				};
+			 
+				User.findOneAndUpdate({_id:req.user._id}, data, function(err, records){
+					if(err) throw err;
+					res.setHeader('Content-Type', 'application/json');
+					res.send(JSON.stringify({'success':1, 'authen':1}));
+				}); 								
+		   });			
+		}
+		else {
+			User.find({_id:req.user._id} , function(err, records){
+				if(err) throw err;
+                res.setHeader('Content-Type', 'application/json');
+				res.send(JSON.stringify({'success':1, 'authen':1, 'records':records}));				
+		    });
+	    }		
+	});
 }
