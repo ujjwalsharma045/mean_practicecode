@@ -727,7 +727,7 @@ app.controller('users' , ['$scope' , '$http' , '$route' , '$routeParams' ,'$loca
 
     $scope.editpassword = function(){
 	   if(localStorageService.get('login')=="1"){ 
-	    if($scope.userpassword.$valid){
+	     if($scope.userpassword.$valid){
 		    
 			data = {
 			   oldpassword:$scope.user.password,
@@ -762,10 +762,10 @@ app.controller('users' , ['$scope' , '$http' , '$route' , '$routeParams' ,'$loca
 					
 				}
             );				
-		}
-        else {
-			$scope.submitted = true;
-		}		
+		 }
+		 else {
+			 $scope.userpassword.$submitted =true;
+		 }
        }
 	} 
 	
@@ -807,9 +807,9 @@ app.controller('users' , ['$scope' , '$http' , '$route' , '$routeParams' ,'$loca
 						}
 					);				
 			}
-			else {
-					$scope.submitted = true;
-			}		
+			else {			
+			     $scope.userprofileform.$submitted =true;
+			}
 		}
 	}
 	
