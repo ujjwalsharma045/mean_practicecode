@@ -3,6 +3,7 @@ app.controller('users' , ['$scope' , '$http' , '$route' , '$routeParams' ,'$loca
     var storageType = localStorageService.getStorageType();
     $scope.adminloggedin = false;
 	$scope.loggedin = false;
+	
     if(localStorageService.get('login')=="1"){
        if(localStorageService.get('usertype')=="admin"){       	
           $scope.adminloggedin = true;
@@ -795,7 +796,7 @@ app.controller('users' , ['$scope' , '$http' , '$route' , '$routeParams' ,'$loca
 									$route.reload();
 								}
 								else if(response.data['success']=="0"){
-									$scope.errors = response.data['errors'];
+									$scope.profileerrors = response.data['errors'];
 								}
 							}
 							else {

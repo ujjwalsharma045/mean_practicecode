@@ -3,7 +3,7 @@ module.exports = function(app , func , mail, upload, storage, mailer, multer, va
     var sess;
     //var session = require('express-session'); 
     var math = require('mathjs');  		
-	
+	var async = require('async');	
 	app.get("/showusers", passport.isAdminAuthenticated, function(req, res){
 		
 			var data = {
@@ -574,8 +574,7 @@ module.exports = function(app , func , mail, upload, storage, mailer, multer, va
                   authen:1				  
 			  });
 		}); 				
-	});
-	
+	});	
 	app.post("/logout", function(req, res){
         req.logout();
 		res.setHeader('Content-Type', 'application/json');
@@ -625,34 +624,93 @@ module.exports = function(app , func , mail, upload, storage, mailer, multer, va
 	
 	app.all('/user/editprofile', passport.isAuthenticated, function(req, res){		   
 		if(req.method=="POST"){  	
-            console.log("user");
-            console.log(req.body);			
+            //console.log("user");
+            //console.log(req.body);			
 		    User.find({_id:req.user._id} , function(err, records){
 				if(err) throw err;
-				var errors = [];
-				//console.log(records[0].password);
-				//console.log(JSON.parse(records).keys.length);				
-								
-				var data = {
-					first_name:req.body.first_name,
-					last_name:req.body.last_name,
-					email:req.body.email,
-					username:req.body.username
-				};
-			 
-				User.findOneAndUpdate({_id:req.user._id}, data, function(err, records){
-					if(err) throw err;
+				if(records.length>0){
+					var errors = [];
+					//console.log(records[0].password);
+					//console.log(JSON.parse(records).keys.length);	
+					var data = {					
+						email:req.body.email,
+						username:req.body.username,
+						userid:req.user._id
+					};	
+				
+					/*				
+						if(func.isUserExists(User, data, "email")){
+							errors.push("Email already exists.");
+						}
+					
+						if(func.isUserExists(User, data, "username")){
+							errors.push("Username already exists."); 	
+						}				
+					*/
+				
+					async.parallel([
+					   function(cb){
+						   User.find({email:data.email}, cb);
+					   },
+					   function(cb){
+						   User.find({username:data.username}, cb);
+					   }
+					 ], function(err, results){
+							 
+						 //console.log("results1"); 
+						 //console.log(results[1][0].email);
+						 //console.log("results2"); 
+						 
+						 if(results[0].length>0){
+							 if(results[0].length>1){
+								 errors.push("Email already exists.");
+							 }
+							 else if(!results[0][0]._id.equals(req.user._id)){
+								 errors.push("Email already exists.");
+							 } 
+						 }
+						 
+						 if(results[1].length>0){
+							 if(results[1].length>1){
+								 errors.push("Username already exists."); 	
+							 }
+							 else if(!results[1][0]._id.equals(req.user._id)){							 
+								 errors.push("Username already exists."); 	
+							 }
+						 }
+
+						 if(errors.length>0){
+							res.setHeader('Content-Type', 'application/json');
+							res.send(JSON.stringify({'success':0, 'authen':1, 'errors':errors}));
+						 }
+						 else {					
+							var data = {
+							  first_name:req.body.first_name,
+							  last_name:req.body.last_name,
+							  email:req.body.email,
+							  username:req.body.username
+							};
+							
+							User.findOneAndUpdate({_id:req.user._id}, data, function(err, records){
+								if(err) throw err;
+								res.setHeader('Content-Type', 'application/json');
+								res.send(JSON.stringify({'success':1, 'authen':1}));
+							});					
+						 }  
+					});	
+				 }
+                 else {
 					res.setHeader('Content-Type', 'application/json');
-					res.send(JSON.stringify({'success':1, 'authen':1}));
-				}); 								
-		   });			
+					res.send(JSON.stringify({'success':0, 'authen':0}));
+				 }				 
+		     });			
 		}
 		else {
-			User.find({_id:req.user._id} , function(err, records){
+			 User.find({_id:req.user._id} , function(err, records){
 				if(err) throw err;
                 res.setHeader('Content-Type', 'application/json');
 				res.send(JSON.stringify({'success':1, 'authen':1, 'records':records}));				
-		    });
+		     });
 	    }		
 	});
 }
