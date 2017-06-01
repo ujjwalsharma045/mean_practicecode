@@ -696,7 +696,7 @@ app.controller('users' , ['$scope' , '$http' , '$route' , '$routeParams' ,'$loca
 	   angular.forEach($scope.users, function (x) {
             x.Selected = false;			
        });	   
-   }
+    }
 
     $scope.removeUsers = function(){	   
        $scope.selected = [];

@@ -17,3 +17,14 @@ app.factory('Users' , function($http){
 	
     return user;	
 });
+
+app.factory('Pages' , function($http){	
+    var page = {};		
+	page.totalPages = function ($scope){         
+		return $http.get('http://127.0.0.1:8081/page/total').then(function(response){
+		    $scope.totalpages  = response.data['pages'];
+		});	
+    }
+	
+    return page;	
+});

@@ -166,6 +166,33 @@
 					   return "Contact Us";
 					}
 				}
+			}).when('/page/index' , {
+				controller:'page',
+				templateUrl:'views/page/index.html',
+				type:'list',
+				resolve:{
+					pageTitle:function(){
+					   return "Page";
+					}
+				}
+			}).when('/page/add' , {
+				controller:'page',
+				templateUrl:'views/page/add.html',
+				type:'add',
+				resolve:{
+					pageTitle:function(){
+					   return "Add Page";
+					}
+				}
+			}).when('/page/edit/:id' , {
+				controller:'page',
+				templateUrl:'views/page/add.html',
+				type:'edit',
+				resolve:{
+					pageTitle:function(){
+					   return "Edit Page";
+					}
+				}
 			}).otherwise({
 				redirectTo:'/error'
 			});					
@@ -178,8 +205,7 @@
 	 <script src="controllers/contact.js"></script>
 	 <script src="controllers/setting.js"></script>
 	 <script src="controllers/home.js"></script>
-	 
-	 
+     <script src="controllers/page.js"></script>	 
   </head>
   <body>
      <div ng-app="apimodule">

@@ -165,7 +165,7 @@ function isAuthenticated(){
 function isAdminAuthenticated(){
 	console.log("mera");
 	return function (req, res, next) {
-        console.log(req.user.is_admin);		
+        //console.log(req.user.is_admin);		
 		if (req.isAuthenticated() && req.user.is_admin=='1'){			
 			return next();
 		}
@@ -221,6 +221,8 @@ require('./services')(app , func , mail, upload, storage, mailer, multer, valida
 require('./settings')(app, func, mail, upload, storage, mailer, multer, validator, Setting, paginate, cors, dateFormat, dateDiff, dobByAge, json2csv, excelexport, pdf, passport, LocalStrategy);
 
 require('./home')(app, func, mail, mailer, multer, validator, cors, dateFormat, dateDiff, LocalStrategy, Category, Page);
+ 
+require('./page')(app , func , mail, upload, storage, mailer, multer, validator, Page , paginate , cors , dateFormat, dateDiff , dobByAge , json2csv , excelexport , pdf , passport , LocalStrategy, bCrypt);
 
 //require('./crons')(schedule, mail, mailer, User);
 

@@ -23,7 +23,7 @@ module.exports = function(app, func, mail, mailer, multer, validator, cors, date
 	app.get("/home" , homepage);
 	
 	app.get("/home/page/:slug" , pages);
-	app.get("/page/:slug" , pages);
+	app.get("/home/page/:slug" , pages);
 	
     app.all("/home/contactus" , function(req, res){
 	    sess=req.session;
