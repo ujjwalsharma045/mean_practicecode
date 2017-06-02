@@ -120,11 +120,11 @@ var urlencodedParser = bodyParser.urlencoded({extended:false});
 var mongoose = require('mongoose');
 mongoose.connect('mongodb://localhost/mydatabase');
 
-var User = require('./models/user')(mongoose);
-var Services = require('./models/service')(mongoose);
-var Setting = require('./models/setting')(mongoose);
-var Category = require('./models/category')(mongoose);
-var Page = require('./models/page')(mongoose);
+var User = require('./models/UserModel')(mongoose);
+var Services = require('./models/ServiceModel')(mongoose);
+var Setting = require('./models/SettingModel')(mongoose);
+var Category = require('./models/CategoryModel')(mongoose);
+var Page = require('./models/PageModel')(mongoose);
 var flash = require('connect-flash');
 var bCrypt = require('bcrypt-nodejs');
 app.use(flash());
@@ -204,8 +204,8 @@ var storage = multer.diskStorage({
 });
 
 var upload = multer({storage:storage}).single('file');
-var func = require("./commonfunctions.js");
-var mail = require("./mailfunctions.js");
+var func = require("./helpers/CommonHelper.js");
+var mail = require("./helpers/MailHelper.js");
 var dateFormat = require('dateformat'); 
 var dateDiff = require('date-diff');
 var dobByAge = require('birth-by-age-at-date');
@@ -215,17 +215,17 @@ var pdf = require('html-pdf');
 var schedule = require("node-schedule");
 var slugify = require('slugify');
 
-require('./user')(app , func , mail, upload, storage, mailer, multer, validator, User , paginate , cors , dateFormat, dateDiff , dobByAge , json2csv , excelexport , pdf , passport , LocalStrategy, bCrypt);
+require('./controllers/UserController')(app , func , mail, upload, storage, mailer, multer, validator, User , paginate , cors , dateFormat, dateDiff , dobByAge , json2csv , excelexport , pdf , passport , LocalStrategy, bCrypt);
 
-require('./services')(app , func , mail, upload, storage, mailer, multer, validator, Services , paginate , cors);
+require('./controllers/ServiceController')(app , func , mail, upload, storage, mailer, multer, validator, Services , paginate , cors);
 
-require('./settings')(app, func, mail, upload, storage, mailer, multer, validator, Setting, paginate, cors, dateFormat, dateDiff, dobByAge, json2csv, excelexport, pdf, passport, LocalStrategy);
+require('./controllers/SettingController')(app, func, mail, upload, storage, mailer, multer, validator, Setting, paginate, cors, dateFormat, dateDiff, dobByAge, json2csv, excelexport, pdf, passport, LocalStrategy);
 
-require('./home')(app, func, mail, mailer, multer, validator, cors, dateFormat, dateDiff, LocalStrategy, Category, Page);
+require('./controllers/HomeController')(app, func, mail, mailer, multer, validator, cors, dateFormat, dateDiff, LocalStrategy, Category, Page);
  
-require('./page')(app , func , mail, upload, storage, mailer, multer, validator, Page , paginate , cors , dateFormat, dateDiff , dobByAge , json2csv , excelexport , pdf , passport , LocalStrategy, bCrypt, slugify);
+require('./controllers/PageController')(app , func , mail, upload, storage, mailer, multer, validator, Page , paginate , cors , dateFormat, dateDiff , dobByAge , json2csv , excelexport , pdf , passport , LocalStrategy, bCrypt, slugify);
 
-//require('./crons')(schedule, mail, mailer, User);
+//require('./crons/crons')(schedule, mail, mailer, User);
 
 var server = app.listen(8081 , function(){
     var host = server.address().address;
