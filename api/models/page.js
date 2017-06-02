@@ -7,7 +7,8 @@ module.exports = function(mongoose){
 	  content: String,	 
       slug:String,	  
 	  created_at: Date,
-	  modified_at: Date
+	  modified_at: Date,
+	  status:String
 	});
 	
 	

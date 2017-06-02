@@ -1,4 +1,4 @@
-app.controller('page' , ['$scope' , '$http' , '$route' , '$routeParams' ,'$location' , 'authen', 'localStorageService' , 'dateTime' , 'Pages' , 'pageTitle', 'Upload', '$timeout', function($scope , $http , $route , $routeParams ,$location , authen, localStorageService , dateTime , Pages , pageTitle, Upload, $timeout){
+app.controller('page' , ['$scope' , '$http' , '$route' , '$routeParams' ,'$location' , 'authen', 'localStorageService' , 'dateTime' , 'Pages' , 'pageTitle', 'Upload', '$timeout', 'Users', function($scope, $http, $route, $routeParams, $location, authen, localStorageService, dateTime, Pages, pageTitle, Upload, $timeout, Users){
        	   
     var storageType = localStorageService.getStorageType();
     $scope.adminloggedin = false;
@@ -505,6 +505,10 @@ app.controller('page' , ['$scope' , '$http' , '$route' , '$routeParams' ,'$locat
 		   $location.path("/login");
 	   }
     }     				
+	
+	$scope.logout = function(){
+	    Users.logOut($scope, $location, localStorageService);
+	}
 }]);
 
 

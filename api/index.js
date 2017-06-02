@@ -213,6 +213,7 @@ var json2csv = require('json2csv');
 var excelexport = require('node-excel-export');
 var pdf = require('html-pdf');
 var schedule = require("node-schedule");
+var slugify = require('slugify');
 
 require('./user')(app , func , mail, upload, storage, mailer, multer, validator, User , paginate , cors , dateFormat, dateDiff , dobByAge , json2csv , excelexport , pdf , passport , LocalStrategy, bCrypt);
 
@@ -222,7 +223,7 @@ require('./settings')(app, func, mail, upload, storage, mailer, multer, validato
 
 require('./home')(app, func, mail, mailer, multer, validator, cors, dateFormat, dateDiff, LocalStrategy, Category, Page);
  
-require('./page')(app , func , mail, upload, storage, mailer, multer, validator, Page , paginate , cors , dateFormat, dateDiff , dobByAge , json2csv , excelexport , pdf , passport , LocalStrategy, bCrypt);
+require('./page')(app , func , mail, upload, storage, mailer, multer, validator, Page , paginate , cors , dateFormat, dateDiff , dobByAge , json2csv , excelexport , pdf , passport , LocalStrategy, bCrypt, slugify);
 
 //require('./crons')(schedule, mail, mailer, User);
 

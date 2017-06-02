@@ -13,6 +13,29 @@ app.factory('Users' , function($http){
 		return $http.get('http://127.0.0.1:8081/totalusers').then(function(response){
 		    $scope.totalusers  = response.data['users'];
 		});	
+    };
+	
+	user.logOut = function ($scope, $location, localStorageService){         
+		var req = {
+			method: 'POST',
+			url: 'logout',
+			headers: {
+			  'Content-Type': 'application/json'
+			}
+	    };
+
+	    return $http(req).then(
+		   function(response){
+			 console.log(response);
+			 if(response.data['success']=='1'){
+				 localStorageService.remove('login');
+				 $location.path("/login");
+			 }
+		   },
+		   function(response){	      
+			
+		   }
+	    );	
     }
 	
     return user;	

@@ -17,12 +17,10 @@ module.exports = function(app, func, mail, mailer, multer, validator, cors, date
 			}
 		});
     };
-	
-	
+		
 	app.get("/home/index" , homepage);
 	app.get("/home" , homepage);
 	
-	app.get("/home/page/:slug" , pages);
 	app.get("/home/page/:slug" , pages);
 	
     app.all("/home/contactus" , function(req, res){
@@ -124,19 +122,10 @@ module.exports = function(app, func, mail, mailer, multer, validator, cors, date
 		}
 	}
 
-    function pages(req , res){
-		sess=req.session;
-        var resp = func.isLoggedIn(sess);
-		if(!resp){
+    function pages(req , res){		   
+		Page.find({slug:req.params.slug} , function(err, doc){ console.log(doc);
 			res.setHeader('Content-Type', 'application/json');
-			res.send(JSON.stringify({authen:0 , success:0}));			
-		}
-	    else {
-			
-			Page.find({slug:req.params.slug} , function(err, doc){ console.log(doc);
-				res.setHeader('Content-Type', 'application/json');
-				res.send(JSON.stringify({'record':doc , success:1}));
-			});
-		}
+			res.send(JSON.stringify({'record':doc , success:1}));
+		});		
 	}	
 }

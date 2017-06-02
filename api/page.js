@@ -1,4 +1,4 @@
-module.exports = function(app , func , mail, upload, storage, mailer, multer, validator, Page, paginate , cors , dateFormat , dateDiff, dobByAge, json2csv, excel , pdf, passport , LocalStrategy, bCrypt){ 
+module.exports = function(app , func , mail, upload, storage, mailer, multer, validator, Page, paginate , cors , dateFormat , dateDiff, dobByAge, json2csv, excel , pdf, passport , LocalStrategy, bCrypt ,slugify){ 
     
     var sess;
     //var session = require('express-session'); 
@@ -100,9 +100,10 @@ module.exports = function(app , func , mail, upload, storage, mailer, multer, va
 		  
 				   data = {
 						title: req.body.title,
-						slug:req.body.title,
+						slug:slugify(req.body.title),
 						content:req.body.content,								
-						modified_at:formatteddate
+						modified_at:formatteddate,
+						status:req.body.status
 				   }; 
 		  
 				   console.log(data);
@@ -128,9 +129,10 @@ module.exports = function(app , func , mail, upload, storage, mailer, multer, va
 				var formatteddate = dateFormat(currentdate ,'yyyy-mm-dd HH:MM:ss');				   
 				data = {
 					 title:req.body.title,
-					 slug:req.body.title,
+					 slug:slugify(req.body.title),
 					 content:req.body.content,							 
-					 created_at :formatteddate 						
+					 created_at :formatteddate,
+                     status:req.body.status					 
 				};
 											
 				console.log(data);			   
