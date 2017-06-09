@@ -1,7 +1,8 @@
 app.controller('users' , ['$scope' , '$http' , '$route' , '$routeParams' ,'$location' , 'authen', 'localStorageService' , 'dateTime' , 'Users' , 'pageTitle', 'Upload', '$timeout', '$state', '$stateParams', function($scope, $http, $route, $routeParams, $location, authen, localStorageService, dateTime, Users, pageTitle, Upload, $timeout, $state, $stateParams){
       	   
     var storageType = localStorageService.getStorageType();
-    $scope.adminloggedin = false;
+	
+    /* $scope.adminloggedin = false;
 	$scope.loggedin = false;
 	
     if(localStorageService.get('login')=="1"){
@@ -12,8 +13,10 @@ app.controller('users' , ['$scope' , '$http' , '$route' , '$routeParams' ,'$loca
 	   else if(localStorageService.get('usertype')=="user"){
 		   $scope.loggedin = true;
 	   }
-	}
+	} */
     
+	$scope.pagemode = "";
+	
     $scope.options = {
        language: 'en',
        allowedContent: true,

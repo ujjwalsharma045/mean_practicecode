@@ -5,7 +5,7 @@ app.controller('home' , ['$scope' , '$http' , '$route' , '$routeParams' ,'$locat
        key: '6LdqGSIUAAAAAER0Wv9KsnLaLpVDj2KaN2UiUCg6'
    };
    
-   $scope.adminloggedin = false;
+   /* $scope.adminloggedin = false;
    $scope.loggedin = false;
    if(localStorageService.get('login')=="1"){
        if(localStorageService.get('usertype')=="admin"){       	
@@ -15,7 +15,7 @@ app.controller('home' , ['$scope' , '$http' , '$route' , '$routeParams' ,'$locat
 	   else if(localStorageService.get('usertype')=="user"){
 		   $scope.loggedin = true;
 	   }
-   }
+   } */
    
    $scope.options = {
       language: 'en',

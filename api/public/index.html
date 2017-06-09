@@ -600,13 +600,14 @@
 			//$locationProvider.html5Mode(true);
 			$urlRouterProvider.otherwise('/');
 			
-			$stateProvider.state('login' , {								
+			$stateProvider
+			.state('login' , {								
                 type:'login',
 				url:'/login',
 				views:{
                     'header':{
 						templateUrl: '/views/layouts/header.html',
-						//controller:'users'
+						controller:'front'
 					},
 					'content': {
 						templateUrl: '/views/users/login.html', 
@@ -614,7 +615,7 @@
 					},
 					'footer': {
 						templateUrl: '/views/layouts/footer.html',
-						//controller:'users'
+						controller:'front'
 					}
 				},
                 resolve:{
@@ -629,7 +630,7 @@
 				views:{
                     'header':{
 						templateUrl: '/views/layouts/admin_header.html',
-						controller:'users'
+						controller:'front'
 					},
 					'content': {
 						templateUrl: '/views/users/users.html', 
@@ -637,7 +638,7 @@
 					},
 					'footer': {
 						templateUrl: '/views/layouts/admin_footer.html',
-						controller:'users'
+						controller:'front'
 					}
 				},
                 resolve:{
@@ -652,7 +653,7 @@
 				views:{
                     'header':{
 						templateUrl: '/views/layouts/admin_header.html',
-						controller:'users'
+						controller:'front'
 					},
 					'content': {
 						templateUrl: '/views/users/add.html', 
@@ -660,7 +661,7 @@
 					},
 					'footer': {
 						templateUrl: '/views/layouts/admin_footer.html',
-						controller:'users'
+						controller:'front'
 					}
 				},
                 resolve:{
@@ -668,12 +669,13 @@
 					   return "Add User";
 					}
 				}				                			
-			}).state('edituser' , {								                
+			})
+			.state('edituser' , {								                
 				url:'/edit/:id',
 				views:{
                     'header':{
 						templateUrl: '/views/layouts/admin_header.html',
-						//controller:'users'
+						controller:'front'
 					},
 					'content': {
 						templateUrl: '/views/users/edit.html', 
@@ -681,7 +683,7 @@
 					},
 					'footer': {
 						templateUrl: '/views/layouts/admin_footer.html',
-						//controller:'users'
+						controller:'front'
 					}
 				},
                 resolve:{
@@ -689,12 +691,13 @@
 					   return "Edit User";
 					}
 				}				                			
-			}).state('settingslist' , {								                
+			})
+			.state('settingslist' , {								                
 				url:'/setting',
 				views:{
                     'header':{
 						templateUrl: '/views/layouts/admin_header.html',
-						controller:'users'
+						controller:'front'
 					},
 					'content':{
 						templateUrl: '/views/settings/add.html', 
@@ -702,7 +705,7 @@
 					},
 					'footer':{
 						templateUrl: '/views/layouts/admin_footer.html',
-						controller:'users'
+						controller:'front'
 					}
 				},
                 resolve:{
@@ -710,12 +713,13 @@
 					   return "Setting";
 					}
 				}				                			
-			}).state('pagelist' , {								                
+			})
+			.state('pagelist' , {								                
 				url:'/page/index',
 				views:{
                     'header':{
 						templateUrl: '/views/layouts/admin_header.html',
-						controller:'page'
+						controller:'front'
 					},
 					'content':{
 						templateUrl: '/views/page/index.html', 
@@ -723,7 +727,7 @@
 					},
 					'footer':{
 						templateUrl: '/views/layouts/admin_footer.html',
-						controller:'page'
+						controller:'front'
 					}
 				},
                 resolve:{
@@ -737,7 +741,7 @@
 				views:{
                     'header':{
 						templateUrl:'/views/layouts/admin_header.html',
-						controller:'users'
+						controller:'front'
 					},
 					'content': {
 						templateUrl:'/views/page/add.html', 
@@ -745,7 +749,7 @@
 					},
 					'footer': {
 						templateUrl:'/views/layouts/admin_footer.html',
-						controller:'users'
+						controller:'front'
 					}
 				},
                 resolve:{
@@ -753,12 +757,13 @@
 					   return "Add Page";
 					}
 				}				                			
-			}).state('editpage' , {								                
+			})
+			.state('editpage' , {								                
 				url:'/page/edit/:id',
 				views:{
                     'header':{
 						templateUrl:'/views/layouts/admin_header.html',
-						controller:'users'
+						controller:'front'
 					},
 					'content': {
 						templateUrl:'/views/page/add.html', 
@@ -766,7 +771,7 @@
 					},
 					'footer': {
 						templateUrl:'/views/layouts/admin_footer.html',
-						controller:'users'
+						controller:'front'
 					}
 				},
                 resolve:{
@@ -774,12 +779,13 @@
 					   return "Edit Page";
 					}
 				}				                			
-			}).state('home' , {								                
+			})
+			.state('home' , {								                
 				url:'/home/index',
 				views:{
                     'header':{
 						templateUrl:'/views/layouts/header.html',
-						controller:'users'
+						controller:'front'
 					},
 					'content': {
 						templateUrl:'/views/home/index.html', 
@@ -787,28 +793,7 @@
 					},
 					'footer': {
 						templateUrl:'/views/layouts/footer.html',
-						controller:'users'
-					}
-				},
-                resolve:{
-					pageTitle:function(){
-					   return "Edit Page";
-					}
-				}				                			
-			}).state('homepage' , {								                
-				url:'/home',
-				views:{
-                    'header':{
-						templateUrl:'/views/layouts/header.html',
-						controller:'users'
-					},
-					'content': {
-						templateUrl:'/views/home/index.html', 
-						controller:'home'
-					},
-					'footer': {
-						templateUrl:'/views/layouts/footer.html',
-						controller:'users'
+						controller:'front'
 					}
 				},
                 resolve:{
@@ -816,12 +801,35 @@
 					   return "Home";
 					}
 				}				                			
-			}).state('contactus' , {								                
+			})
+			.state('homepage' , {								                
+				url:'/home',
+				views:{
+                    'header':{
+						templateUrl:'/views/layouts/header.html',
+						controller:'front'
+					},
+					'content': {
+						templateUrl:'/views/home/index.html', 
+						controller:'home'
+					},
+					'footer': {
+						templateUrl:'/views/layouts/footer.html',
+						controller:'front'
+					}
+				},
+                resolve:{
+					pageTitle:function(){
+					   return "Home";
+					}
+				}				                			
+			})
+			.state('contactus' , {								                
 				url:'/home/contactus',
 				views:{
                     'header':{
 						templateUrl:'/views/layouts/header.html',
-						controller:'users'
+						controller:'front'
 					},
 					'content': {
 						templateUrl:'/views/home/contactus.html', 
@@ -829,7 +837,7 @@
 					},
 					'footer': {
 						templateUrl:'/views/layouts/footer.html',
-						controller:'users'
+						controller:'front'
 					}
 				},
                 resolve:{
@@ -837,12 +845,13 @@
 					   return "Contact Us";
 					}
 				}				                			
-			}).state('aboutus' , {								                
+			})
+			.state('aboutus' , {								                
 				url:'/home/aboutus',
 				views:{
                     'header':{
 						templateUrl:'/views/layouts/header.html',
-						controller:'users'
+						controller:'front'
 					},
 					'content': {
 						templateUrl:'/views/home/aboutus.html', 
@@ -850,7 +859,7 @@
 					},
 					'footer': {
 						templateUrl:'/views/layouts/footer.html',
-						controller:'users'
+						controller:'front'
 					}
 				},
                 resolve:{
@@ -858,12 +867,13 @@
 					   return "About Us";
 					}
 				}				                			
-			}).state('profile' , {								                
+			})
+			.state('profile' , {								                
 				url:'/user/editpassword',
 				views:{
                     'header':{
 						templateUrl:'/views/layouts/header.html',
-						controller:'users'
+						controller:'front'
 					},
 					'content':{
 						templateUrl:'/views/users/editpassword.html', 
@@ -871,7 +881,7 @@
 					},
 					'footer':{
 						templateUrl:'/views/layouts/footer.html',
-						controller:'users'
+						controller:'front'
 					}
 				},
                 resolve:{
@@ -882,6 +892,7 @@
 			});
          });			
 	 </script>
+	 <script src="controllers/front.js"></script>
 	 <script src="services/services.js"></script>
 	 <script src="directives/directives.js"></script>
 	 <script src="services/authenticate.js"></script>	 
