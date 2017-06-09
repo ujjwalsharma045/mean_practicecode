@@ -57,6 +57,15 @@ app.directive('fancybox' , function($compile, $http){
                 compiledTemplate($scope);
 				$.fancybox.open({content:data , type:'html'});
 			});
+		},
+		
+		$scope.showpasswordview = function(){			
+			$http.get('http://127.0.0.1:8081/user/showpassword').then(function(response){ 
+			    var data = response.data;
+				var compiledTemplate = $compile(data);
+                compiledTemplate($scope);
+				$.fancybox.open({content:data , type:'html'});
+			});
 		}
 	};
 	return fdirective;

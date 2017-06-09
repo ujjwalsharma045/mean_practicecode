@@ -1,4 +1,4 @@
-app.controller('page' , ['$scope' , '$http' , '$route' , '$routeParams' ,'$location' , 'authen', 'localStorageService' , 'dateTime' , 'Pages' , 'pageTitle', 'Upload', '$timeout', 'Users', function($scope, $http, $route, $routeParams, $location, authen, localStorageService, dateTime, Pages, pageTitle, Upload, $timeout, Users){
+app.controller('page' , ['$scope' , '$http' , '$route' , '$routeParams' ,'$location' , 'authen', 'localStorageService' , 'dateTime' , 'Pages' , 'pageTitle', 'Upload', '$timeout', 'Users', '$state', '$stateParams', function($scope, $http, $route, $routeParams, $location, authen, localStorageService, dateTime, Pages, pageTitle, Upload, $timeout, Users, $state, $stateParams){
        	   
     var storageType = localStorageService.getStorageType();
     $scope.adminloggedin = false;
@@ -38,7 +38,7 @@ app.controller('page' , ['$scope' , '$http' , '$route' , '$routeParams' ,'$locat
 		}
 	];  
 	
-    if($route.current.type=="list"){
+    if($state.current.name=="pagelist"){
 	    Pages.totalPages($scope);				
 		
         $scope.page = {
@@ -97,12 +97,14 @@ app.controller('page' , ['$scope' , '$http' , '$route' , '$routeParams' ,'$locat
 		}   
     }
     
-    if($route.current.type=="view"){  
-         $scope.title += ' '+$routeParams.id;
+    if($state.current.name=="view"){  
+	     alert($stateParams.id);
+         $scope.title += ' '+$stateParams.id;
 		 if(localStorageService.get('login')=="1" && localStorageService.get('usertype')=="admin"){    
-			$http.get('page/view/'+$routeParams.id).then(function(response){
+			$http.get('page/view/'+$stateParams.id).then(function(response){
                     if(response.data['authen']=="1"){				
 					   if(response.data['success']=="1"){
+		                  alert($stateParams.id);				   
 					      $scope.page = response.data['records']; 
 					   }
 					   else {
@@ -152,10 +154,14 @@ app.controller('page' , ['$scope' , '$http' , '$route' , '$routeParams' ,'$locat
 		}
     }
    
-    if($route.current.type=="edit"){           
-		$scope.title +=' '+$routeParams.id;
+    if($state.current.name=="addpage"){
+	   $scope.pagemode = "add";
+	}
+    
+	if($state.current.name=="editpage"){           
+		$scope.title +=' '+$stateParams.id;
 		$scope.pagemode = "edit";
-        if(localStorageService.get('login')=="1" && localStorageService.get('usertype')=="admin"){       $http.get('page/view/'+$routeParams.id).then(function(response){
+        if(localStorageService.get('login')=="1" && localStorageService.get('usertype')=="admin"){       $http.get('page/view/'+$stateParams.id).then(function(response){
 					if(response.data['authen']=="1"){				
 					   if(response.data['success']=="1"){
 						  $scope.page = response.data['records'][0]; 
@@ -178,7 +184,7 @@ app.controller('page' , ['$scope' , '$http' , '$route' , '$routeParams' ,'$locat
 		}		
     } 
    
-    if($route.current.type=="add"){
+    if($state.current.name=="add"){
 	    $scope.pagemode = "add";
 	}
 	
@@ -194,7 +200,7 @@ app.controller('page' , ['$scope' , '$http' , '$route' , '$routeParams' ,'$locat
                       
 					   var req = {
 						    method: 'POST',
-						    url: 'page/edit/'+$routeParams.id,
+						    url: 'page/edit/'+$stateParams.id,
 						    headers: {
 						      'Content-Type': 'application/json'
 						    },

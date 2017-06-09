@@ -713,4 +713,58 @@ module.exports = function(app , func , mail, upload, storage, mailer, multer, va
 		     });
 	    }		
 	});
+
+    app.post('/user/recovery_email', function(req, res){
+         User.find({email:req.body.email} , function(err, records){
+                 if(records.length>0){									
+					var currentdate = new Date();
+                    var formatteddate = dateFormat(currentdate ,'yyyy-mm-dd HH:MM:ss');
+					var expirationdate = new Date(currentdate.getTime() + 2*24*60*60*1000);
+					var formattedexpirationdate = dateFormat(expirationdate ,'yyyy-mm-dd HH:MM:ss');
+					var data = {
+					    user_id:records[0]._id,
+                        token:'dfgsrfg',
+                        expiration_time:formattedexpirationdate,
+                        created_at:formatteddate 						
+					};										
+					
+					var detail = PasswordGenerate(data);
+					detail.save(function(err){
+						if(err)
+						  throw err;
+					  
+					    var mailoptions = {
+							to:records[0].email,
+							subject:"Password Reset",
+							text:'password reset'
+						};
+						   
+					    var mailObj = mail.configMail(mailer);
+					  
+					    mailObj.sendMail(mailoptions, function(error , response){
+							  if(error){
+								console.log(error);
+							  }
+							  else {
+								console.log(response.message); 
+							  }
+					    });
+						
+                        res.setHeader('Content-Type', 'application/json');
+				        res.send(JSON.stringify({'success':1, 'authen':0}));  						
+					});
+				}
+                else {
+				    res.setHeader('Content-Type', 'application/json');
+				    res.send(JSON.stringify({'success':0, 'authen':0}));
+			    }			 
+		 });       		
+	});
+
+    app.get('/user/showpassword', function(req, res){
+		 
+         res.render('users/forgotpassword' , {
+			
+		 });          		
+	});	
 }

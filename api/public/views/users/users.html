@@ -1,5 +1,5 @@
 
-<div ng-include="'views/layouts/admin_header.html'"></div>
+<!-- <div ng-include="'views/layouts/admin_header.html'"></div> -->
  <link rel="stylesheet" type="text/css" href="css/slider.css">	 
  <div>
     <titleelement></titleelement>
@@ -117,8 +117,8 @@
 	  
 	  <tr ng-repeat="x in users">
 	      <td><input type="checkbox" ng-model="x.Selected" value="{{x._id}}"/></td>
-	      <td>{{x.first_name}}</td>
-		  <td>{{x.last_name}}</td>
+	      <td>{{x.first_name | uppercase}}</td>
+		  <td>{{x.last_name | uppercase}}</td>
 		  <td>{{x.email}}</td>
 		  <td>{{x.username}}</td>
           <td>{{x.dateofbirth}}</td>		  
@@ -166,4 +166,4 @@
   </ul>  
 </div>
 
-<div ng-include="'views/layouts/admin_footer.html'"></div>
+<!-- <div ng-include="'views/layouts/admin_footer.html'"></div> -->

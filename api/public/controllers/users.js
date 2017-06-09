@@ -1,4 +1,4 @@
-app.controller('users' , ['$scope' , '$http' , '$route' , '$routeParams' ,'$location' , 'authen', 'localStorageService' , 'dateTime' , 'Users' , 'pageTitle', 'Upload', '$timeout', function($scope , $http , $route , $routeParams ,$location , authen, localStorageService , dateTime , Users , pageTitle, Upload, $timeout){
+app.controller('users' , ['$scope' , '$http' , '$route' , '$routeParams' ,'$location' , 'authen', 'localStorageService' , 'dateTime' , 'Users' , 'pageTitle', 'Upload', '$timeout', '$state', '$stateParams', function($scope, $http, $route, $routeParams, $location, authen, localStorageService, dateTime, Users, pageTitle, Upload, $timeout, $state, $stateParams){
       	   
     var storageType = localStorageService.getStorageType();
     $scope.adminloggedin = false;
@@ -28,7 +28,7 @@ app.controller('users' , ['$scope' , '$http' , '$route' , '$routeParams' ,'$loca
     $scope.timeformat = dateTime.showTime();     
     $scope.title = pageTitle;
       
-    if($route.current.type=="list"){
+    if($state.current.name=="list"){
 	    Users.totalUsers($scope);
 		
         $scope.user = {
@@ -88,10 +88,10 @@ app.controller('users' , ['$scope' , '$http' , '$route' , '$routeParams' ,'$loca
 		}   
     }
     
-    if($route.current.type=="view"){  
-         $scope.title += ' '+$routeParams.id;
+    if($state.current.name=="view"){  
+         $scope.title += ' '+$stateParams.id;
 		 if(localStorageService.get('login')=="1" && localStorageService.get('usertype')=="admin"){    
-			$http.get('view/'+$routeParams.id).then(function(response){
+			$http.get('view/'+$stateParams.id).then(function(response){
                     if(response.data['authen']=="1"){				
 					   if(response.data['success']=="1"){
 					      $scope.user = response.data['records']; 
@@ -138,16 +138,16 @@ app.controller('users' , ['$scope' , '$http' , '$route' , '$routeParams' ,'$loca
 			}
 		}
     }
-   
-    if($route.current.type=="edit"){   
+    
+    if($state.current.name=="edituser"){   
         
-		$scope.title +=' '+$routeParams.id;
+		$scope.title +=' '+$stateParams.id;
 		
         if(localStorageService.get('login')=="1" && localStorageService.get('usertype')=="admin"){       
-			$http.get('view/'+$routeParams.id).then(function(response){
+			$http.get('view/'+$stateParams.id).then(function(response){
 				if(response.data['authen']=="1"){				
 				   if(response.data['success']=="1"){
-					  $scope.user = response.data['records']; 
+					  $scope.user = response.data['records'][0]; 
 				   }
 				   else {
 					  localStorageService.remove('login'); 
@@ -182,7 +182,7 @@ app.controller('users' , ['$scope' , '$http' , '$route' , '$routeParams' ,'$loca
 				       };
  
                        file.upload = Upload.upload({
-							  url:'edit/'+$routeParams.id,
+							  url:'edit/'+$stateParams.id,
 							  data:data
 				       });
 
@@ -229,7 +229,7 @@ app.controller('users' , ['$scope' , '$http' , '$route' , '$routeParams' ,'$loca
                       
 					   var req = {
 						    method: 'POST',
-						    url: 'edit/'+$routeParams.id,
+						    url: 'edit/'+$stateParams.id,
 						    headers: {
 						      'Content-Type': 'application/json'
 						    },
@@ -414,7 +414,7 @@ app.controller('users' , ['$scope' , '$http' , '$route' , '$routeParams' ,'$loca
 		}	  
     }; 
 
-    if($route.current.type=="logout"){    
+    if($state.current.name=="logout"){    
         $http.get('api/logout.php').then(function(response){	
 			if(response.data['success']=='1'){
 			    $location.path("/login");
@@ -608,8 +608,8 @@ app.controller('users' , ['$scope' , '$http' , '$route' , '$routeParams' ,'$loca
 	   });	
     }
 
-    if($route.current.type=="login"){  
-   
+    //if($route.current.type=="login"){  
+	if($state.current.name=="login"){           
         $http.get('checklogin').then(function(response){	
 			if(response.data['authen']=='1'){
 				//localStorageService.set('login' , '1');
@@ -814,7 +814,7 @@ app.controller('users' , ['$scope' , '$http' , '$route' , '$routeParams' ,'$loca
 		}
 	}
 	
-	if($route.current.type=="profile"){           
+	if($state.current.name=="profile"){           
 		 if(localStorageService.get('login')=="1" && localStorageService.get('usertype')=="user"){    
 			$http.get('user/editprofile').then(function(response){
                     if(response.data['authen']=="1"){				
@@ -838,6 +838,76 @@ app.controller('users' , ['$scope' , '$http' , '$route' , '$routeParams' ,'$loca
 			$location.path("/login");
 		 }		 
     }
+
+    $scope.sendrecoveremail = function(){
+		if(localStorageService.get('login')=="1"){ 
+		   $location.path("/");
+		}
+		else {
+			
+		   var data = {
+              email:$scope.useremail			   
+		   };
+		   
+		   var req = {
+               url:'user/recovery_mail',
+               method:'POST',
+               header:{
+				  'Content-Type':'application/json' 
+			   },
+               data:data			   
+		   };
+		   
+		   $http(req).then(
+		         function(response){
+					 if(response.data['success']=="1"){
+						 
+					 }
+					 else {
+						 
+					 }
+				 },
+				 function(){
+					 
+				 }
+		   );	
+		}
+	}
+	
+  	$scope.show_recoverypopup = function(){
+		if(localStorageService.get('login')=="1"){ 
+		   $location.path("/");
+		}
+		else {
+			
+		   var data = {
+              section:'forgetpassword'			   
+		   };
+		   
+		   var req = {
+               url:'user/showpassword',
+               method:'POST',
+               header:{
+				  'Content-Type':'application/json' 
+			   },
+               data:data			   
+		   };
+		   
+		   $http(req).then(
+		         function(response){
+					 if(response.data['success']=="1"){
+						 
+					 }
+					 else {
+						 
+					 }
+				 },
+				 function(){
+					 
+				 }
+		   );	
+		}
+	}
 }]);
 
 

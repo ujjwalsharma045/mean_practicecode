@@ -189,7 +189,7 @@ app.use(function(req, res, next) {
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
     next();
 });
-
+  
 var mailer = require('nodemailer');  
   
 var storage = multer.diskStorage({
@@ -226,6 +226,15 @@ require('./controllers/HomeController')(app, func, mail, mailer, multer, validat
 require('./controllers/PageController')(app , func , mail, upload, storage, mailer, multer, validator, Page , paginate , cors , dateFormat, dateDiff , dobByAge , json2csv , excelexport , pdf , passport , LocalStrategy, bCrypt, slugify);
 
 //require('./crons/crons')(schedule, mail, mailer, User);
+
+app.use(function(req, res) {
+    res.status(404).send({url: req.originalUrl + ' not found'});	
+});
+  
+// Handle 500
+app.use(function(error, req, res, next) {
+   //res.status(500).send('500: Internal Server Error', 500);
+});
 
 var server = app.listen(8081 , function(){
     var host = server.address().address;

@@ -1,4 +1,4 @@
-app.controller('setting' , ['$scope' , '$http' , '$route' , '$routeParams' ,'$location' , 'authen', 'localStorageService' , 'dateTime' , 'Users' , 'pageTitle', 'Upload', '$timeout', 'Users', function($scope , $http , $route , $routeParams ,$location , authen, localStorageService , dateTime , Users , pageTitle, Upload, $timeout, Users){
+app.controller('setting' , ['$scope' , '$http' , '$route' , '$routeParams' ,'$location' , 'authen', 'localStorageService' , 'dateTime' , 'Users' , 'pageTitle', 'Upload', '$timeout', 'Users', '$state', '$stateParams', function($scope , $http , $route , $routeParams ,$location , authen, localStorageService , dateTime , Users , pageTitle, Upload, $timeout, Users, $state, $stateParams){
      	   
    var storageType = localStorageService.getStorageType(); 
    
@@ -64,7 +64,7 @@ app.controller('setting' , ['$scope' , '$http' , '$route' , '$routeParams' ,'$lo
 	  }
    }
 
-   if($route.current.type=="list"){       
+   if($state.current.name=="settingslist"){       
 	    if(localStorageService.get('login')=="1" && localStorageService.get('usertype')=="admin"){       
 			$http.get('setting/list').then(function(response){
 				if(response.data['authen']==1){					

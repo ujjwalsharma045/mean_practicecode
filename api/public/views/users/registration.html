@@ -1,0 +1,26 @@
+<div>
+    <titleelement></titleelement>
+</div>
+
+<form name="forgetpassword_form" ng-submit="sendrecoveremail()"  novalidate>
+	<div>
+	  <div ng-bind="errormessage" style="color:red"></div>
+		  <table border="1" style="border:1px solid #cccccc;border-collapse:collapse">
+			  <tr>
+				  <td>Email</td>		  
+				  <td>
+					 <input type="text" name="useremail" ng-model="user.email" required>
+					 <p ng-show="forgetpassword_form.submitted && forgetpassword_form.useremail.$invalid">
+					     Enter Email
+					 </p>
+				  </td>		  
+			  </tr>
+			  
+              <tr>				  
+				  <td colspan="2">					 
+					 <input type="Submit" name="Submit" id="submit" value="Submit"/>
+				  </td>		  
+			  </tr>			  
+		  </table>
+	</div>
+</form>

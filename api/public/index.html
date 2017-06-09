@@ -10,7 +10,7 @@
      <!-- <script src="js/angular-ckeditor.js"></script>
      <script src="js/angular-ckeditor.min.js"></script> -->	 
      <!-- <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/angular-i18n/1.4.6/angular-locale_es.js"></script> -->
-     
+	 <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/1.0.3/angular-ui-router.min.js"></script>     
 	 <script data-require="jquery@1.8.2" data-semver="1.8.2" src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.8.2/jquery.js"></script>
      <script data-require="fancybox@2.1.4" data-semver="2.1.4" src="//cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/jquery.fancybox.js"></script>
      <link data-require="fancybox@2.1.4" data-semver="2.1.4" rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/jquery.fancybox.css" />
@@ -35,12 +35,12 @@
 	 
 	 <script src="js/captcha/angular-recaptcha.js" type="text/javascript"></script>
 	
-	<script type="text/javascript" src="js/ui-bootstrap-tpls.min.js"></script>	 
+	 <script type="text/javascript" src="js/ui-bootstrap-tpls.min.js"></script>	 
 	 <link rel="stylesheet" type="text/css" href="css/angular-slide-wrapper.css">
 	 <script type="text/javascript">
-	    var app = angular.module('apimodule', ['ngRoute',  'ngCookies' , 'LocalStorageModule','720kb.datepicker' , 'ngCkeditor' , 'rzModule', 'ui.bootstrap','checklist-model','ngMap','ngFileUpload','vcRecaptcha']);
+	    var app = angular.module('apimodule', ['ngRoute',  'ngCookies' , 'LocalStorageModule','720kb.datepicker' , 'ngCkeditor' , 'rzModule', 'ui.bootstrap','checklist-model','ngMap','ngFileUpload','vcRecaptcha','ui.router']);
 		
-	    app.config(function($routeProvider , $locationProvider){
+	    /* app.config(function($routeProvider , $locationProvider){
 			//$locationProvider.html5Mode(true);
 			$routeProvider.when('/' , {
 				controller:'users',
@@ -193,10 +193,694 @@
 					   return "Edit Page";
 					}
 				}
+			}).when('/user/registration' , {
+				controller:'user',
+				templateUrl:'views/user/registration.html',
+				type:'registration',
+				resolve:{
+					pageTitle:function(){
+					   return "Registration";
+					}
+				}
 			}).otherwise({
 				redirectTo:'/error'
 			});					
-		});				
+		}); */		
+
+        /*app.config(function($stateProvider , $urlRouterProvider){
+			//$locationProvider.html5Mode(true);
+			$urlRouterProvider.otherwise('/');
+			
+			$stateProvider.state('app' , {								
+                type:'list',
+				url:'/',
+				views:{
+                    'header':{
+						templateUrl: '/views/users/users.html',
+						controller:'users'
+					},
+					'content': {
+						templateUrl: '/views/users/users.html', 
+						controller:'users'
+					},
+					'footer': {
+						templateUrl: '/views/users/users.html',
+						controller:'users'
+					}
+				},
+                resolve:{
+					pageTitle:function(){
+					   return "User List";
+					}
+				}				                			
+			}).state('add' , {				
+				type:'add',
+				url:'/add',
+				views:{
+                    'header':{
+						templateUrl: '/views/users/add.html',
+						controller:'users'
+					},
+					'content': {
+						templateUrl: '/views/users/add.html', 
+						controller:'users'
+					},
+					'footer': {
+						templateUrl: '/views/users/add.html',
+						controller:'users'
+					}
+				},
+				resolve:{
+					pageTitle:function(){
+					   return "Add User";
+					}
+				}
+			}).state('viewuser' , {				
+				type:'view',
+				url:'/view/:id',
+				views: {
+                    'header':{
+						templateUrl: '/views/users/view.html',
+						controller:'users'
+					},
+					'content': {
+						templateUrl: '/views/users/view.html', 
+						controller:'users'
+					},
+					'footer': {
+						templateUrl: '/views/users/view.html',
+						controller:'users'
+					}
+				},
+				resolve:{
+					pageTitle:function(){
+					   return "View User";
+					}
+				}
+			}).state('edituser' , {				
+				type:'edit',
+				url:'/edit/:id',
+				views: {
+                    'header':{
+						templateUrl: '/views/users/edit.html',
+						controller:'users'
+					},
+					'content': {
+						templateUrl: '/views/users/edit.html', 
+						controller:'users'
+					},
+					'footer': {
+						templateUrl: '/views/users/edit.html',
+						controller:'users'
+					}
+				},
+				resolve:{
+					pageTitle:function(){
+					   return "Edit User";
+					}
+				}
+			}).state('login' , {				
+				type:'login',
+				url:'/login',
+				views: {
+                    'header':{
+						templateUrl: '/views/users/login.html',
+						controller:'users'
+					},
+					'content': {
+						templateUrl: '/views/users/login.html', 
+						controller:'users'
+					},
+					'footer': {
+						templateUrl: '/views/users/login.html',
+						controller:'users'
+					}
+				},
+				resolve:{
+					pageTitle:function(){
+					   return "Sign-in";
+					}
+				}
+			}).state('contactus' , {
+				type:'contact',
+				url:'/contactus',
+				views: {
+                    'header':{
+						templateUrl: '/views/users/contact.html',
+						controller:'users'
+					},
+					'content': {
+						templateUrl: '/views/users/contact.html', 
+						controller:'users'
+					},
+					'footer': {
+						templateUrl: '/views/users/contact.html',
+						controller:'users'
+					}
+				},
+				resolve:{
+					pageTitle:function(){
+					   return "Contact Us";
+					}
+				}
+			}).state('aboutus' , {				
+				type:'aboutus',
+				url:'/aboutus',
+				views: {
+                    'header':{
+						templateUrl: '/views/home/aboutus.html',
+						controller:'home'
+					},
+					'content': {
+						templateUrl: '/views/home/aboutus.html', 
+						controller:'home'
+					},
+					'footer': {
+						templateUrl: '/views/home/aboutus.html',
+						controller:'home'
+					}
+				},
+				resolve:{
+					pageTitle:function(){
+					   return "About Us";
+					}
+				}
+			}).state('homeaboutus' , {				
+				type:'aboutus',
+				url:'/home/aboutus',
+				views: {
+                    'header':{
+						templateUrl: '/views/home/aboutus.html',
+						controller:'home'
+					},
+					'content': {
+						templateUrl: '/views/home/aboutus.html', 
+						controller:'home'
+					},
+					'footer': {
+						templateUrl: '/views/home/aboutus.html',
+						controller:'home'
+					}
+				},
+				resolve:{
+					pageTitle:function(){
+					   return "About Us";
+					}
+				}
+			}).state('exportusers' , {								
+				
+			}).state('exportxlsusers' , {
+												
+			}).state('homeindex' , {				
+				type:'home',
+				url:'/home/index',
+				views: {
+                    'header':{
+						templateUrl: '/views/home/index.html',
+						controller:'home'
+					},
+					'content': {
+						templateUrl: '/views/home/index.html', 
+						controller:'home'
+					},
+					'footer': {
+						templateUrl: '/views/home/index.html',
+						controller:'home'
+					}
+				},
+				resolve:{
+					pageTitle:function(){
+					   return "Home";
+					}
+				}
+			}).state('editpassword' , {				
+				type:'profile',
+				url:'/user/editpassword',
+				views: {
+                    'header':{
+						templateUrl: '/views/users/editpassword.html',
+						controller:'users'
+					},
+					'content': {
+						templateUrl: '/views/users/editpassword.html', 
+						controller:'users'
+					},
+					'footer': {
+						templateUrl: '/views/users/editpassword.html',
+						controller:'users'
+					}
+				},
+				resolve:{
+					pageTitle:function(){
+					   return "Change Password";
+					}
+				}
+			}).state('home' , {
+				type:'home',
+                url:'/home',				
+				views: {
+                    'header':{
+						templateUrl: '/views/home/index.html',
+						controller:'home'
+					},
+					'content': {
+						templateUrl: '/views/home/index.html', 
+						controller:'home'
+					},
+					'footer': {
+						templateUrl: '/views/home/index.html',
+						controller:'home'
+					}
+				},								
+				resolve:{
+					pageTitle:function(){
+					   return "Home";
+					}
+				}
+			}).state('error' , {				
+				template:'<div>404 Page Not Found</div>',				
+			}).state('setting' , {				
+				type:'list',
+				url:'/setting',
+				views: {
+                    'header':{
+						templateUrl: '/views/settings/add.html',
+						controller:'setting'
+					},
+					'content': {
+						templateUrl: '/views/settings/add.html', 
+						controller:'setting'
+					},
+					'footer': {
+						templateUrl: '/views/settings/add.html',
+						controller:'setting'
+					}
+				},
+				resolve:{
+					pageTitle:function(){
+					   return "Settings";
+					}
+				}
+			}).state('homecontactus' , {				
+				type:'add',
+				url:'/home/contactus',
+				views: {
+                    'header':{
+						templateUrl: '/views/home/contactus.html',
+						controller:'home'
+					},
+					'content': {
+						templateUrl: '/views/home/contactus.html', 
+						controller:'home'
+					},
+					'footer': {
+						templateUrl: '/views/home/contactus.html',
+						controller:'home'
+					}
+				},
+				resolve:{
+					pageTitle:function(){
+					   return "Contact Us";
+					}
+				}
+			}).state('pageindex' , {				
+				type:'list',
+				url:'/page/index',
+				views: {
+                    'header':{
+						templateUrl: '/views/page/index.html',
+						controller:'page'
+					},
+					'content': {
+						templateUrl: '/views/page/index.html', 
+						controller:'page'
+					},
+					'footer': {
+						templateUrl: '/views/page/index.html',
+						controller:'page'
+					}
+				},
+				resolve:{
+					pageTitle:function(){
+					   return "Page";
+					}
+				}
+			}).state('pageadd' , {				
+				type:'add',
+				url:'/page/add',
+				views: {
+                    'header':{
+						templateUrl: '/views/page/add.html',
+						controller:'page'
+					},
+					'content': {
+						templateUrl: '/views/page/add.html', 
+						controller:'page'
+					},
+					'footer': {
+						templateUrl: '/views/page/add.html',
+						controller:'page'
+					}
+				},
+				resolve:{
+					pageTitle:function(){
+					   return "Add Page";
+					}
+				}
+			}).state('pageedit' , {				
+				type:'edit',
+				url:'/page/edit/:id',
+				views: {
+                    'header':{
+						templateUrl: '/views/page/add.html',
+						controller:'page'
+					},
+					'content': {
+						templateUrl: '/views/page/add.html', 
+						controller:'page'
+					},
+					'footer': {
+						templateUrl: '/views/page/add.html',
+						controller:'page'
+					}
+				},
+				resolve:{
+					pageTitle:function(){
+					   return "Edit Page";
+					}
+				}
+			}).state('userregistration' , {				
+				type:'registration',
+				url:'/user/registration',
+				views: {
+                    'header':{
+						templateUrl: '/views/user/registration.html',
+						controller:'user'
+					},
+					'content': {
+						templateUrl: '/views/user/registration.html', 
+						controller:'user'
+					},
+					'footer': {
+						templateUrl: '/views/user/registration.html',
+						controller:'user'
+					}
+				},
+				resolve:{
+					pageTitle:function(){
+					   return "Registration";
+					}
+				}
+			}).otherwise({
+				redirectTo:'/error'
+			});					
+		});  */	
+
+        app.config(function($stateProvider , $urlRouterProvider){
+			//$locationProvider.html5Mode(true);
+			$urlRouterProvider.otherwise('/');
+			
+			$stateProvider.state('login' , {								
+                type:'login',
+				url:'/login',
+				views:{
+                    'header':{
+						templateUrl: '/views/layouts/header.html',
+						//controller:'users'
+					},
+					'content': {
+						templateUrl: '/views/users/login.html', 
+						controller:'users'
+					},
+					'footer': {
+						templateUrl: '/views/layouts/footer.html',
+						//controller:'users'
+					}
+				},
+                resolve:{
+					pageTitle:function(){
+					   return "Sign-In";
+					}
+				}				                			
+			})
+			.state('list' , {								
+                type:'list',
+				url:'/',
+				views:{
+                    'header':{
+						templateUrl: '/views/layouts/admin_header.html',
+						controller:'users'
+					},
+					'content': {
+						templateUrl: '/views/users/users.html', 
+						controller:'users'
+					},
+					'footer': {
+						templateUrl: '/views/layouts/admin_footer.html',
+						controller:'users'
+					}
+				},
+                resolve:{
+					pageTitle:function(){
+					   return "User List";
+					}
+				}				                			
+			})
+			.state('adduser' , {								
+                type:'add',
+				url:'/add',
+				views:{
+                    'header':{
+						templateUrl: '/views/layouts/admin_header.html',
+						controller:'users'
+					},
+					'content': {
+						templateUrl: '/views/users/add.html', 
+						controller:'users'
+					},
+					'footer': {
+						templateUrl: '/views/layouts/admin_footer.html',
+						controller:'users'
+					}
+				},
+                resolve:{
+					pageTitle:function(){
+					   return "Add User";
+					}
+				}				                			
+			}).state('edituser' , {								                
+				url:'/edit/:id',
+				views:{
+                    'header':{
+						templateUrl: '/views/layouts/admin_header.html',
+						//controller:'users'
+					},
+					'content': {
+						templateUrl: '/views/users/edit.html', 
+						controller:'users'
+					},
+					'footer': {
+						templateUrl: '/views/layouts/admin_footer.html',
+						//controller:'users'
+					}
+				},
+                resolve:{
+					pageTitle:function(){
+					   return "Edit User";
+					}
+				}				                			
+			}).state('settingslist' , {								                
+				url:'/setting',
+				views:{
+                    'header':{
+						templateUrl: '/views/layouts/admin_header.html',
+						controller:'users'
+					},
+					'content':{
+						templateUrl: '/views/settings/add.html', 
+						controller:'setting'
+					},
+					'footer':{
+						templateUrl: '/views/layouts/admin_footer.html',
+						controller:'users'
+					}
+				},
+                resolve:{
+					pageTitle:function(){
+					   return "Setting";
+					}
+				}				                			
+			}).state('pagelist' , {								                
+				url:'/page/index',
+				views:{
+                    'header':{
+						templateUrl: '/views/layouts/admin_header.html',
+						controller:'page'
+					},
+					'content':{
+						templateUrl: '/views/page/index.html', 
+						controller:'page'
+					},
+					'footer':{
+						templateUrl: '/views/layouts/admin_footer.html',
+						controller:'page'
+					}
+				},
+                resolve:{
+					pageTitle:function(){
+					   return "Page List";
+					}
+				}				                			
+			})
+			.state('addpage' , {								                
+				url:'/page/add',
+				views:{
+                    'header':{
+						templateUrl:'/views/layouts/admin_header.html',
+						controller:'users'
+					},
+					'content': {
+						templateUrl:'/views/page/add.html', 
+						controller:'page'
+					},
+					'footer': {
+						templateUrl:'/views/layouts/admin_footer.html',
+						controller:'users'
+					}
+				},
+                resolve:{
+					pageTitle:function(){
+					   return "Add Page";
+					}
+				}				                			
+			}).state('editpage' , {								                
+				url:'/page/edit/:id',
+				views:{
+                    'header':{
+						templateUrl:'/views/layouts/admin_header.html',
+						controller:'users'
+					},
+					'content': {
+						templateUrl:'/views/page/add.html', 
+						controller:'page'
+					},
+					'footer': {
+						templateUrl:'/views/layouts/admin_footer.html',
+						controller:'users'
+					}
+				},
+                resolve:{
+					pageTitle:function(){
+					   return "Edit Page";
+					}
+				}				                			
+			}).state('home' , {								                
+				url:'/home/index',
+				views:{
+                    'header':{
+						templateUrl:'/views/layouts/header.html',
+						controller:'users'
+					},
+					'content': {
+						templateUrl:'/views/home/index.html', 
+						controller:'home'
+					},
+					'footer': {
+						templateUrl:'/views/layouts/footer.html',
+						controller:'users'
+					}
+				},
+                resolve:{
+					pageTitle:function(){
+					   return "Edit Page";
+					}
+				}				                			
+			}).state('homepage' , {								                
+				url:'/home',
+				views:{
+                    'header':{
+						templateUrl:'/views/layouts/header.html',
+						controller:'users'
+					},
+					'content': {
+						templateUrl:'/views/home/index.html', 
+						controller:'home'
+					},
+					'footer': {
+						templateUrl:'/views/layouts/footer.html',
+						controller:'users'
+					}
+				},
+                resolve:{
+					pageTitle:function(){
+					   return "Home";
+					}
+				}				                			
+			}).state('contactus' , {								                
+				url:'/home/contactus',
+				views:{
+                    'header':{
+						templateUrl:'/views/layouts/header.html',
+						controller:'users'
+					},
+					'content': {
+						templateUrl:'/views/home/contactus.html', 
+						controller:'home'
+					},
+					'footer': {
+						templateUrl:'/views/layouts/footer.html',
+						controller:'users'
+					}
+				},
+                resolve:{
+					pageTitle:function(){
+					   return "Contact Us";
+					}
+				}				                			
+			}).state('aboutus' , {								                
+				url:'/home/aboutus',
+				views:{
+                    'header':{
+						templateUrl:'/views/layouts/header.html',
+						controller:'users'
+					},
+					'content': {
+						templateUrl:'/views/home/aboutus.html', 
+						controller:'home'
+					},
+					'footer': {
+						templateUrl:'/views/layouts/footer.html',
+						controller:'users'
+					}
+				},
+                resolve:{
+					pageTitle:function(){
+					   return "About Us";
+					}
+				}				                			
+			}).state('profile' , {								                
+				url:'/user/editpassword',
+				views:{
+                    'header':{
+						templateUrl:'/views/layouts/header.html',
+						controller:'users'
+					},
+					'content':{
+						templateUrl:'/views/users/editpassword.html', 
+						controller:'users'
+					},
+					'footer':{
+						templateUrl:'/views/layouts/footer.html',
+						controller:'users'
+					}
+				},
+                resolve:{
+					pageTitle:function(){
+					   return "Password";
+					}
+				}				                			
+			});
+         });			
 	 </script>
 	 <script src="services/services.js"></script>
 	 <script src="directives/directives.js"></script>
@@ -209,8 +893,9 @@
   </head>
   <body>
      <div ng-app="apimodule">
-	    
-	    <div ng-view></div>
+	    <div ui-view="header"></div>
+		<div ui-view="content"></div>
+		<div ui-view="footer"></div>
 	 </div>
   </body>
 </html>

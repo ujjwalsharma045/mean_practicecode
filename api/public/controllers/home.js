@@ -1,4 +1,4 @@
-app.controller('home' , ['$scope' , '$http' , '$route' , '$routeParams' ,'$location' , 'authen', 'localStorageService' , 'dateTime' , 'Users' , 'pageTitle', 'Upload', '$timeout', 'vcRecaptchaService', function($scope , $http , $route , $routeParams ,$location , authen, localStorageService , dateTime , Users , pageTitle, Upload, $timeout, vcRecaptchaService){
+app.controller('home' , ['$scope' , '$http' , '$route' , '$routeParams' ,'$location' , 'authen', 'localStorageService' , 'dateTime' , 'Users' , 'pageTitle', 'Upload', '$timeout', 'vcRecaptchaService', '$state', '$stateParams', function($scope , $http , $route , $routeParams ,$location , authen, localStorageService , dateTime , Users , pageTitle, Upload, $timeout, vcRecaptchaService, $state, $stateParams){
     	
    var storageType = localStorageService.getStorageType(); 
    $scope.model = {
@@ -71,7 +71,7 @@ app.controller('home' , ['$scope' , '$http' , '$route' , '$routeParams' ,'$locat
 	
     $scope.sliders = [];
 	
-    if($route.current.type=="home"){
+    if($state.current.name=="home" || $state.current.name=="homepage"){
 	    $http.get('/home/index').then(function(response){
 			  if(response.data['success']=="1"){
 				   $scope.sliders = response.data['records'];
@@ -82,7 +82,7 @@ app.controller('home' , ['$scope' , '$http' , '$route' , '$routeParams' ,'$locat
 		});
     }
 	
-	if($route.current.type=="aboutus"){
+	if($state.current.name=="aboutus"){
 		$scope.pagecontent = "";
 	    $http.get('/home/page/about-us').then(function(response){			
 			  if(response.data['success']=="1"){ 			  
