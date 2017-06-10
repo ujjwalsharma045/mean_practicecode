@@ -1,27 +1,23 @@
 <!-- <div ng-include="'views/layouts/admin_header.html'"></div> -->
 
-<div>
-   <titleelement></titleelement>
-</div>
-</br>
-
-<form name="settingform" novalidate>
+<div class="content-wrapper">
+ <section class="content">
 	<div>
-	  <table border="1" style="border:1px solid#cccccc;border-collapse:collapse">	 
-	      <tr ng-repeat="(key, value) in settings">
-			  <td>{{settings[key].title}}</td>		  
-			  <td>
-				 <input type="text" name="setting[]" ng-model="settings[key].content">
-			  </td>		  
-		  </tr>
-		  		  		  
-		  <tr style="border:0px solid #ffffff">			  
-			  <td colspan="2">
-				 <input type="button" value="Submit" ng-click="savesettings()"/> 	  
-			  </td>		  
-		  </tr>
-	  </table>	  
+	   <titleelement></titleelement>
 	</div>
-</form>
+    </br>
 
+	<form name="settingform" novalidate>
+		<div>
+		  <div class="form-group" ng-repeat="(key, value) in settings">
+			  <label>{{settings[key].title}}</label>		  				  
+			  <input type="text" name="setting[]" class="form-control" ng-model="settings[key].content">
+		  </div>
+          <div class="form-group">		  
+			  <input type="button" value="Submit" ng-click="savesettings()"/>
+		  </div>
+		</div>
+	</form>
+  </section>
+</div>  
 <!-- <div ng-include="'views/layouts/admin_footer.html'"></div> -->

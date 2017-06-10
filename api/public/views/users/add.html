@@ -1,74 +1,61 @@
 <!-- <div ng-include="'views/layouts/admin_header.html'"></div> -->
-
+<div class="content-wrapper">
+ <section class="content">
 <div>
    <titleelement></titleelement>
 </div>
 </br>
 
 <form name="userform"  novalidate>
-	<div>
-	  <table border="1" style="border:1px solid #cccccc;border-collapse:collapse">
-		  <tr>
-			  <td>First Name</td>		  
-			  <td>
-			     <input type="text" name="firstname" ng-model="user.first_name" required>
-				 <p ng-show="submitted && userform.firstname.$invalid">Enter First Name</p>
-			  </td>		  
-		  </tr>		  		  
+	<div>	  
+		  <div class="form-group">
+			  <label>First Name</label>
+			  <input type="text" name="firstname" class="form-control" ng-model="user.first_name" required placeholder="">
+			  <p ng-show="submitted && userform.firstname.$invalid">Enter First Name</p>
+		  </div>		  		  
 		  
-		  <tr>
-			  <td>Last Name</td>		  
-			  <td>
-				 <input type="text" name="lastname" ng-model="user.last_name" required>
-				 <p ng-show="submitted && userform.lastname.$invalid">Enter Last Name</p>
-				 <input type="hidden" ng-model="user.id">
-			  </td>		  
-		  </tr>
+		  <div class="form-group">
+			  <label>Last Name</label>  			  
+			  <input type="text" name="lastname" class="form-control" ng-model="user.last_name" required>
+			  <p ng-show="submitted && userform.lastname.$invalid">Enter Last Name</p>
+			  <input type="hidden" ng-model="user.id">			  
+		  </div>
 		  
-          <tr>
-			  <td>Email</td>		  
-			  <td>
-				 <input type="text" name="email" ng-model="user.email" required>
-				 <p ng-show="submitted && userform.email.$invalid">Enter Email</p>				 
-			  </td>		  
-		  </tr>
+          <div class="form-group">			  		 
+			  <label>Email</label>
+			  <input type="text" name="email" class="form-control" ng-model="user.email" required>
+			  <p ng-show="submitted && userform.email.$invalid">Enter Email</p>
+		  </div>
 
-          <tr>
-			  <td>Username</td>		  
-			  <td>
-				 <input type="text" name="username" ng-model="user.username" required>
-				 <p ng-show="submitted && userform.username.$invalid">Enter Username</p>				 
-			  </td>		  
-		  </tr>
+          <div class="form-group">
+			  <label>Username</label>		  
+			  <input type="text" name="username" class="form-control" ng-model="user.username" required>
+			  <p ng-show="submitted && userform.username.$invalid">Enter Username</p>
+		  </div>
 
-          <tr>
-			  <td>Password</td>		  
-			  <td>
-				 <input type="password" name="password" ng-model="user.password" required>
-				 <p ng-show="submitted && userform.password.$invalid">Enter Password</p>				 
-			  </td>		  
-		  </tr>
+          <div class="form-group">
+			  <label>Password</label>		  			  
+			  <input type="password" name="password" class="form-control" ng-model="user.password" required>
+			  <p ng-show="submitted && userform.password.$invalid">Enter Password</p>
+		  </div>
 		  
-		  <tr>
-		    <td>Image</td>	
-		    <td>
-		       <input type="file" ngf-select ng-model="picFile" name="file"    
+		  <div class="form-group">
+		    <label>Image</label>	
+		    <input type="file" ngf-select ng-model="picFile" class="form-control" name="file"    
              accept="image/*" ngf-max-size="2MB">
-			   <!-- <p ng-show="submitted && userform.file.$error.required">
+			<!-- <p ng-show="submitted && userform.file.$error.required">
 			      Select File
 			   </p>
 			   <p ng-show="submitted && userform.file.$error.maxSize">
 			     File too large 
                  {{errorFile.size / 1000000|number:1}}MB: max 2M
 			   </p> -->                           
-              <img ng-show="userform.file.$valid" ngf-thumbnail="picFile" class="thumb"> <button ng-click="picFile = null" ng-show="picFile">Remove</button>
-	        </td>
-		  </tr>
+            <img ng-show="userform.file.$valid" ngf-thumbnail="picFile" class="thumb"> <button ng-click="picFile = null" ng-show="picFile">Remove</button>	        
+		  </div> 
           
-          <tr>
-			  <td>DOB</td>		  
-			  <td>
-				 <datepicker date-format="yyyy-MM-dd" date-max-limit="2017
+          <!-- <div>
+			  <label>DOB</label>		  
+			  <datepicker date-format="yyyy-MM-dd" date-max-limit="2017
 " selector="form-control">
 					<div class="input-group">
 						<input class="form-control" name="dateofbirth" ng-model="user.dateofbirth" placeholder="Choose a date"/>
@@ -76,27 +63,20 @@
 						<i class="fa fa-lg fa-calendar"></i>
 						</span>
 					</div>
-                 </datepicker>
-				 <p ng-show="submitted && userform.dateofbirth.$invalid">Enter Date Of Birth</p>
-			  </td>		  
-		  </tr>  
+              </datepicker>
+			  <p ng-show="submitted && userform.dateofbirth.$invalid">Enter Date Of Birth</p>
+		  </div> --> 
 		  
-		  <tr>
-			  <td>Description</td>		  
-			  <td>
-				 <textarea ckeditor="editorOptions" ng-model="user.description"></textarea>
-			  </td>		  
-		  </tr>
+		  <div class="form-group">
+			  <label>Description</label>		  			  
+			  <textarea ckeditor="editorOptions" class="form-control" ng-model="user.description"></textarea>			  
+		  </div>
 		  
-		  <tr style="border:0px solid #ffffff">
-			  <td></td>		  
-			  <td>
-				 <input type="button" value="Submit" ng-click="adduser(picFile)"/> 	  
-			  </td>		  
-		  </tr>
-	  </table>
-	  
+		  <div class="form-group">			  
+			  <input type="button" value="Submit" ng-click="adduser(picFile)"/> 	  			  
+		  </div>	  	  
 	</div>
 </form>
-
+</section>
+</div>
 <!-- <div ng-include="'views/layouts/admin_footer.html'"></div> -->

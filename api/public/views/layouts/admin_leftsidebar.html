@@ -1,0 +1,44 @@
+<style type="text/css">
+ul{
+  list-style:none
+}
+ul li {
+  float:left
+}
+</style>
+
+<div class="container">
+        <div class="logo">
+			<a href="/">
+				<img src="img/logo.png" alt="Unlocking Smart">
+			</a>
+        </div>
+        <nav>
+           <div class="responsive_nav">                                        
+			  <ul class="menu">				
+				<li class="unlock-link" ng-if="adminloggedin">
+					<a href="#/" class="btn btn-link">User</a>
+				</li>
+				<li class="" ng-if="adminloggedin">
+				   <a href="#/page/index" class="btn btn-link">Page</a>
+				</li>
+				<li class="" ng-if="adminloggedin">
+				   <a href="#/setting" class="btn btn-link">Setting</a>
+				</li>				
+				<li ng-if="adminloggedin">
+				   <a href="javascript:void(0)" class="btn btn-link" ng-click="logout()">Logout</a>
+				</li>				
+			  </ul>
+           </div>
+	    </nav>
+</div>
+<div timeelement></div>
+<style type="text/css">
+  ul li{
+    float:left;
+	border:1px solid #CCCCCC;
+	width:auto;
+	padding-left:10px;
+	padding-right:10px;
+  }
+</style>

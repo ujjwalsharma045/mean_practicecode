@@ -41,7 +41,17 @@ app.controller('front' , ['$scope' , '$http' , '$route' , '$routeParams' ,'$loca
 			
 		   }
 	   );	   	    	  
-    }          
+    }
+    $scope.userstate = false;
+	$scope.pagestate = false;
+    $scope.toogle = function(type){
+		if(type=="user"){
+			$scope.userstate = !$scope.userstate;
+		}
+		else if(type=="page"){
+			$scope.pagestate = !$scope.pagestate;
+		}
+	}	
 }]);
 
 

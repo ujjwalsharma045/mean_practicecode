@@ -1,52 +1,44 @@
 <!-- <div ng-include="'views/layouts/admin_header.html'"></div> -->
 
-<div>
-   <titleelement></titleelement>
-</div>
-</br>
-
-<form name="pageform"  novalidate>
+<div class="content-wrapper">
+ <section class="content">
 	<div>
-	  <table border="1" style="border:1px solid #cccccc;border-collapse:collapse">
-		  <tr>
-			  <td>Title</td>		  
-			  <td>
-			     <input type="text" name="title" ng-model="page.title" required>
-				 <p ng-show="pageform.submitted && pageform.title.$invalid">Enter Title</p>
-			  </td>		  
-		  </tr>		  		  
-		  
-		  <tr>
-			  <td>Content</td>		  
-			  <td>
-				 <textarea ckeditor="editorOptions" type="text" name="content" ng-model="page.content" required></textarea>
-				 <p ng-show="pageform.submitted && pageform.content.$invalid">Enter Last Name</p>
-			  </td>		  
-		  </tr>
-		  
-          <tr>
-			  <td>Status</td>		  
-			  <td>
-				 <select name="status" ng-model="page.status" required>
-				    <option ng-repeat="status in  statusarr" value="{{status.id}}">{{status.title}}</option>
+	   <titleelement></titleelement>
+	</div>
+    </br>
+
+	<form name="pageform"  novalidate>
+		<div>
+		      <div class="form-group">
+				  <label>Title</label>		  
+				  <input type="text" name="title" class="form-control" ng-model="page.title" required>
+				  <p ng-show="pageform.submitted && pageform.title.$invalid">Enter Title</p>
+			  </div>		  		  
+			  
+			  <div class="form-group">
+				  <label>Content</label>		  				  
+				  <textarea ckeditor="editorOptions" class="form-control" type="text" name="content" ng-model="page.content" required></textarea>
+				  <p ng-show="pageform.submitted && pageform.content.$invalid">Enter Last Name</p>
+			  </div>
+			  
+			  <div class="form-group">
+				 <label>Status</label>		  				  
+				 <select name="status" class="form-control" ng-model="page.status" required>
+					<option ng-repeat="status in  statusarr" value="{{status.id}}">{{status.title}}</option>
 				 </select>
 				 <p ng-show="pageform.submitted && pageform.status.$invalid">Select Status</p>
-			  </td>		  
-		  </tr>
-          		 
-		  <tr style="border:0px solid #ffffff">
-			  <td></td>		  
-			  <td>
-			     <div ng-if="pagemode == 'add'">
+			  </div>
+					 
+			  <div class="form-group">				 				  
+				 <div ng-if="pagemode == 'add'">
 				   <input type="button" value="Submit" ng-click="addpage()"/> 	  
 				 </div>
-                 <div ng-if="pagemode == 'edit'">
+				 <div ng-if="pagemode == 'edit'">
 				   <input type="button" value="Submit" ng-click="editpage()"/> 	   
-                 </div>				 
-			  </td>		  
-		  </tr>
-	  </table>	  
-	</div>
-</form>
-
+				 </div>				 				  
+			  </div>		   
+		</div>
+	</form>
+  </section>
+</div>  
 <!-- <div ng-include="'views/layouts/admin_footer.html'"></div> -->
