@@ -30,42 +30,42 @@ app.controller('setting' , ['$scope' , '$http' , '$route' , '$routeParams' ,'$lo
     $scope.title = pageTitle;
                           
     $scope.savesettings = function(){
-	  if(localStorageService.get('login')=="1" && localStorageService.get('usertype')=="admin"){ 	                  		
-		   var data = {
-				settings: $scope.settings					
-		   };	
-		   
-		   var req = {
-				method: 'POST',
-				url: 'setting/add',
-				headers: {
-				  'Content-Type': 'application/json'
-				},
-				data: data
-		   };
+		  if(localStorageService.get('login')=="1" && localStorageService.get('usertype')=="admin"){ 	                  		
+			   var data = {
+					settings: $scope.settings					
+			   };	
+			   
+			   var req = {
+					method: 'POST',
+					url: 'setting/add',
+					headers: {
+					  'Content-Type': 'application/json'
+					},
+					data: data
+			   };
 
-		   $http(req).then(
-			  function(response){
-					console.log(response);
-					if(response.data['authen']=='1'){
-						$location.path("/");
-					}
-					else {
-						localStorageService.remove('login');
-						$location.path("/login");
-					}
-			  },
-			  function(response){	      
-					
-			  }
-		   );		    				
-	  }
-	  else {
-		  $location.path("/login");
-	  }
-    }
+			   $http(req).then(
+				  function(response){
+						console.log(response);
+						if(response.data['authen']=='1'){
+							$location.path("/admin/setting");
+						}
+						else {
+							localStorageService.remove('login');
+							$location.path("/login");
+						}
+				  },
+				  function(response){	      
+						
+				  }
+			   );		    				
+		  }
+		  else {
+			  $location.path("/login");
+		  }
+     }
 
-    if($state.current.name=="settingslist"){       
+     if($state.current.name=="settingslist"){       
 	    if(localStorageService.get('login')=="1" && localStorageService.get('usertype')=="admin"){       
 			$http.get('setting/list').then(function(response){
 				if(response.data['authen']==1){					
@@ -81,10 +81,6 @@ app.controller('setting' , ['$scope' , '$http' , '$route' , '$routeParams' ,'$lo
         else {
 			$location.path("/login");
 		}      
-   }
-
-    $scope.logout = function(){
-	    Users.logOut($scope, $location, localStorageService);
     }   
 }]);
 

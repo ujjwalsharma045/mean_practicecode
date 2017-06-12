@@ -34,11 +34,6 @@ header{
 	<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
 
-
-
-
-
-
 <header class="main-header">
         <!-- Logo -->
         <a href="../../index2.html" class="logo">
@@ -63,15 +58,15 @@ header{
               <li class="dropdown user user-menu">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                   <!-- <img src="../../dist/img/user2-160x160.jpg" class="user-image" alt="User Image"> -->
-                  <span class="hidden-xs">Alexander Pierce</span>
+                  <span class="hidden-xs">{{loggedinusername}}</span>
                 </a>
                 <ul class="dropdown-menu">
                   <!-- User image -->
                   <li class="user-header">
-                    <img src="../../dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
+                    <img src="/uploads/{{loggedin_filepath}}" class="img-circle" alt="User Image">
                     <p>
-                      Alexander Pierce - Web Developer
-                      <small>Member since Nov. 2012</small>
+                      {{loggedinusername}}
+                      <small>Member since {{memberfrom}}</small>
                     </p>
                   </li>
                   
@@ -93,7 +88,17 @@ header{
             </ul>
           </div>
         </nav>
- </header>
+</header>
+ 
+<style type="text/css">
+.treeview-menus{
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    padding-left: 25px;
+	margin-left: 0 1px;
+}
+</style>
 
 <aside class="main-sidebar" style="min-height:200%">
 	<!-- sidebar: style can be found in sidebar.less -->
@@ -111,19 +116,19 @@ header{
 	  <!-- sidebar menu: : style can be found in sidebar.less -->
 	  <ul class="sidebar-menu">
 		<li class="header">MAIN NAVIGATION</li>
-		<!-- <li class="treeview">
-		  <a href="#">
+		<li class="treeview">
+		  <a href="#/admin/dashboard">
 			<i class="fa fa-dashboard"></i> <span>Dashboard</span> <i class="fa fa-angle-left pull-right"></i>
 		  </a>		  
-		</li> -->
+		</li>
 		<li class="treeview">
 			  <a href="javascript:void(0)" ng-click="toogle('user')">
 				<i class="fa fa-table"></i> <span>User</span>
 				<i class="fa fa-angle-left pull-right"></i>
 			  </a>
-			  <ul class="treeview-menu" ng-show="userstate">
-				<li><a href="#/add"><i class="fa fa-circle-o"></i>Add User</a></li>
-				<li><a href="#/"><i class="fa fa-circle-o"></i> User List</a></li>
+			  <ul class="treeview-menus" ng-show="userstate">
+				<li><a href="#/admin/user/add"><i class="fa fa-circle-o"></i>Add User</a></li>
+				<li><a href="#/admin/user/index"><i class="fa fa-circle-o"></i> User List</a></li>
 			  </ul>
         </li>
 		
@@ -132,14 +137,14 @@ header{
 				<i class="fa fa-table"></i> <span>Page</span>
 				<i class="fa fa-angle-left pull-right"></i>
 			  </a>
-			  <ul class="treeview-menu"  ng-show="pagestate">
-				<li><a href="#/page/add"><i class="fa fa-circle-o"></i>Add Page</a></li>
-				<li><a href="#/page/index"><i class="fa fa-circle-o"></i>Page List</a></li>
+			  <ul class="treeview-menus"  ng-show="pagestate">
+				<li><a href="#/admin/page/add"><i class="fa fa-circle-o"></i>Add Page</a></li>
+				<li><a href="#/admin/page/index"><i class="fa fa-circle-o"></i>Page List</a></li>
 			  </ul>
         </li>
 		
 		<li class="treeview">
-			  <a href="#/setting" ng-click="toogle('setting')">
+			  <a href="#/admin/setting" ng-click="toogle('setting')">
 				<i class="fa fa-table"></i> <span>Settings</span>				
 			  </a>			  
         </li>

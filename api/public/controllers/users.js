@@ -196,7 +196,7 @@ app.controller('users' , ['$scope' , '$http' , '$route' , '$routeParams' ,'$loca
 							  });*/
 							  if(response.data['authen']=='1'){
 								  if(response.data['success']=='1'){
-									  $location.path("/");
+									  $location.path("/admin/user/index");
 								  }
 								  else {
 									  localStorageService.remove('login');
@@ -244,7 +244,7 @@ app.controller('users' , ['$scope' , '$http' , '$route' , '$routeParams' ,'$loca
 						      console.log(response);
 							  if(response.data['authen']=='1'){
 								  if(response.data['success']=='1'){
-									  $location.path("/");
+									  $location.path("/admin/user/index");
 								  }
 								  else {
 									  localStorageService.remove('login');
@@ -297,7 +297,7 @@ app.controller('users' , ['$scope' , '$http' , '$route' , '$routeParams' ,'$loca
 					  });*/
 					  if(response.data['authen']=='1'){
 						    if(response.data['success']=='1')
-							  $location.path("/");
+							  $location.path("/admin/user/index");
                             else {
 							  localStorageService.remove('login');	
 							  $location.path("/login");	
@@ -343,7 +343,7 @@ app.controller('users' , ['$scope' , '$http' , '$route' , '$routeParams' ,'$loca
 						console.log(response);
 						if(response.data['authen']=='1'){
 							if(response.data['success']=='1'){
-							   $location.path("/");
+							   $location.path("/admin/user/index");
 							}
 							else {  
 							   localStorageService.remove('login');
@@ -395,16 +395,21 @@ app.controller('users' , ['$scope' , '$http' , '$route' , '$routeParams' ,'$loca
 							if(response.data['usertype']=='admin'){
 							   localStorageService.set('login', '1'); 
 							   localStorageService.set('usertype', 'admin');
-							   $location.path("/");
+							   localStorageService.set('username' , response.data['records'].first_name+" "+response.data['records'].last_name);
+							   localStorageService.set('memberfrom' , response.data['records'].created_at);
+                               localStorageService.set('profilepic' , response.data['records'].profile_pic);
+							   $location.path("/admin/dashboard");
 							}
 							else {
 							   localStorageService.set('login', '1');
 							   localStorageService.set('usertype', 'user');
+							   localStorageService.set('username' , response.data['records'].first_name+" "+response.data['records'].last_name);
+							   localStorageService.set('memberfrom' , response.data['records'].created_at);
 							   $location.path("/home");	
 							}
 						}
 						else {							
-					       $scope.errormessage = "Either Name or salary is incorrect";
+					        $scope.errormessage = "Either Name or salary is incorrect";
 						} 
 				  },
 				  function(response){	      
@@ -427,30 +432,6 @@ app.controller('users' , ['$scope' , '$http' , '$route' , '$routeParams' ,'$loca
 			}							   	  		
 		});         
     }   
-   
-    $scope.logout = function(){
-	     
-	   var req = {
-			method: 'POST',
-			url: 'logout',
-			headers: {
-			  'Content-Type': 'application/json'
-			}
-	   };
-
-	   $http(req).then(
-		   function(response){
-			 console.log(response);
-			 if(response.data['success']=='1'){
-				 localStorageService.remove('login');
-				 $location.path("/login");
-			 }
-		   },
-		   function(response){	      
-			
-		   }
-	   );	   	    	  
-    }
    
     $scope.setPageNo = function(no){
 	   $scope.current_page  = no+1;

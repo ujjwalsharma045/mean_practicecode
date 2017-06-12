@@ -1,5 +1,13 @@
 <!-- <div ng-include="'views/layouts/admin_header.html'"></div> -->
 <div class="content-wrapper">
+
+ <section class="content-header">	  
+	  <ol class="breadcrumb">
+		<li><a href="#/admin/dashboard"><i class="fa fa-dashboard"></i>Home</a></li>
+		<li class="active">User</li>
+	  </ol>
+ </section>
+	
  <section class="content">    
 	<div>
 		<titleelement></titleelement>
@@ -38,7 +46,7 @@
 		
 		<div style="float:left">
 		  <div>
-		   <a href="#add">Add Users</a>
+		   <a href="#/admin/user/add">Add Users</a>
 		  </div>
 		  </br>
 		</div>
@@ -132,7 +140,7 @@
 			  <td>{{x.dateofbirth}}</td>		  
 			  <!-- <td><a href="#/view/{{x._id}}" >View</a></td> -->
 			  <td><a href="javascript:void(0)" fancybox ng-click="showview(x._id)">View</a></td>
-			  <td><a href="#/edit/{{x._id}}">Edit</a></td>
+			  <td><a href="#/admin/user/edit/{{x._id}}">Edit</a></td>
 			  <td>
 				<a href="javascript:void(0)" ng-click="remove(x._id , $index)">
 				   Delete

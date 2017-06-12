@@ -1,11 +1,9 @@
-module.exports = function(app, func, mail, mailer, multer, validator, cors, dateFormat, dateDiff,LocalStrategy, Category, Page){ 
+module.exports = function(app, func, mail, mailer, multer, validator, cors, dateFormat, dateDiff,LocalStrategy, Category, Page, passport, fs, async, User){ 
     
     var sess;
     var session = require('express-session'); 
-	var fs = require('fs'); 
 	var handlebars = require('handlebars');
 	var request = require('request');
-	
     var readHTMLFile = function(path, callback) {
 		fs.readFile(path, {encoding: 'utf-8'}, function (err, html) {
 			if (err) {
@@ -127,5 +125,24 @@ module.exports = function(app, func, mail, mailer, multer, validator, cors, date
 			res.setHeader('Content-Type', 'application/json');
 			res.send(JSON.stringify({'record':doc , success:1}));
 		});		
-	}	
+	}
+
+    app.get("/home/summary", passport.isAdminAuthenticated, function(req, res){
+	    async.parallel([
+			   function(cb){
+				   User.find({}, cb);
+			   },
+			   function(cb){
+				   Page.find({}, cb);
+			   }
+		  ], function(err, results){				 
+			 var records = {
+				 totalusers:results[0].length,
+                 totalpages:results[1].length				 
+			 };
+			 
+			 res.setHeader('Content-Type', 'application/json');
+			 res.send(JSON.stringify({'success':1, 'authen':1, 'records':records}));
+	    });				
+	});	
 }

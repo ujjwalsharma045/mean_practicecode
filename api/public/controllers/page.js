@@ -98,14 +98,12 @@ app.controller('page' , ['$scope' , '$http' , '$route' , '$routeParams' ,'$locat
 		}   
     }
     
-    if($state.current.name=="view"){  
-	     alert($stateParams.id);
+    if($state.current.name=="view"){  	     
          $scope.title += ' '+$stateParams.id;
 		 if(localStorageService.get('login')=="1" && localStorageService.get('usertype')=="admin"){    
 			$http.get('page/view/'+$stateParams.id).then(function(response){
                     if(response.data['authen']=="1"){				
-					   if(response.data['success']=="1"){
-		                  alert($stateParams.id);				   
+					   if(response.data['success']=="1"){		                  
 					      $scope.page = response.data['records']; 
 					   }
 					   else {
@@ -213,7 +211,7 @@ app.controller('page' , ['$scope' , '$http' , '$route' , '$routeParams' ,'$locat
 						      console.log(response);
 							  if(response.data['authen']=='1'){
 								  if(response.data['success']=='1'){
-									  $location.path("/page/index");
+									  $location.path("/admin/page/index");
 								  }
 								  else {
 									  localStorageService.remove('login');
@@ -266,7 +264,7 @@ app.controller('page' , ['$scope' , '$http' , '$route' , '$routeParams' ,'$locat
 						console.log(response);
 						if(response.data['authen']=='1'){
 							if(response.data['success']=='1'){
-							   $location.path("/page/index");
+							   $location.path("/admin/page/index");
 							}
 							else {  
 							   localStorageService.remove('login');

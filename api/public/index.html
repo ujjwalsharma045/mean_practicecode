@@ -627,7 +627,7 @@
 			})
 			.state('list' , {								
                 type:'list',
-				url:'/',
+				url:'/admin/user/index',
 				views:{
                     'header':{
 						templateUrl: '/views/layouts/admin_header.html',
@@ -650,7 +650,7 @@
 			})
 			.state('adduser' , {								
                 type:'add',
-				url:'/add',
+				url:'/admin/user/add',
 				views:{
                     'header':{
 						templateUrl: '/views/layouts/admin_header.html',
@@ -672,7 +672,7 @@
 				}				                			
 			})
 			.state('edituser' , {								                
-				url:'/edit/:id',
+				url:'/admin/user/edit/:id',
 				views:{
                     'header':{
 						templateUrl: '/views/layouts/admin_header.html',
@@ -694,7 +694,7 @@
 				}				                			
 			})
 			.state('settingslist' , {								                
-				url:'/setting',
+				url:'/admin/setting',
 				views:{
                     'header':{
 						templateUrl: '/views/layouts/admin_header.html',
@@ -716,7 +716,7 @@
 				}				                			
 			})
 			.state('pagelist' , {								                
-				url:'/page/index',
+				url:'/admin/page/index',
 				views:{
                     'header':{
 						templateUrl: '/views/layouts/admin_header.html',
@@ -738,7 +738,7 @@
 				}				                			
 			})
 			.state('addpage' , {								                
-				url:'/page/add',
+				url:'/admin/page/add',
 				views:{
                     'header':{
 						templateUrl:'/views/layouts/admin_header.html',
@@ -760,7 +760,7 @@
 				}				                			
 			})
 			.state('editpage' , {								                
-				url:'/page/edit/:id',
+				url:'/admin/page/edit/:id',
 				views:{
                     'header':{
 						templateUrl:'/views/layouts/admin_header.html',
@@ -783,6 +783,28 @@
 			})
 			.state('home' , {								                
 				url:'/home/index',
+				views:{
+                    'header':{
+						templateUrl:'/views/layouts/header.html',
+						controller:'front'
+					},
+					'content': {
+						templateUrl:'/views/home/index.html', 
+						controller:'home'
+					},
+					'footer': {
+						templateUrl:'/views/layouts/footer.html',
+						controller:'front'
+					}
+				},
+                resolve:{
+					pageTitle:function(){
+					   return "Home";
+					}
+				}				                			
+			})
+			.state('homedefault' , {								                
+				url:'/',
 				views:{
                     'header':{
 						templateUrl:'/views/layouts/header.html',
@@ -888,6 +910,28 @@
                 resolve:{
 					pageTitle:function(){
 					   return "Password";
+					}
+				}				                			
+			})
+			.state('dashboard' , {								                
+				url:'/admin/dashboard',
+				views:{
+                    'header':{
+						templateUrl: '/views/layouts/admin_header.html',
+						controller:'front'
+					},
+					'content': {
+						templateUrl: '/views/home/dashboard.html', 
+						controller:'home'
+					},
+					'footer': {
+						templateUrl: '/views/layouts/admin_footer.html',
+						controller:'front'
+					}
+				},
+                resolve:{
+					pageTitle:function(){
+					   return "Dashboard";
 					}
 				}				                			
 			});

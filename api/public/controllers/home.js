@@ -97,7 +97,19 @@ app.controller('home' , ['$scope' , '$http' , '$route' , '$routeParams' ,'$locat
     $scope.logout = function(){
 	  localStorageService.remove('login');
 	  $location.path("/login"); 	   
-    }     
+    } 
+
+    if($state.current.name=="dashboard"){		
+	    $http.get('/home/summary').then(function(response){			
+			  if(response.data['success']=="1"){ 			  
+				 $scope.totalpages = response.data['records'].totalpages;
+				 $scope.totalusers = response.data['records'].totalusers;
+			  }
+			  else {
+				  
+			  }
+		});
+	}		
 }]);
 
 

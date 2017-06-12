@@ -1,9 +1,9 @@
-module.exports = function(app , func , mail, upload, storage, mailer, multer, validator, User, paginate , cors , dateFormat , dateDiff, dobByAge, json2csv, excel , pdf, passport , LocalStrategy, bCrypt){ 
+module.exports = function(app , func , mail, upload, storage, mailer, multer, validator, User, paginate , cors , dateFormat , dateDiff, dobByAge, json2csv, excel , pdf, passport , LocalStrategy, bCrypt , fs, async){ 
     
     var sess;
     //var session = require('express-session'); 
     var math = require('mathjs');  		
-	var async = require('async');	
+
 	app.get("/showusers", passport.isAdminAuthenticated, function(req, res){
 		
 			var data = {
@@ -284,14 +284,35 @@ module.exports = function(app , func , mail, upload, storage, mailer, multer, va
 			  }
 			  else {
 				  req.login(user, function(err) {
-					 if(err){ return next(err); }
-					 res.setHeader('Content-Type', 'application/json');
-					 if(req.user.is_admin==1){
-					   res.send(JSON.stringify({authen:1, success:1, usertype:'admin'}));
-					 }
-					 else {
-					   res.send(JSON.stringify({authen:1, success:1, usertype:'user'}));	 
-					 }
+					   if(err){ return next(err); }
+					   res.setHeader('Content-Type', 'application/json');
+					   
+					   if(req.user.profile_pic!=""){
+							if(!fs.existsSync("uploads/"+req.user.profile_pic)){	
+							    req.user.profile_pic = "default.jpg";
+							}
+					   }
+					   else {
+							 req.user.profile_pic = "default.jpg";
+					   }
+					   
+                       console.log(req.user);					 					 
+					   if(req.user.is_admin==1){					   
+					      res.send(JSON.stringify({
+						     authen:1, 
+                             success:1, 
+					         usertype:'admin',
+						     records:req.user
+					      }));
+					   }
+					   else {
+					      res.send(JSON.stringify({
+						    authen:1, 
+						    success:1, 
+						    usertype:'user', 
+						    records:req.user
+					      }));	 
+					   }
 				  });
 			  }
          })(req, res, next);

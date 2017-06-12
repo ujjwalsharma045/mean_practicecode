@@ -7,10 +7,14 @@ app.controller('front' , ['$scope' , '$http' , '$route' , '$routeParams' ,'$loca
     if(localStorageService.get('login')=="1"){
        if(localStorageService.get('usertype')=="admin"){       	
           $scope.adminloggedin = true;
+		  $scope.loggedinusername = localStorageService.get('username');
+		  var ddtt = new Date(localStorageService.get('memberfrom'));		  		  
+		  $scope.memberfrom = ddtt.getDate() +"-"+ (ddtt.getMonth()+1) +"-"+ ddtt.getFullYear();
+		  $scope.loggedin_filepath = localStorageService.get('profilepic');
 		  $scope.loggedin = true;
 	   }
 	   else if(localStorageService.get('usertype')=="user"){
-		   $scope.loggedin = true;
+		  $scope.loggedin = true;
 	   }
 	}
         
@@ -42,6 +46,7 @@ app.controller('front' , ['$scope' , '$http' , '$route' , '$routeParams' ,'$loca
 		   }
 	   );	   	    	  
     }
+	
     $scope.userstate = false;
 	$scope.pagestate = false;
     $scope.toogle = function(type){
