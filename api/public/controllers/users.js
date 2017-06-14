@@ -1,4 +1,4 @@
-app.controller('users' , ['$scope' , '$http' , '$route' , '$routeParams' ,'$location' , 'authen', 'localStorageService' , 'dateTime' , 'Users' , 'pageTitle', 'Upload', '$timeout', '$state', '$stateParams', function($scope, $http, $route, $routeParams, $location, authen, localStorageService, dateTime, Users, pageTitle, Upload, $timeout, $state, $stateParams){
+app.controller('users' , ['$scope' , '$http' , '$route' , '$routeParams' ,'$location' , 'authen', 'localStorageService' , 'dateTime' , 'Users' , 'pageTitle', 'Upload', '$timeout', '$state', '$stateParams', '$modal', function($scope, $http, $route, $routeParams, $location, authen, localStorageService, dateTime, Users, pageTitle, Upload, $timeout, $state, $stateParams, $modal){
       	   
     var storageType = localStorageService.getStorageType();
 	
@@ -822,76 +822,27 @@ app.controller('users' , ['$scope' , '$http' , '$route' , '$routeParams' ,'$loca
 			$location.path("/login");
 		 }		 
     }
-
-    $scope.sendrecoveremail = function(){
-		if(localStorageService.get('login')=="1"){ 
-		   $location.path("/");
-		}
-		else {
-			
-		   var data = {
-              email:$scope.useremail			   
-		   };
-		   
-		   var req = {
-               url:'user/recovery_mail',
-               method:'POST',
-               header:{
-				  'Content-Type':'application/json' 
-			   },
-               data:data			   
-		   };
-		   
-		   $http(req).then(
-		         function(response){
-					 if(response.data['success']=="1"){
-						 
-					 }
-					 else {
-						 
-					 }
-				 },
-				 function(){
-					 
-				 }
-		   );	
-		}
-	}
 	
-  	$scope.show_recoverypopup = function(){
-		if(localStorageService.get('login')=="1"){ 
-		   $location.path("/");
-		}
-		else {
-			
-		   var data = {
-              section:'forgetpassword'			   
-		   };
-		   
-		   var req = {
-               url:'user/showpassword',
-               method:'POST',
-               header:{
-				  'Content-Type':'application/json' 
-			   },
-               data:data			   
-		   };
-		   
-		   $http(req).then(
-		         function(response){
-					 if(response.data['success']=="1"){
-						 
-					 }
-					 else {
-						 
-					 }
-				 },
-				 function(){
-					 
-				 }
-		   );	
-		}
-	}
+  	$scope.show_recoverypopup = function(){				
+		var modalInstance = $modal.open({
+            templateUrl: '/views/users/myModalContent.html',
+            controller: 'control',
+			scope:$scope,
+            //size: size,
+            resolve: {                
+				pageTitle:function(){					  
+					   return "Forgot Password";
+				}
+            }
+        });
+        
+        modalInstance.result.then(function (selectedItems) {
+            //products = selectedItems;
+			console.log($scope);  
+        }, function () {
+            //$log.info('Modal dismissed at: ' + new Date());
+        });	
+	}		
 }]);
 
 

@@ -124,6 +124,8 @@ var User = require('./models/UserModel')(mongoose);
 var Services = require('./models/ServiceModel')(mongoose);
 var Setting = require('./models/SettingModel')(mongoose);
 var Category = require('./models/CategoryModel')(mongoose);
+var PasswordGenerate = require('./models/PasswordGenerateModel')(mongoose);
+
 var Page = require('./models/PageModel')(mongoose);
 var flash = require('connect-flash');
 var bCrypt = require('bcrypt-nodejs');
@@ -217,7 +219,7 @@ var slugify = require('slugify');
 var fs = require('fs');
 var async = require('async');	
 
-require('./controllers/UserController')(app , func , mail, upload, storage, mailer, multer, validator, User , paginate , cors , dateFormat, dateDiff , dobByAge , json2csv , excelexport , pdf , passport , LocalStrategy, bCrypt, fs, async);
+require('./controllers/UserController')(app , func , mail, upload, storage, mailer, multer, validator, User , paginate , cors , dateFormat, dateDiff , dobByAge , json2csv , excelexport , pdf , passport , LocalStrategy, bCrypt, fs, async, PasswordGenerate);
 
 require('./controllers/ServiceController')(app , func , mail, upload, storage, mailer, multer, validator, Services , paginate , cors);
 

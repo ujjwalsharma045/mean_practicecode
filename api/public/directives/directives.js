@@ -65,7 +65,7 @@ app.directive('fancybox' , function($compile, $http){
 				var compiledTemplate = $compile(data);
                 compiledTemplate($scope);
 				$.fancybox.open({content:data , type:'html'});
-			});
+			});			
 		}
 	};
 	return fdirective;

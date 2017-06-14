@@ -7,6 +7,7 @@
      <script src="//code.angularjs.org/1.2.20/angular-route.js"></script>
      <script src="//code.angularjs.org/1.2.13/angular-cookies.js"></script>
      <script src="js/angular-local-storage.min.js"></script>
+	 
      <!-- <script src="js/angular-ckeditor.js"></script>
      <script src="js/angular-ckeditor.min.js"></script> -->	 
      <!-- <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/angular-i18n/1.4.6/angular-locale_es.js"></script> -->
@@ -38,6 +39,7 @@
 	
 	 <script type="text/javascript" src="js/ui-bootstrap-tpls.min.js"></script>	 
 	 <link rel="stylesheet" type="text/css" href="css/angular-slide-wrapper.css">
+	 
 	 <script type="text/javascript">
 	    var app = angular.module('apimodule', ['ngRoute',  'ngCookies' , 'LocalStorageModule','720kb.datepicker' , 'ngCkeditor' , 'rzModule', 'ui.bootstrap','checklist-model','ngMap','ngFileUpload','vcRecaptcha','ui.router']);
 		
@@ -934,9 +936,10 @@
 					   return "Dashboard";
 					}
 				}				                			
-			});
+			})			
          });			
 	 </script>
+	 <script src="controllers/control.js"></script>
 	 <script src="controllers/front.js"></script>
 	 <script src="services/services.js"></script>
 	 <script src="directives/directives.js"></script>
@@ -948,10 +951,11 @@
      <script src="controllers/page.js"></script>	 	 	
   </head>
   <body class="hold-transition skin-blue sidebar-mini">
-     <div ng-app="apimodule">	    
+     <div ng-app="apimodule">	 
+	 
 	      <div ui-view="header"></div>
 		  <div ui-view="content"></div>
-		  <div ui-view="footer"></div>		
+		  <div ui-view="footer"></div>				  
 	 </div>
   </body>
 </html>

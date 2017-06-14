@@ -1,0 +1,27 @@
+<div>
+	
+            <!-- template for modal -->
+            <div class ='modal-header'>
+                
+            </div>
+            <div class="modal-body">                				
+	           <form name="forgetpassword_form"  novalidate>
+					<div>		  
+						  <table border="1" style="border:1px solid #cccccc;border-collapse:collapse">
+							  <tr>
+								  <td>Email</td>		  
+								  <td>
+									 <input type="text" name="useremail" ng-model="user.email" id="useremail" required>
+									 <div class="error" id="useremailerror" style="color:red"></div>
+								  </td>		  
+							  </tr>							  							  			 
+						  </table>
+					</div>
+					<div class="modal-footer">
+                       <button class="btn btn-primary" ng-click="sendrecoveremail()">Submit</button>
+                       <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+                     </div>
+               </form>				
+            </div>            
+     
+</div>

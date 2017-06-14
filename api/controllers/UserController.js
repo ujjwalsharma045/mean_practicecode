@@ -1,4 +1,4 @@
-module.exports = function(app , func , mail, upload, storage, mailer, multer, validator, User, paginate , cors , dateFormat , dateDiff, dobByAge, json2csv, excel , pdf, passport , LocalStrategy, bCrypt , fs, async){ 
+module.exports = function(app , func , mail, upload, storage, mailer, multer, validator, User, paginate , cors , dateFormat , dateDiff, dobByAge, json2csv, excel , pdf, passport , LocalStrategy, bCrypt , fs, async, PasswordGenerate){ 
     
     var sess;
     //var session = require('express-session'); 
@@ -596,6 +596,7 @@ module.exports = function(app , func , mail, upload, storage, mailer, multer, va
 			  });
 		}); 				
 	});	
+	
 	app.post("/logout", function(req, res){
         req.logout();
 		res.setHeader('Content-Type', 'application/json');
@@ -735,8 +736,9 @@ module.exports = function(app , func , mail, upload, storage, mailer, multer, va
 	    }		
 	});
 
-    app.post('/user/recovery_email', function(req, res){
-         User.find({email:req.body.email} , function(err, records){
+    app.get('/user/recoverpassword', function(req, res){
+         User.find({email:req.query.email} , function(err, records){
+			     console.log(records);
                  if(records.length>0){									
 					var currentdate = new Date();
                     var formatteddate = dateFormat(currentdate ,'yyyy-mm-dd HH:MM:ss');
@@ -749,7 +751,7 @@ module.exports = function(app , func , mail, upload, storage, mailer, multer, va
                         created_at:formatteddate 						
 					};										
 					
-					var detail = PasswordGenerate(data);
+					var detail = new PasswordGenerate(data);
 					detail.save(function(err){
 						if(err)
 						  throw err;
@@ -777,15 +779,8 @@ module.exports = function(app , func , mail, upload, storage, mailer, multer, va
 				}
                 else {
 				    res.setHeader('Content-Type', 'application/json');
-				    res.send(JSON.stringify({'success':0, 'authen':0}));
+				    res.send(JSON.stringify({'success':0, 'authen':0 , 'error':'Email does not exists in system'}));
 			    }			 
 		 });       		
-	});
-
-    app.get('/user/showpassword', function(req, res){
-		 
-         res.render('users/forgotpassword' , {
-			
-		 });          		
 	});	
 }

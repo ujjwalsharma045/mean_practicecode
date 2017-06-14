@@ -56,7 +56,40 @@ app.controller('front' , ['$scope' , '$http' , '$route' , '$routeParams' ,'$loca
 		else if(type=="page"){
 			$scope.pagestate = !$scope.pagestate;
 		}
-	}	
+	}
+
+    $scope.sendrecoveremail = function(){
+		if(localStorageService.get('login')=="1"){ 
+		   $location.path("/");
+		}
+		else {
+			alert("FG");	
+		   var data = {
+              email:$scope.useremail			   
+		   };
+		   
+		   var req = {
+               url:'user/recovery_mail',
+               method:'POST',
+               header:{
+				  'Content-Type':'application/json' 
+			   },
+               data:data			   
+		   };
+		   
+		   $http(req).then(
+		         function(response){
+					 if(response.data['success']=="1"){
+						 
+					 }
+					 else {
+						 
+					 }
+				 },
+				 function(){
+					 
+				 }
+		   );	
+		}
+	} 	
 }]);
-
-
