@@ -1,8 +1,8 @@
-module.exports = function(app, func, mail, mailer, multer, validator, cors, dateFormat, dateDiff,LocalStrategy, Category, Page, passport, fs, async, User){ 
+module.exports = function(app, func, mail, mailer, multer, validator, cors, dateFormat, dateDiff,LocalStrategy, Category, Page, passport, fs, async, User, handlebars){ 
     
     var sess;
     var session = require('express-session'); 
-	var handlebars = require('handlebars');
+	
 	var request = require('request');
     var readHTMLFile = function(path, callback) {
 		fs.readFile(path, {encoding: 'utf-8'}, function (err, html) {

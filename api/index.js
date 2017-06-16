@@ -129,6 +129,8 @@ var PasswordGenerate = require('./models/PasswordGenerateModel')(mongoose);
 var Page = require('./models/PageModel')(mongoose);
 var flash = require('connect-flash');
 var bCrypt = require('bcrypt-nodejs');
+var randtoken = require('rand-token');
+var handlebars = require('handlebars');
 app.use(flash());
 
 /*passport.use(new LocalStrategy({
@@ -219,13 +221,13 @@ var slugify = require('slugify');
 var fs = require('fs');
 var async = require('async');	
 
-require('./controllers/UserController')(app , func , mail, upload, storage, mailer, multer, validator, User , paginate , cors , dateFormat, dateDiff , dobByAge , json2csv , excelexport , pdf , passport , LocalStrategy, bCrypt, fs, async, PasswordGenerate);
+require('./controllers/UserController')(app , func , mail, upload, storage, mailer, multer, validator, User , paginate , cors , dateFormat, dateDiff , dobByAge , json2csv , excelexport , pdf , passport , LocalStrategy, bCrypt, fs, async, PasswordGenerate, randtoken, handlebars);
 
 require('./controllers/ServiceController')(app , func , mail, upload, storage, mailer, multer, validator, Services , paginate , cors);
 
 require('./controllers/SettingController')(app, func, mail, upload, storage, mailer, multer, validator, Setting, paginate, cors, dateFormat, dateDiff, dobByAge, json2csv, excelexport, pdf, passport, LocalStrategy);
 
-require('./controllers/HomeController')(app, func, mail, mailer, multer, validator, cors, dateFormat, dateDiff, LocalStrategy, Category, Page, passport, fs, async, User);
+require('./controllers/HomeController')(app, func, mail, mailer, multer, validator, cors, dateFormat, dateDiff, LocalStrategy, Category, Page, passport, fs, async, User, handlebars);
  
 require('./controllers/PageController')(app , func , mail, upload, storage, mailer, multer, validator, Page , paginate , cors , dateFormat, dateDiff , dobByAge , json2csv , excelexport , pdf , passport , LocalStrategy, bCrypt, slugify);
 

@@ -83,7 +83,7 @@ app.controller('home' , ['$scope' , '$http' , '$route' , '$routeParams' ,'$locat
     }
 	
 	if($state.current.name=="aboutus"){
-		$scope.pagecontent = "";
+		$scope.pagecontent = ""; 
 	    $http.get('/home/page/about-us').then(function(response){			
 			  if(response.data['success']=="1"){ 			  
 				   $scope.pagecontent = response.data['record'][0].content;

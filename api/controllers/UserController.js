@@ -1,8 +1,21 @@
-module.exports = function(app , func , mail, upload, storage, mailer, multer, validator, User, paginate , cors , dateFormat , dateDiff, dobByAge, json2csv, excel , pdf, passport , LocalStrategy, bCrypt , fs, async, PasswordGenerate){ 
+module.exports = function(app , func , mail, upload, storage, mailer, multer, validator, User, paginate , cors , dateFormat , dateDiff, dobByAge, json2csv, excel , pdf, passport , LocalStrategy, bCrypt , fs, async, PasswordGenerate, randtoken, handlebars){ 
     
     var sess;
     //var session = require('express-session'); 
-    var math = require('mathjs');  		
+    var math = require('mathjs');  
+
+    var readHTMLFile = function(path, callback) {
+		fs.readFile(path, {encoding: 'utf-8'}, function (err, html) {
+			if(err){
+				console.log(err);
+				//throw err;
+				callback(err);
+			}
+			else {
+				callback(null, html); 
+			}
+		});
+    };	
 
 	app.get("/showusers", passport.isAdminAuthenticated, function(req, res){
 		
@@ -746,7 +759,7 @@ module.exports = function(app , func , mail, upload, storage, mailer, multer, va
 					var formattedexpirationdate = dateFormat(expirationdate ,'yyyy-mm-dd HH:MM:ss');
 					var data = {
 					    user_id:records[0]._id,
-                        token:'dfgsrfg',
+                        token:randtoken.generate(16),
                         expiration_time:formattedexpirationdate,
                         created_at:formatteddate 						
 					};										
@@ -761,20 +774,36 @@ module.exports = function(app , func , mail, upload, storage, mailer, multer, va
 							subject:"Password Reset",
 							text:'password reset'
 						};
-						   
-					    var mailObj = mail.configMail(mailer);
-					  
-					    mailObj.sendMail(mailoptions, function(error , response){
-							  if(error){
-								console.log(error);
-							  }
-							  else {
-								console.log(response.message); 
-							  }
-					    });
-						
-                        res.setHeader('Content-Type', 'application/json');
-				        res.send(JSON.stringify({'success':1, 'authen':0}));  						
+												
+						readHTMLFile(__dirname + '/../public/views/emails/passwordrecovery.html', function(err, html){
+								var template = handlebars.compile(html);
+								
+								var replacements = {
+									 name: records[0].firstname+records[0].lastname,
+									 reseturl:'http://127.0.0.1:8081/#/user/resetpassword/'+data.token									 
+								};
+								
+								var htmlToSend = template(replacements);
+								var mailOptions = {
+									//from: 'my@email.com',
+									to : req.query.email,
+									subject : 'Password Reset',
+									html : htmlToSend
+								};
+								 
+								var mailObj = mail.configMail(mailer);
+								mailObj.sendMail(mailOptions , function(error , response){
+									if(error){
+										console.log(error);
+									}
+									else {
+										console.log(response);
+									}        				
+								});
+								
+                                res.setHeader('Content-Type', 'application/json');
+				                res.send(JSON.stringify({'success':1, 'authen':0}));  														
+						});						   					                            
 					});
 				}
                 else {
