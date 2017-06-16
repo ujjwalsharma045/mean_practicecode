@@ -804,12 +804,50 @@ module.exports = function(app , func , mail, upload, storage, mailer, multer, va
                                 res.setHeader('Content-Type', 'application/json');
 				                res.send(JSON.stringify({'success':1, 'authen':0}));  														
 						});						   					                            
-					});
-				}
-                else {
+					 });
+				 }
+                 else {
 				    res.setHeader('Content-Type', 'application/json');
 				    res.send(JSON.stringify({'success':0, 'authen':0 , 'error':'Email does not exists in system'}));
-			    }			 
+			     }			 
+		 });       		
+	});
+
+    app.get('/user/resetpassword/:token', function(req, res){
+         PasswordGenerate.find({token:req.params.token} , function(err, records){
+			 console.log(records);
+             if(records.length>0){                 				 
+			     var data = {
+					 token:records[0].token,					 
+				 };
+				 res.setHeader('Content-Type', 'application/json');
+				 res.send(JSON.stringify({'success':1, 'authen':0 , 'records':data}));				 
+			 }
+             else {
+			     res.setHeader('Content-Type', 'application/json');
+				 res.send(JSON.stringify({'success':0, 'authen':0 , 'error':'Your link is not available'}));		 
+			 }				 
+		 });       		
+	});
+
+    app.post('/user/changepassword', function(req, res){
+         PasswordGenerate.find({token:req.body.token} , function(err, records){
+			 // console.log(records);			 			 
+             if(records.length>0){                 				 			    
+			     var data = {
+				    password:bCrypt.hashSync(req.body.password) 
+			     };
+				 
+				 User.findOneAndUpdate({_id:records[0].user_id} , data , function(err , records){
+					 if(err) throw err;
+					 res.setHeader('Content-Type', 'application/json');
+				     res.send(JSON.stringify({'success':1, 'authen':0}));				 
+				 });			                  				 				 
+			 }
+             else {
+			     res.setHeader('Content-Type', 'application/json');
+				 res.send(JSON.stringify({'success':0, 'authen':0 , 'error':'Unauthorized Access'}));		 
+			 }				 
 		 });       		
 	});	
 }

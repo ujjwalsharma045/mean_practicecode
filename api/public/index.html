@@ -936,6 +936,28 @@
 					   return "Dashboard";
 					}
 				}				                			
+			})
+            .state('resetpassword' , {								                
+				url:'/user/resetpassword/:token',
+				views:{
+                    'header':{
+						templateUrl: '/views/layouts/header.html',
+						controller:'front'
+					},
+					'content': {
+						templateUrl: '/views/users/resetpassword.html', 
+						controller:'users'
+					},
+					'footer': {
+						templateUrl: '/views/layouts/footer.html',
+						controller:'front'
+					}
+				},
+                resolve:{
+					pageTitle:function(){
+					   return "Change Password";
+					}
+				}				                			
 			})			
          });			
 	 </script>

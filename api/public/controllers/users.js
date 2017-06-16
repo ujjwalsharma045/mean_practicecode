@@ -697,7 +697,7 @@ app.controller('users' , ['$scope' , '$http' , '$route' , '$routeParams' ,'$loca
 		   $http.delete('removemultiple?ids='+ids).then(function(response){	
 				if(response.data['authen']=='1'){
 					//localStorageService.set('login' , '1');
-					$route.reload();
+					$state.reload();
 				}
 				else {
 					localStorageService.remove('login');
@@ -733,7 +733,7 @@ app.controller('users' , ['$scope' , '$http' , '$route' , '$routeParams' ,'$loca
 				function(response){
 					if(response.data['authen']=="1"){
 						if(response.data['success']=="1"){
-							$route.reload();
+							$state.reload();
 						}
 						else if(response.data['success']=="0"){
 							$scope.errors = response.data['errors'];
@@ -777,7 +777,7 @@ app.controller('users' , ['$scope' , '$http' , '$route' , '$routeParams' ,'$loca
 						function(response){
 							if(response.data['authen']=="1"){
 								if(response.data['success']=="1"){
-									$route.reload();
+									$state.reload();
 								}
 								else if(response.data['success']=="0"){
 									$scope.profileerrors = response.data['errors'];
@@ -842,7 +842,51 @@ app.controller('users' , ['$scope' , '$http' , '$route' , '$routeParams' ,'$loca
         }, function () {
             //$log.info('Modal dismissed at: ' + new Date());
         });	
-	}		
+	}
+
+    $scope.resetpassword = function(){				
+	    if($scope.useresetpassword.$valid){
+			var data = {
+				password:$scope.user.newpassword,
+				token:$scope.user.token		  
+			};
+		
+			var req = {
+				 url:'user/changepassword',
+				 method:'POST',
+				 header:{
+					'Content-Type':'application/json'
+				 },
+				 data:data,			 
+			};
+		
+			$http(req).then(function(response){
+				if(response.data['success']=="1"){
+					$state.reload();
+				}
+				else {
+					
+				}
+			}, function(response){
+				
+			});
+		}
+        else {
+			$scope.useresetpassword.$submitted = true;
+		}  		
+	}
+
+	if($state.current.name=="resetpassword"){
+        console.log($stateParams);		
+	    $http.get('user/resetpassword/'+$stateParams.token).then(function(response){
+			if(response.data['success']=="1"){				
+			   $scope.user = response.data['records'];
+			}					  
+			else {			   
+			   $location.path("/home/index");
+			}
+		}); 
+	}  	
 }]);
 
 
