@@ -1,4 +1,4 @@
-module.exports = function(app , func , mail, upload, storage, mailer, multer, validator, User, paginate , cors , dateFormat , dateDiff, dobByAge, json2csv, excel , pdf, passport , LocalStrategy, bCrypt , fs, async, PasswordGenerate, randtoken, handlebars){ 
+module.exports = function(app , func , mail, upload, storage, mailer, multer, validator, User, paginate , cors , dateFormat , dateDiff, dobByAge, json2csv, excel , pdf, passport , LocalStrategy, bCrypt , fs, async, PasswordGenerate, randtoken, handlebars, UserProfile){ 
     
     var sess;
     //var session = require('express-session'); 
@@ -254,25 +254,39 @@ module.exports = function(app , func , mail, upload, storage, mailer, multer, va
 						detail.save(function(err){
 							  if(err) throw err;
 							  console.log('User saved successfully!');
+							  
+							  var profile_data = {
+								  description:'ss',
+								  user_id:detail._id
+							  };
+							  
+							  var profile_detail = new UserProfile(profile_data);
+							  
+							  profile_detail.save(function(err){
+								  if(err) console.log(err);
+								  detail.userprofiles.push(profile_detail);
+								  detail.save(function(err){});
+							  });
 						   
-							   mailoptions = {
+							  mailoptions = {
 								  to:data.email,
 								  subject: "User Registration",
 								  text:"User Registered successfully"
-							   };
+							  };
 						   
-							   var mailObj = mail.configMail(mailer);
+							  var mailObj = mail.configMail(mailer);
 							  
-							   mailObj.sendMail(mailoptions, function(error , response){
+							  mailObj.sendMail(mailoptions, function(error , response){
 								  if(error){
 									  console.log(error);
 								  }
 								  else {
 									  console.log(response.message); 
 								  }
-							   }); 
-							   res.setHeader('Content-Type', 'application/json');
-							   res.send(JSON.stringify({authen:1 , success:1})); 				   
+							  });
+							  
+							  res.setHeader('Content-Type', 'application/json');
+							  res.send(JSON.stringify({authen:1 , success:1})); 				   
 						});			   			    
 				    });
 				 } 
@@ -599,15 +613,18 @@ module.exports = function(app , func , mail, upload, storage, mailer, multer, va
 
     app.get("/viewhtml/:id",  passport.isAdminAuthenticated, function(req, res){            		     	
 		var userid = req.params.id;
-		User.find({_id:userid}, function(err, records) {
-			  if (err) throw err;
-			  console.log(records); 				  
-			  res.render('users/views', {
-				  records:records,
-                  success:1,
-                  authen:1				  
-			  });
-		}); 				
+		User.findOne({_id:userid})
+		    .populate('userprofiles')
+			.exec(function(err, records) {
+				  //console.log(records);
+				  if (err) throw err;
+				  console.log(records); 				  
+				  res.render('users/views', {
+					  records:records,
+					  success:1,
+					  authen:1				  
+				  });
+		    }); 				
 	});	
 	
 	app.post("/logout", function(req, res){

@@ -8,43 +8,47 @@
 				   <td>City</td>
 				   <td>State</td>
 				   <td>Zipcode</td>
-                   <td>Created</td> 				   
+                   <td>Created</td>
+                   <td>Description</td> 				   
 				</tr>
 				<tr>
 					<td>
-					  <%= records[0]['email'] %>
+					  <%= records['email'] %>
 					</td>						
 					
 					<td>
-					  <%= records[0]['username'] %>
+					  <%= records['username'] %>
 					</td>						
 					
 					<td>
-					   <%= records[0]['first_name']+" "+records[0]['last_name'] %>
+					   <%= records['first_name']+" "+records['last_name'] %>
 					</td>
 
                     <td>
-					   <%= records[0]['dateofbirth'] %>
+					   <%= records['dateofbirth'] %>
 					</td>
  
                     <td>
-					   <%= records[0]['address'] %>
+					   <%= records['address'] %>
 					</td>
 
                     <td>
-					   <%= records[0]['city'] %>
+					   <%= records['city'] %>
 					</td>
 
                     <td>
-					   <%= records[0]['state'] %>
+					   <%= records['state'] %>
 					</td>
 
                     <td>
-					   <%= records[0]['zipcode'] %>
+					   <%= records['zipcode'] %>
 					</td>					
 
                     <td>
-					   <%= records[0]['created_at'] %>
+					   <%= records['created_at'] %>
+					</td>
+                    <td>
+					   <%= records['userprofiles'][0]['description'] %>
 					</td>					
 				</tr>							 
 </table>			

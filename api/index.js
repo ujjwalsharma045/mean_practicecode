@@ -120,6 +120,7 @@ var urlencodedParser = bodyParser.urlencoded({extended:false});
 var mongoose = require('mongoose');
 mongoose.connect('mongodb://localhost/mydatabase');
 
+var UserProfile = require('./models/UserProfileModel')(mongoose);
 var User = require('./models/UserModel')(mongoose);
 var Services = require('./models/ServiceModel')(mongoose);
 var Setting = require('./models/SettingModel')(mongoose);
@@ -221,7 +222,7 @@ var slugify = require('slugify');
 var fs = require('fs');
 var async = require('async');	
 
-require('./controllers/UserController')(app , func , mail, upload, storage, mailer, multer, validator, User , paginate , cors , dateFormat, dateDiff , dobByAge , json2csv , excelexport , pdf , passport , LocalStrategy, bCrypt, fs, async, PasswordGenerate, randtoken, handlebars);
+require('./controllers/UserController')(app , func , mail, upload, storage, mailer, multer, validator, User , paginate , cors , dateFormat, dateDiff , dobByAge , json2csv , excelexport , pdf , passport , LocalStrategy, bCrypt, fs, async, PasswordGenerate, randtoken, handlebars, UserProfile);
 
 require('./controllers/ServiceController')(app , func , mail, upload, storage, mailer, multer, validator, Services , paginate , cors);
 

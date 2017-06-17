@@ -17,12 +17,14 @@ module.exports = function(mongoose){
 	  profile_pic: String,
 	  created_at: Date,
 	  updated_at: Date,
-	  is_admin:String
-	});
+	  is_admin:String,
+	  userprofiles:[{type:Schema.Types.ObjectId, ref:'UserProfile'}]
+	});		
 	
 	userSchema.plugin(passportLocalMongoose);
 	
 	var User = mongoose.model('User', userSchema);
+	
 	return User;
 }
 
