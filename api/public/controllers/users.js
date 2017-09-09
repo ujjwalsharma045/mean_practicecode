@@ -140,6 +140,9 @@ app.controller('users' , ['$scope' , '$http' , '$route' , '$routeParams' ,'$loca
 				$location.path("/login");
 			}
 		}
+		else {
+			$location.path("/login");
+		}
     }
     
     if($state.current.name=="edituser"){   

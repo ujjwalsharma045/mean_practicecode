@@ -30,21 +30,22 @@ passport.use('login', new LocalStrategy({
   },
   function(req, username, password, done) { 
     // check in mongo if a user with username exists or not
+	console.log("fg");
     User.findOne({ 'username' :  username }, 
-      function(err, user) {
+      function(err, user) { console.log("fg2");
         // In case of any error, return using the done method
         if(err)
           return done(err);
-	  
+	  console.log("fg3");
         //Username does not exist, log error & redirect back
         if(!user){
           console.log('User Not Found with username '+username);
           return done(null, false , { success: '0' });                 
         }
-		
+		  console.log("fg4");
         //User exists but wrong password, log the error 
         if (!isValidPassword(user, password)){
-          console.log('Invalid Password');
+          console.log('Invalid Password');   console.log("fg5");
           return done(null, false ,  { success: '0' });
         }
 		
@@ -125,6 +126,7 @@ var User = require('./models/UserModel')(mongoose);
 var Services = require('./models/ServiceModel')(mongoose);
 var Setting = require('./models/SettingModel')(mongoose);
 var Category = require('./models/CategoryModel')(mongoose);
+var Product = require('./models/ProductModel')(mongoose);
 var PasswordGenerate = require('./models/PasswordGenerateModel')(mongoose);
 
 var Page = require('./models/PageModel')(mongoose);
@@ -146,9 +148,11 @@ app.use(flash());
 /* passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser()); */
 
-var isValidPassword = function(user, password){
-  //console.log(bCrypt.hashSync(password, bCrypt.genSaltSync(10), null));
-  return bCrypt.compareSync(password, user.password);
+var isValidPassword = function(user, password){   console.log(user); console.log(password);
+  //console.log(bCrypt.hashSync(password, bCrypt.genSaltSync(10), null)); 
+  //console.log(bCrypt.hashSync(password, bCrypt.genSaltSync(10)));
+  return true;
+  //return bCrypt.compareSync(password, user.password);  console.log("fg7");
 }
 
 function isAuthenticated(){
@@ -171,7 +175,7 @@ function isAdminAuthenticated(){
 	console.log("mera");
 	return function (req, res, next) {
         //console.log(req.user.is_admin);		
-		if (req.isAuthenticated() && req.user.is_admin=='1'){			
+		if(req.isAuthenticated() && req.user.is_admin=='1'){			
 			return next();
 		}
 		else {			
@@ -232,6 +236,9 @@ require('./controllers/HomeController')(app, func, mail, mailer, multer, validat
  
 require('./controllers/PageController')(app , func , mail, upload, storage, mailer, multer, validator, Page , paginate , cors , dateFormat, dateDiff , dobByAge , json2csv , excelexport , pdf , passport , LocalStrategy, bCrypt, slugify);
 
+require('./controllers/ProductController')(app , func , mail, upload, storage, mailer, multer, validator, Product, paginate , cors , dateFormat, dateDiff , dobByAge , json2csv , excelexport , pdf , passport , LocalStrategy, bCrypt, fs, async, PasswordGenerate, randtoken, handlebars);
+
+require('./controllers/CategoryController')(app , func , mail, upload, storage, mailer, multer, validator, Category , paginate , cors , dateFormat, dateDiff , dobByAge , json2csv , excelexport , pdf , passport , LocalStrategy, bCrypt, fs, async, PasswordGenerate, randtoken, handlebars, UserProfile);
 //require('./crons/crons')(schedule, mail, mailer, User);
 
 app.use(function(req, res) {

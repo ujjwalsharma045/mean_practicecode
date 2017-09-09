@@ -1,0 +1,24 @@
+<div ng-include="'views/layouts/admin_header.html'"></div>
+
+<div>
+    <titleelement></titleelement>
+</div>
+
+<div>
+  <table border="1" style="border:1px solid #cccccc;border-collapse:collapse">
+      <tr>
+	      <td>Title</td>		  
+	      <td>{{page.title}}</td>		  
+	  </tr>
+	  <tr>
+	      <td>Content</td>		  
+	      <td>{{page.content}}</td>		  
+	  </tr>
+	  <tr>
+	      <td>Status</td>		   
+	      <td>{{page.status}}</td>		  
+	  </tr>	  
+  </table>
+</div>
+
+<div ng-include="'views/layouts/admin_footer.html'"></div>

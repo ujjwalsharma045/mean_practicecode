@@ -6,33 +6,35 @@
 
 <form name="contactusform"  novalidate>
 	<div>
-	  <table border="1" style="border:1px solid #cccccc;border-collapse:collapse">
+	  <table border="0" style="border:0px solid #cccccc;border-collapse:collapse">
 	  
 		  <tr>
 			  <td>Name</td>		  
 			  <td>
-			     <input type="text" name="name" ng-model="user.name" required>
+			     <input type="text" name="name" ng-model="user.name" required></br>
 				 <p ng-show="submitted && contactusform.name.$invalid">
 				   Enter Name
 				 </p>
+				 </br>
 			  </td>		  
 		  </tr>
 		  
 		  <tr>
 			  <td>Email</td>		  
 			  <td>
-				 <input type="text" name="email" ng-model="user.email" required>
-				 <p ng-show="submitted && contactusform.email.$invalid">Enter Last Name</p>				 
+				 <input type="text" name="email" ng-model="user.email" required> </br>
+				 <p ng-show="submitted && contactusform.email.$invalid">Enter Last Name</p>	</br>			 
 			  </td>		  
 		  </tr>
 		  		  
           <tr>
 			  <td>Content</td>		  
 			  <td>
-				 <textarea name="content" ng-model="user.content" required></textarea>				 
+				 <textarea name="content" ng-model="user.content" required></textarea>	</br>			 
 				 <p ng-show="submitted && contactusform.content.$invalid">
 				   Enter Content				 
 				 </p>  
+				 </br>
 			  </td>		  
 		  </tr>		
 
@@ -42,7 +44,8 @@
 				 <div vc-recaptcha key="model.key"></div>
                  <p ng-show="submitted && contactusform.g-recaptcha-response.$invalid">
 				     Select Captcha				 
-				 </p> 				 
+				 </p> 
+</br>				 
 			  </td>		  
 		  </tr>		
 

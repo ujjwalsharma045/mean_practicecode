@@ -1,0 +1,26 @@
+<div>
+    <titleelement></titleelement>
+</div>
+
+<form name="userform"  novalidate>
+	<div>
+	  <div ng-bind="errormessage" style="color:red"></div>
+	  <table border="1" style="border:1px solid #cccccc;border-collapse:collapse">
+		  <tr>
+			  <td>User Name</td>		  
+			  <td>
+			     <input type="text" name="username" ng-model="user.username" required>
+				 <p ng-show="submitted && userform.username.$invalid">Enter User Name</p>
+			  </td>		  
+		  </tr>
+		  <tr>
+			  <td>Password</td>		  
+			  <td>
+				 <input type="password" name="password" ng-model="user.password" required>
+				 <p ng-show="submitted && userform.password.$invalid">Enter Password</p>				 
+			  </td>		  
+		  </tr>          		 
+	  </table>
+	  <input type="button" value="Submit" ng-click="loginuser()"/> 
+	</div>
+</form>

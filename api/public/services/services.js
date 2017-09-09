@@ -10,7 +10,7 @@ app.factory('dateTime' , function(){
 app.factory('Users' , function($http){	
     var user = {};		
 	user.totalUsers = function ($scope){         
-		return $http.get('http://127.0.0.1:8081/totalusers').then(function(response){
+		return $http.get('http://localhost:8081/totalusers').then(function(response){
 		    $scope.totalusers  = response.data['users'];
 		});	
     };
@@ -44,10 +44,22 @@ app.factory('Users' , function($http){
 app.factory('Pages' , function($http){	
     var page = {};		
 	page.totalPages = function ($scope){         
-		return $http.get('http://127.0.0.1:8081/page/total').then(function(response){
+		return $http.get('http://localhost:8081/page/total').then(function(response){
 		    $scope.totalpages  = response.data['pages'];
 		});	
     }
 	
     return page;	
+});
+
+app.factory('Category' , function($http){	
+    var category = {
+		list:function($scope){
+		   return $http.get('http://localhost:8081/category/list').then(function(response){
+		      $scope.categorydetail  = response.data['records'];
+		   });	
+		}
+	};
+	
+    return category;	
 });

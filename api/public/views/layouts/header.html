@@ -6,6 +6,12 @@
 	  float:left
 	}
 </style>
+<!-- All CSS Plugins -->
+<link rel="stylesheet" type="text/css" href="css/plugin.css">
+<!-- Main CSS Stylesheet -->
+<link rel="stylesheet" type="text/css" href="css/style.css">
+<!-- Google Web Fonts  -->
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:400,300,500,600,700">
 
 <div class="container">
         <div class="logo">
@@ -17,28 +23,28 @@
            <div class="responsive_nav">                                        
 			  <ul class="menu">
 				<li class="active">
-				   <a href="#/home/index" class="btn btn-link">Home</a>
+				   <a href="#/home/index" class="btn-link">Home</a>
 				</li>
 				<li ng-if="loggedin">
-				   <a href="#/user/editpassword" class="btn btn-link">Profile</a>
+				   <a href="#/user/editpassword" class="btn-link">Profile</a>
 				</li>
 				<li class="unlock-link" ng-if="adminloggedin">
 					<a href="#/" class="btn btn-link">User</a>
 				</li>
 				<li class="" ng-if="adminloggedin">
-				   <a href="#/setting" class="btn btn-link">Setting</a>
+				   <a href="#/setting" class="btn-link">Setting</a>
 				</li>
 				<li class="">
-					 <a href="#/home/contactus" class="btn btn-link">Contact us</a>
+					 <a href="#/home/contactus" class="btn-link">Contact us</a>
 				</li>
 				<li class="">
-				   <a href="#/home/aboutus" class="btn btn-link">About</a>
+				   <a href="#/home/aboutus" class="btn-link">About</a>
 				</li>
 				<li ng-if="loggedin">
-				   <a href="javascript:void(0)" class="btn btn-link" ng-click="logout()">Logout</a>
+				   <a href="javascript:void(0)" class="btn-link" ng-click="logout()">Logout</a>
 				</li>
 				<li ng-if="!loggedin">
-				   <a href="#/login" class="btn btn-link">Login</a>
+				   <a href="#/login" class="btn-link">Login</a>
 				</li>
 			  </ul>
            </div>

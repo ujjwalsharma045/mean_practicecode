@@ -1,0 +1,81 @@
+<!-- <div ng-include="'views/layouts/admin_header.html'"></div> -->
+<div class="content-wrapper">
+ 
+ <section class="content-header">	  
+	  <ol class="breadcrumb">
+		<li><a href="#/admin/dashboard"><i class="fa fa-dashboard"></i>Home</a></li>
+		<li><a href="#/admin/product/index"><i class="fa fa-dashboard"></i>Product</a></li>
+		<li class="active">Edit Product</li>
+	  </ol>
+ </section>
+ 
+ <section class="content">
+	<div>
+	   <titleelement></titleelement>
+	</div>
+    </br>
+
+<form name="productform"  novalidate>
+	<div>	  
+		  <div class="form-group">
+			  <label>Title</label>
+			  <input type="text" name="title" class="form-control" ng-model="product.title" required placeholder="">
+			  <p ng-show="submitted && productform.title.$invalid">Enter Title</p>
+		  </div>		  		  
+		  
+		  <div class="form-group">
+			  <label>Description</label>  			  
+			  <input type="text" name="description" class="form-control" ng-model="product.description" required>
+			  <p ng-show="submitted && productform.description.$invalid">Enter Description</p>
+		  </div>
+		  
+          <div class="form-group">			  		 
+			  <label>Meta Tag</label>
+			  <input type="text" name="meta_tag" class="form-control" ng-model="product.meta_tag" required>
+			  <p ng-show="submitted && productform.meta_tag.$invalid">Enter Meta Tag</p>
+		  </div>
+
+          <div class="form-group">
+			  <label>Meta Description</label>		  
+			  <input type="text" name="meta_description" class="form-control" ng-model="product.meta_description" required>
+			  <p ng-show="submitted && productform.meta_description.$invalid">Enter Meta Description</p>
+		  </div>
+
+          <div class="form-group">
+			  <label>Price</label>		  			  
+			  <input type="text" name="price" class="form-control" ng-model="product.price" required>
+			  <p ng-show="submitted && productform.price.$invalid">Enter Price</p>
+		  </div>		
+		  
+		  <div class="form-group">
+			  <label>Cost Price</label>		  			  
+			  <input type="text" name="cost_price" class="form-control" ng-model="product.cost_price" required>
+			  <p ng-show="submitted && productform.cost_price.$invalid">Enter Cost Price</p>
+		  </div>
+		  
+		  <div class="form-group">
+			  <label>Discount Type</label>		  			  
+			  <input type="text" name="discount_type" class="form-control" ng-model="product.discount_type" required>
+			  <p ng-show="submitted && productform.discount_type.$invalid">Enter Discount Type</p>
+		  </div>
+		  
+		  <div class="form-group">
+			  <label>Discount</label>		  			  
+			  <input type="text" name="discount" class="form-control" ng-model="product.discount" required>
+			  <p ng-show="submitted && productform.discount.$invalid">Enter Discount</p>
+		  </div>
+		  
+		  <div class="form-group">
+			  <label>Status</label>		  			  
+			  <input type="text" name="status" class="form-control" ng-model="product.status" required>
+			  <p ng-show="submitted && productform.status.$invalid">Enter Status</p>
+		  </div>
+		  <input type="hidden" name="productid"  ng-model="product.productid">
+		  <div class="form-group">			  
+			  <input type="button" value="Submit" ng-click="editproduct()"/> 	  			  
+		  </div>	  	  
+	</div>
+</form>
+</section>
+</div>
+<!-- <div ng-include="'views/layouts/admin_footer.html'"></div> -->

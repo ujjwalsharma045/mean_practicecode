@@ -597,7 +597,7 @@
 			}).otherwise({
 				redirectTo:'/error'
 			});					
-		});  */	
+		});*/	
 
         app.config(function($stateProvider , $urlRouterProvider){
 			//$locationProvider.html5Mode(true);
@@ -958,8 +958,118 @@
 					   return "Change Password";
 					}
 				}				                			
-			})			
-         });			
+			})
+            .state('editproduct' , {								                
+				url:'/admin/product/edit/:id',
+				views:{
+                    'header':{
+						templateUrl: '/views/layouts/admin_header.html',
+						controller:'front'
+					},
+					'content': {
+						templateUrl: '/views/products/edit.html', 
+						controller:'products'
+					},
+					'footer': {
+						templateUrl: '/views/layouts/admin_footer.html',
+						controller:'front'
+					}
+				},
+                resolve:{
+					pageTitle:function(){
+					   return "Edit Product";
+					}
+				}				                			
+			})
+            .state('productadd' , {								                
+				url:'/admin/product/add',
+				views:{
+                    'header':{
+						templateUrl: '/views/layouts/admin_header.html',
+						controller:'front'
+					},
+					'content': {
+						templateUrl: '/views/products/add.html', 
+						controller:'products'
+					},
+					'footer': {
+						templateUrl: '/views/layouts/admin_footer.html',
+						controller:'front'
+					}
+				},
+                resolve:{
+					pageTitle:function(){
+					   return "Add Product";
+					}
+				}				                							
+         })
+		 .state('viewproduct' , {								                
+				url:'/admin/product/view/:id',
+				views:{
+                    'header':{
+						templateUrl: '/views/layouts/admin_header.html',
+						controller:'front'
+					},
+					'content': {
+						templateUrl: '/views/products/view.html', 
+						controller:'products'
+					},
+					'footer': {
+						templateUrl: '/views/layouts/admin_footer.html',
+						controller:'front'
+					}
+				},
+                resolve:{
+					pageTitle:function(){
+					   return "View Product";
+					}
+				}				                							
+         })
+		 .state('listproducts' , {								                
+				url:'/admin/product/index',
+				views:{
+                    'header':{
+						templateUrl: '/views/layouts/admin_header.html',
+						controller:'front'
+					},
+					'content': {
+						templateUrl: '/views/products/index.html', 
+						controller:'products'
+					},
+					'footer': {
+						templateUrl: '/views/layouts/admin_footer.html',
+						controller:'front'
+					}
+				},
+                resolve:{
+					pageTitle:function(){
+					   return "Product List";
+					}
+				}				                							
+         })
+		 .state('addcategory' , {								                
+				url:'/admin/category/add',
+				views:{
+                    'header':{
+						templateUrl: '/views/layouts/admin_header.html',
+						controller:'front'
+					},
+					'content': {
+						templateUrl: '/views/category/add.html', 
+						controller:'category'
+					},
+					'footer': {
+						templateUrl: '/views/layouts/admin_footer.html',
+						controller:'front'
+					}
+				},
+                resolve:{
+					pageTitle:function(){
+					   return "Category List";
+					}
+				}				                							
+         })
+	  });			
 	 </script>
 	 <script src="controllers/control.js"></script>
 	 <script src="controllers/front.js"></script>
@@ -970,7 +1080,9 @@
 	 <script src="controllers/contact.js"></script>
 	 <script src="controllers/setting.js"></script>
 	 <script src="controllers/home.js"></script>
-     <script src="controllers/page.js"></script>	 	 	
+     <script src="controllers/page.js"></script>
+     <script src="controllers/products.js"></script>
+     <script src="controllers/category.js"></script> 	 
   </head>
   <body class="hold-transition skin-blue sidebar-mini">
      <div ng-app="apimodule">	 
