@@ -75,8 +75,62 @@ app.controller('category' , ['$scope' , '$http' , '$route' , '$routeParams' ,'$l
 		
 	};
 	
+	if($state.current.name=="edit"){
+	    if(localStorageService.get('login')=="1" && localStorageService.get('usertype')=="admin"){    
+		   $http.get("category/view/"+$stateParams.id).then(
+		      function(response){
+		         if(response.data['authen']=="1"){
+					 if(response.data['success']=="1"){
+					    $scope.category = response.data['data'];
+					 }
+				 }
+		      },
+			  
+			  function(response){
+		   
+		      }
+		   );
+	   }
+	};
+	
 	$scope.editcategory = function(id){
-		
+		if(localStorageService.get('login')=="1" && localStorageService.get('usertype')=="admin"){    
+		    $scope.submitted = true;
+			if($scope.categoryform.$valid){
+				var data = {
+					parent_id:$scope.category.parent_category,
+					title:$scope.category.title,
+					description:$scope.category.description,
+					meta_tag:$scope.category.meta_tag,
+					meta_description:$scope.category.meta_description,
+					order:$scope.category.order,
+					status:$scope.category.status		
+				};
+				
+				var req = {
+					url:'category/edit/'+$stateParams.id;
+					method:'POST',
+					data:data,
+					header:{
+						'Content-Type':'application/json'
+					}
+				};
+				
+				$http(req).then(function(response){
+					if(response.data['authen']=="1"){
+					   if(response.data['success']=="1"){
+						  $location.path("/category/index");
+					   }
+					}
+					else {
+						$location.path("");
+					}
+				},
+				function(){
+					
+				});
+			}
+		}
 	};
 }]);
 

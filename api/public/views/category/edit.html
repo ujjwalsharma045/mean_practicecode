@@ -2,62 +2,76 @@
 
 <div class="content-wrapper">
 
- <section class="content-header">	  
+  <section class="content-header">	  
 	  <ol class="breadcrumb">
 		<li><a href="#/admin/dashboard"><i class="fa fa-dashboard"></i>Home</a></li>
-		<li><a href="#/admin/page/index"><i class="fa fa-dashboard"></i>Page</a></li>
-		<li class="active">Edit</li>
+		<li><a href="#/admin/category/index"><i class="fa fa-dashboard"></i>Category</a></li>
+		<li class="active">Edit Category</li>		
 	  </ol>
- </section>
-
- <section class="content">
+  </section>
+ 
+  <section class="content">
 	<div>
-		<titleelement></titleelement>
+	   <titleelement></titleelement>
 	</div>
+    </br>
 
-	<form name="pageform"  novalidate>
+	<form name="categoryform"  novalidate>
 		<div>
-		  <table border="1" style="border:1px solid #cccccc;border-collapse:collapse">
-		  
-			  <tr>
-				  <td>Title</td>		  
-				  <td>
-					 <input type="text" name="title" ng-model="page.title" required>
-					 <p ng-show="pageform.submitted && pageform.title.$invalid">
-						 Enter Title
-					 </p>
-				  </td>		  
-			  </tr>
+		      <div class="form-group">
+				  <label>Parent Category</label>		  
+				  <select name="parent_category" ng-model="category.parent_category" class="form-control" required>
+				     <option >Select Category</option>
+					 <option ng-repeat="category in categorydetail" value="{{category._id}}">{{category.title}}</option>
+				  </select>				  
+			  </div>		  		  
 			  
-			  <tr>
-				  <td>Content</td>		  
-				  <td>
-					 <textarea name="content" ng-model="page.content" required></textarea>
-					 <p ng-show="pageform.submitted && pageform.content.$invalid">Enter Content</p>
-				  </td>		  
-			  </tr>
-					  
-			  <tr>
-				  <td>Status</td>		  
-				  <td>
-					 <select name="status" ng-model="page.status" required>
-						 <option ng-repeat="status in statusarr" value="{{status.id}}">{{status.title}}</option>
-					 </select>
-					 <p ng-show="pageform.submitted && pageform.status.$invalid">
-						 Select Status				 
-					 </p>  
-				  </td>		  
-			  </tr>		  
-								 
-			  <tr style="border:0px solid #ffffff">
-				  <td></td>		  
-				  <td>
-					 <input type="button" value="Submit" ng-click="editpage()"/> 
-				  </td>		  
-			  </tr>
-		  </table>	  
+			  <div class="form-group">
+				  <label>Title</label>		  
+				  <input type="text" name="title" class="form-control" ng-model="category.title" required>
+				  <p ng-show="submitted && categoryform.title.$invalid">Enter Title</p>
+			  </div>
+			  
+			  <div class="form-group">
+				  <label>Description</label>		  				  
+				  <textarea class="form-control" name="description" ng-model="category.description" required></textarea>
+				  <p ng-show="submitted && categoryform.description.$invalid">Enter Description</p>
+			  </div>
+			  
+			  <div class="form-group">
+				  <label>Meta Tag</label>		  
+				  <textarea class="form-control" name="meta_tag" ng-model="category.meta_tag" required></textarea>
+				  <p ng-show="submitted && categoryform.meta_tag.$invalid">Enter Meta Title</p>
+			  </div>		  		  
+			  
+			  <div class="form-group">
+				  <label>Meta Description</label>		  				  
+				  <textarea class="form-control"  name="meta_description" ng-model="category.meta_description" required></textarea>
+				  <p ng-show="submitted && categoryform.meta_description.$invalid">Enter Meta Description</p>
+			  </div>
+			  
+			  <div class="form-group">
+				  <label>Order</label>		  				  
+				  <input type="number" name="order" class="form-control" ng-model="category.order" required>
+				  <p ng-show="submitted && categoryform.order.$invalid">Enter Order</p>
+			  </div>
+			  
+			  <div class="form-group">
+				 <label>Status</label>		  				  
+				 <select name="status" class="form-control" ng-model="category.status" required>
+				     <option value="3">Select Status</option>
+					 <option ng-repeat="status in  statusarr" value="{{status.id}}">{{status.title}}</option>
+				 </select>
+				 <p ng-show="submitted && categoryform.status.$invalid">Select Status</p>
+			  </div>
+					 
+			  <div class="form-group">				 				  
+				 <div>
+				   <input type="button" value="Submit" ng-click="addcategory()"/> 	  
+				 </div>				 				 				 
+			  </div>		   
 		</div>
 	</form>
-	</section>
-</div>	
+  </section>
+</div>  
 <!-- <div ng-include="'views/layouts/admin_footer.html'"></div> -->
