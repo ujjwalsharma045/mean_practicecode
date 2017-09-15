@@ -63,3 +63,15 @@ app.factory('Category' , function($http){
 	
     return category;	
 });
+
+app.factory('Status' , function($http){	
+    var statusobjc = {
+		statusdetail:function($scope){
+		   return $http.get('http://localhost:8081/common/getstatus').then(function(response){
+		        $scope.statusarr  = response.data['status'];
+		   });	
+		}
+	};
+	
+    return statusobjc;	
+});

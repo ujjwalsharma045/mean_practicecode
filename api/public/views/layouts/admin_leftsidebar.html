@@ -24,7 +24,13 @@ ul li {
 				</li>
 				<li class="" ng-if="adminloggedin">
 				   <a href="#/setting" class="btn btn-link">Setting</a>
-				</li>				
+				</li>
+                <li class="" ng-if="adminloggedin">
+				   <a href="#/product/index" class="btn btn-link">Product</a>
+				</li>
+                <li class="" ng-if="adminloggedin">
+				   <a href="#/category/index" class="btn btn-link">Category</a>
+				</li>  				
 				<li ng-if="adminloggedin">
 				   <a href="javascript:void(0)" class="btn btn-link" ng-click="logout()">Logout</a>
 				</li>				

@@ -1,24 +1,45 @@
-<div ng-include="'views/layouts/admin_header.html'"></div>
-
+<div class="content-wrapper">
 <div>
     <titleelement></titleelement>
 </div>
 
 <div>
-  <table border="1" style="border:1px solid #cccccc;border-collapse:collapse">
+  <table border="1" style="width:100%;border:1px solid #cccccc;border-collapse:collapse">
+  
       <tr>
 	      <td>Title</td>		  
-	      <td>{{page.title}}</td>		  
+	      <td>{{category.title}}</td>		  
 	  </tr>
+	  
 	  <tr>
-	      <td>Content</td>		  
-	      <td>{{page.content}}</td>		  
+	      <td>Description</td>		  
+	      <td>{{category.description}}</td>		  
 	  </tr>
+	  
+	  <tr>
+	      <td>Meta Tag</td>		   
+	      <td>{{category.meta_tag}}</td>		  
+	  </tr>
+	  
+	  <tr>
+	      <td>Meta Description</td>		   
+	      <td>{{category.meta_description}}</td>		  
+	  </tr>
+	  
+	  <tr>
+	      <td>Parent Category</td>		   
+	      <td>{{category.parent_categoryname}}</td>		  
+	  </tr>
+	  
+	  <tr>
+	      <td>Order</td>		   
+	      <td>{{category.order}}</td>		  
+	  </tr>
+	  
 	  <tr>
 	      <td>Status</td>		   
-	      <td>{{page.status}}</td>		  
+	      <td>{{category.status}}</td>		  
 	  </tr>	  
   </table>
 </div>
-
-<div ng-include="'views/layouts/admin_footer.html'"></div>
+</div>

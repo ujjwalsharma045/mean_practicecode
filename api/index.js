@@ -212,6 +212,17 @@ var storage = multer.diskStorage({
 	}
 });
 
+function getStatus(){
+	return [
+	    {
+		   'A':'Active'	
+		},
+		{
+		   'I':'Inactive'	
+		}
+	];
+}
+
 var upload = multer({storage:storage}).single('file');
 var func = require("./helpers/CommonHelper.js");
 var mail = require("./helpers/MailHelper.js");
@@ -239,6 +250,7 @@ require('./controllers/PageController')(app , func , mail, upload, storage, mail
 require('./controllers/ProductController')(app , func , mail, upload, storage, mailer, multer, validator, Product, paginate , cors , dateFormat, dateDiff , dobByAge , json2csv , excelexport , pdf , passport , LocalStrategy, bCrypt, fs, async, PasswordGenerate, randtoken, handlebars);
 
 require('./controllers/CategoryController')(app , func , mail, upload, storage, mailer, multer, validator, Category , paginate , cors , dateFormat, dateDiff , dobByAge , json2csv , excelexport , pdf , passport , LocalStrategy, bCrypt, fs, async, PasswordGenerate, randtoken, handlebars, UserProfile);
+require('./controllers/CommonController')(app , func , mail, upload, storage, mailer, multer, validator, Category , paginate , cors , dateFormat, dateDiff , dobByAge , json2csv , excelexport , pdf , passport , LocalStrategy, bCrypt, fs, async, PasswordGenerate, randtoken, handlebars, UserProfile);
 //require('./crons/crons')(schedule, mail, mailer, User);
 
 app.use(function(req, res) {

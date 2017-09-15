@@ -144,6 +144,28 @@ header{
         </li>
 		
 		<li class="treeview">
+			  <a href="javascript:void(0)" ng-click="toogle('product')">
+				<i class="fa fa-table"></i> <span>Product</span>
+				<i class="fa fa-angle-left pull-right"></i>
+			  </a>
+			  <ul class="treeview-menus"  ng-show="productstate">
+				<li><a href="#/admin/product/add"><i class="fa fa-circle-o"></i>Add Product</a></li>
+				<li><a href="#/admin/product/index"><i class="fa fa-circle-o"></i>Product List</a></li>
+			  </ul>
+        </li>
+		
+		<li class="treeview">
+			  <a href="javascript:void(0)" ng-click="toogle('category')">
+				<i class="fa fa-table"></i> <span>Category</span>
+				<i class="fa fa-angle-left pull-right"></i>
+			  </a>
+			  <ul class="treeview-menus"  ng-show="categorystate">
+				<li><a href="#/admin/category/add"><i class="fa fa-circle-o"></i>Add Category</a></li>
+				<li><a href="#/admin/category/index"><i class="fa fa-circle-o"></i>Category List</a></li>
+			  </ul>
+        </li>
+		
+		<li class="treeview">
 			  <a href="#/admin/setting" ng-click="toogle('setting')">
 				<i class="fa fa-table"></i> <span>Settings</span>				
 			  </a>			  

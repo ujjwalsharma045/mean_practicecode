@@ -1065,7 +1065,73 @@
 				},
                 resolve:{
 					pageTitle:function(){
+					   return "Category Add";
+					}
+				}				                							
+         })
+		 .state('editcategory' , {								                
+				url:'/admin/category/edit/:id',
+				views:{
+                    'header':{
+						templateUrl: '/views/layouts/admin_header.html',
+						controller:'front'
+					},
+					'content': {
+						templateUrl: '/views/category/edit.html', 
+						controller:'category'
+					},
+					'footer': {
+						templateUrl: '/views/layouts/admin_footer.html',
+						controller:'front'
+					}
+				},
+                resolve:{
+					pageTitle:function(){
+					   return "Category Edit";
+					}
+				}				                							
+         })
+		 .state('listcategory' , {								                
+				url:'/admin/category/index',
+				views:{
+                    'header':{
+						templateUrl: '/views/layouts/admin_header.html',
+						controller:'front'
+					},
+					'content': {
+						templateUrl: '/views/category/index.html', 
+						controller:'category'
+					},
+					'footer': {
+						templateUrl: '/views/layouts/admin_footer.html',
+						controller:'front'
+					}
+				},
+                resolve:{
+					pageTitle:function(){
 					   return "Category List";
+					}
+				}				                							
+         })
+		 .state('viewcategory' , {								                
+				url:'/admin/category/view/:id',
+				views:{
+                    'header':{
+						templateUrl: '/views/layouts/admin_header.html',
+						controller:'front'
+					},
+					'content': {
+						templateUrl: '/views/category/view.html', 
+						controller:'category'
+					},
+					'footer': {
+						templateUrl: '/views/layouts/admin_footer.html',
+						controller:'front'
+					}
+				},
+                resolve:{
+					pageTitle:function(){
+					   return "Category View";
 					}
 				}				                							
          })

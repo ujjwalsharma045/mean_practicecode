@@ -52,7 +52,7 @@
 			  
 			  <div class="form-group">
 				  <label>Order</label>		  				  
-				  <input type="number" name="order" class="form-control" ng-model="category.order" required>
+				  <input type="text" name="order" class="form-control" ng-model="category.order" required>
 				  <p ng-show="submitted && categoryform.order.$invalid">Enter Order</p>
 			  </div>
 			  
@@ -67,7 +67,7 @@
 					 
 			  <div class="form-group">				 				  
 				 <div>
-				   <input type="button" value="Submit" ng-click="addcategory()"/> 	  
+				   <input type="button" value="Submit" ng-click="editcategory()"/> 	  
 				 </div>				 				 				 
 			  </div>		   
 		</div>

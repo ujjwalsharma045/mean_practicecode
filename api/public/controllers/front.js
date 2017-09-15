@@ -49,12 +49,20 @@ app.controller('front' , ['$scope' , '$http' , '$route' , '$routeParams' ,'$loca
 	
     $scope.userstate = false;
 	$scope.pagestate = false;
+	$scope.productstate = false;
+	$scope.categorystate = false;
     $scope.toogle = function(type){
 		if(type=="user"){
 			$scope.userstate = !$scope.userstate;
 		}
 		else if(type=="page"){
 			$scope.pagestate = !$scope.pagestate;
+		}
+		else if(type=="product"){
+			$scope.productstate = !$scope.productstate;
+		}
+		else if(type=="category"){
+			$scope.categorystate = !$scope.categorystate;
 		}
 	}
 

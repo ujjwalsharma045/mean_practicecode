@@ -1,5 +1,8 @@
 module.exports = function(app , func , mail, upload, storage, mailer, multer, validator, Category, paginate , cors , dateFormat , dateDiff, dobByAge, json2csv, excel , pdf, passport , LocalStrategy, bCrypt , fs, async, PasswordGenerate, randtoken, handlebars, UserProfile){ 
-    app.post("/category/add" , function(req , res){
+    
+	var math = require('mathjs');  
+	
+	app.post("/category/add" , function(req , res){
 		 if(req.method=="POST"){
             var condition = {
 				title:req.body.title,
@@ -98,17 +101,51 @@ module.exports = function(app , func , mail, upload, storage, mailer, multer, va
 	});	
 	
 	app.get("/category/view/:id" , function(req , res){
-		 var productid = req.body.id;
-	     Category.findOne({_id:req.body.id} , function(err , records){
+		 var categoryid = req.params.id;
+	     Category.findOne({_id:categoryid} , function(err , records){
 		    res.setHeader('Content-Type' , 'application/json');
+			console.log(records);
 			res.send(JSON.stringify({authen:1 , success:1 , records:records}));
 		 });
 	});
 	
-	app.get("/category/list" , function(req , res){		
-	     Category.find().exec(function(err , records){
-		    res.setHeader('Content-Type', 'application/json');
-			res.send(JSON.stringify({authen:1 , success:1 , records:records}));
+	app.get("/category/index" , function(req , res){
+         var condition = {};
+         var perPage = 10;	
+         var currentpage = 1;
+		 
+	     Category.find(condition).count().exec(function(err , totalrecords){
+			 if(err)
+			   throw err;				   
+		     var pages = {};
+			 for(i=1; i<=totalrecords; i++){
+				pages[i] = i; 
+			 } 
+			 
+             var totalPages = math.ceil(totalrecords/perPage);			 
+			 Category.find(condition).limit(perPage).skip(perPage*(currentpage-1)).sort().exec(function(err , records){
+				 if(err)
+			      throw err;
+		         res.setHeader('Content-Type', 'application/json');
+			     res.send(JSON.stringify({authen:1 , success:1 , records:records , totalpages:totalPages, pages:'pages'}));
+			 });
 		 });
+	});
+
+	app.get("/category/list" , function(req , res){
+	     Category.find().exec(function(err , records){
+		   res.setHeader('Content-Type', 'application/json');
+		   res.send(JSON.stringify({authen:1 , success:1 , records:records}));	
+	     });
+	});
+	
+	app.delete("/category/remove/:id" , function(req , res){
+		 var categoryid = req.params.id
+	     Category.findOneAndRemove({_id:categoryid}, function(err){
+		      if(err)
+				throw err;
+			  res.setHeader('Content-Type', 'application/json');
+		      res.send(JSON.stringify({authen:1 , success:1}));	
+	     });
 	});
 }
